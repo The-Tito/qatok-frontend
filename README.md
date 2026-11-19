@@ -2,7 +2,7 @@
 
 Interfaz de **QATO'K**, el proyecto final de Bases de Datos en la Nube. La API, las tres bases (PostgreSQL, MongoDB y Neo4j), la documentación y el plan de trabajo están en **[The-Tito/qatok-backend](https://github.com/The-Tito/qatok-backend)**.
 
-> **Estado:** el repo está listo (lint, tipos, CI y la copia de `shared/`), pero la app Next.js **todavía no existe**. Crearla es la primera tarea del frontend (issue «Esqueleto de la interfaz en Next.js» en este repo).
+> **Estado:** el repo está listo (lint, tipos, CI y la copia de `shared/`), pero la app Next.js **todavía no existe**. Crearla es la primera tarea del frontend: [#4 Esqueleto de la interfaz en Next.js](https://github.com/The-Tito/qatok-frontend/issues/4).
 
 ## Reglas que no se negocian (guía §7.6, convenciones §6.8)
 
@@ -60,3 +60,5 @@ import { EstadoIntento } from '@qatok/shared';
 ## Forma de trabajo
 
 Igual que en el backend: gitflow (`feature/<perfil>-<tarea>` desde `develop`), un commit por implementación con el formato `<ámbito>: <qué cambia>`, `npm run verificar` en verde antes de subir y PR a `develop` con `Closes #N`.
+
+Issues de este repo: #2 (F3a interfaz), #3 (F1 y F3b interfaz), #4 (esqueleto Next.js) y #5 (F2 interfaz). La tabla completa de equivalencias con el monorepo anterior está en `context/github.md` del backend.
