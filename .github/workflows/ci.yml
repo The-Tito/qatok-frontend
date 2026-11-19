@@ -1,0 +1,44 @@
+# CI de la interfaz de QATO'K: en cada push y PR corre lint, formato y tipos, y comprueba
+# que src/shared/ coincide con shared/src de The-Tito/qatok-backend (rama develop).
+# No usa credenciales: el repo del backend es público.
+name: CI
+
+on:
+  push:
+    branches: [develop, main, 'feature/**', 'release/**', 'hotfix/**']
+  pull_request:
+    branches: [develop, main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verificar:
+    name: Verificar (lint, formato, tipos y shared)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Traer shared/ del backend (develop)
+        uses: actions/checkout@v5
+        with:
+          repository: The-Tito/qatok-backend
+          ref: develop
+          path: .ci-backend
+          sparse-checkout: shared
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Lint, formato, tipos y copia de shared/
+        run: npm run verificar
+        env:
+          QATOK_BACKEND: .ci-backend
