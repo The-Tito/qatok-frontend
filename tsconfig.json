@@ -14,7 +14,10 @@
     "isolatedModules": true,
     "resolveJsonModule": true,
     "noEmit": true,
-    "types": ["node"]
+    "types": ["node"],
+    "paths": {
+      "@qatok/shared": ["./src/shared/index.ts"]
+    }
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.mts"],
   "exclude": ["node_modules", ".next", "out", ".ci-backend"]

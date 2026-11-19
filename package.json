@@ -12,7 +12,9 @@
     "format": "prettier --write \"**/*.{ts,tsx,js,mjs,json,css}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,mjs,json,css}\"",
     "typecheck": "tsc --noEmit -p .",
-    "verificar": "npm run lint && npm run format:check && npm run typecheck"
+    "verificar": "npm run lint && npm run format:check && npm run typecheck && npm run check:shared",
+    "sync:shared": "node scripts/sync-shared.mjs",
+    "check:shared": "node scripts/sync-shared.mjs --check"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
