@@ -1,0 +1,21 @@
+# Dependencias y compilados
+node_modules/
+.next/
+out/
+dist/
+coverage/
+*.tsbuildinfo
+next-env.d.ts
+
+# Configuración local (solo se versiona .env.example)
+.env
+.env.*
+!.env.example
+
+# Copia temporal del backend que usa el CI para comprobar shared/
+.ci-backend/
+
+# Sistema y editores
+.DS_Store
+.idea/
+*.log
