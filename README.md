@@ -32,7 +32,7 @@ Para tener la API corriendo, sigue el inicio rápido del README de `qatok-backen
 `src/shared/` es una **copia de solo lectura** de `shared/src/` de `qatok-backend`, que es la fuente única del contrato. Se importa con el alias `@qatok/shared` (ver `tsconfig.json`):
 
 ```ts
-import { EstadoIntento } from '@qatok/shared';
+import { ErrorRespuesta, Session, SimulationCatalog } from '@qatok/shared';
 ```
 
 | Comando | Qué hace |
@@ -47,7 +47,7 @@ import { EstadoIntento } from '@qatok/shared';
 
 1. Crear la app con App Router + TypeScript **en la raíz de este repo**, conservando el nombre `@qatok/frontend`, los scripts `lint`, `format`, `typecheck`, `sync:shared`, `check:shared` y `verificar`, y el bloque `no-restricted-imports` de `eslint.config.mjs`.
 2. Al mezclar el `tsconfig.json` que genera Next, conservar `paths` (`@qatok/shared`) y `strict`.
-3. `lib/api.ts`: cliente que llama a la API usando **solo** `NEXT_PUBLIC_API_URL` y entiende el formato de error del contrato (`{ error: { codigo, mensaje, detalles } }`), mostrando `mensaje` al usuario.
+3. `lib/api.ts`: cliente que llama a la API usando **solo** `NEXT_PUBLIC_API_URL` y valida el error del contrato (`{ error: { code, message, details? } }`). Usa `code` para localizar el mensaje en la interfaz.
 4. Una página inicial que muestre el estado de las 3 bases desde `GET /api/health` (verde/rojo por base).
 5. Agregar `dev` (puerto 3000), `build` y `start`, y sumar `npm run build` al CI.
 
