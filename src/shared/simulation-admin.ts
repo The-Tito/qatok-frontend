@@ -44,7 +44,7 @@ const consequence = z.strictObject({
   impact: z.enum(['POSITIVE', 'NEUTRAL', 'NEGATIVE']),
   type: z.enum(['RELATIONSHIP', 'TIME', 'QUALITY', 'REPUTATION']),
 });
-const option = z.strictObject({
+export const SimulationOption = z.strictObject({
   id: uuidV4,
   description: text(1000),
   score,
@@ -61,7 +61,7 @@ const step = {
   order: z.number().int().positive(),
   title: text(150),
   description: text(1000),
-  options: z.array(option).max(6),
+  options: z.array(SimulationOption).max(6),
 };
 const items = (length: number, max: number) => z.array(text(length)).min(1).max(max);
 export const SimulationStep = z.discriminatedUnion('type', [

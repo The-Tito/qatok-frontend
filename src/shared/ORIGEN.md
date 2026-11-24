@@ -2,6 +2,6 @@
 
 Copia de solo lectura de `shared/src/` de [The-Tito/qatok-backend](https://github.com/The-Tito/qatok-backend), fuente única del contrato.
 
-- Commit de origen: `30fc2d3`
+- Commit de origen: `17439d0`
 - Para actualizarla: `npm run sync:shared` (con `qatok-backend` en la carpeta hermana) y commit propio.
 - Cualquier cambio se hace primero en el backend.
