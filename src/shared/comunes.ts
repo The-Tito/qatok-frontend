@@ -24,9 +24,9 @@ export const Nivel = z.number().min(0).max(100);
 
 export const ErrorRespuesta = z.object({
   error: z.object({
-    codigo: z.string().regex(/^[A-Z][A-Z0-9_]*$/),
-    mensaje: z.string(),
-    detalles: z.record(z.string(), z.unknown()).optional(),
+    code: z.string().regex(/^[A-Z][A-Z0-9_]*$/),
+    message: z.string(),
+    details: z.record(z.string(), z.unknown()).optional(),
   }),
 });
 export type ErrorRespuesta = z.infer<typeof ErrorRespuesta>;
