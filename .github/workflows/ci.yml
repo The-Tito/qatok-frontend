@@ -1,4 +1,4 @@
-# CI de la interfaz de QATO'K: en cada push y PR corre lint, formato y tipos, y comprueba
+# CI de la interfaz de QATO'K: en cada push y PR compila la app, corre lint, formato y tipos, y comprueba
 # que src/shared/ coincide con shared/src de The-Tito/qatok-backend (rama develop).
 # No usa credenciales: el repo del backend es público.
 name: CI
@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   verificar:
-    name: Verificar (lint, formato, tipos y shared)
+    name: Verificar (lint, formato, tipos, shared y build)
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -42,3 +42,6 @@ jobs:
         run: npm run verificar
         env:
           QATOK_BACKEND: .ci-backend
+
+      - name: Compilar Next.js
+        run: npm run build

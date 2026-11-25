@@ -2,7 +2,7 @@
 
 Interfaz de **QATO'K**, el proyecto final de Bases de Datos en la Nube. La API, las tres bases (PostgreSQL, MongoDB y Neo4j), la documentación y el plan de trabajo están en **[The-Tito/qatok-backend](https://github.com/The-Tito/qatok-backend)**.
 
-> **Estado:** el repo está listo (lint, tipos, CI y la copia de `shared/`), pero la app Next.js **todavía no existe**. Crearla es la primera tarea del frontend: [#4 Esqueleto de la interfaz en Next.js](https://github.com/The-Tito/qatok-frontend/issues/4).
+La app Next.js muestra el estado de la API y sus tres bases en la página inicial. Este es el primer paso del [#4 Esqueleto de la interfaz en Next.js](https://github.com/The-Tito/qatok-frontend/issues/4).
 
 ## Reglas que no se negocian (guía §7.6, convenciones §6.8)
 
@@ -20,12 +20,13 @@ git clone git@github.com:The-Tito/qatok-backend.git
 git clone git@github.com:The-Tito/qatok-frontend.git
 cd qatok-frontend
 git checkout develop
-npm install
+npm ci
 cp .env.example .env.local
-npm run verificar        # lint + formato + tipos
+npm run verificar
+npm run dev
 ```
 
-Para tener la API corriendo, sigue el inicio rápido del README de `qatok-backend` (`npm run setup:env`, `npm run db:up`, `npm run dev:api`). La API escucha en `http://localhost:4000/api` y ya permite CORS desde `http://localhost:3000`.
+Sigue el [inicio rápido del backend](https://github.com/The-Tito/qatok-backend#inicio-rápido) para inicializar las bases y arrancar la API en `http://localhost:4000/api`. Abre `http://localhost:3000` para ver el estado y la latencia de cada motor. La API permite ese origen mediante CORS.
 
 ## Tipos compartidos: `src/shared/`
 
@@ -43,13 +44,14 @@ import { ErrorRespuesta, Session, SimulationCatalog } from '@qatok/shared';
 - **Nunca** edites `src/shared/` a mano: cambia `shared/` en el backend (con su PR) y luego corre `npm run sync:shared` aquí, en un commit propio.
 - Otra ruta del backend: `QATOK_BACKEND=/ruta/a/qatok-backend npm run sync:shared`.
 
-## Crear la app Next.js (primera tarea)
+## Compilar la app Next.js
 
-1. Crear la app con App Router + TypeScript **en la raíz de este repo**, conservando el nombre `@qatok/frontend`, los scripts `lint`, `format`, `typecheck`, `sync:shared`, `check:shared` y `verificar`, y el bloque `no-restricted-imports` de `eslint.config.mjs`.
-2. Al mezclar el `tsconfig.json` que genera Next, conservar `paths` (`@qatok/shared`) y `strict`.
-3. `lib/api.ts`: cliente que llama a la API usando **solo** `NEXT_PUBLIC_API_URL` y valida el error del contrato (`{ error: { code, message, details? } }`). Usa `code` para localizar el mensaje en la interfaz.
-4. Una página inicial que muestre el estado de las 3 bases desde `GET /api/health` (verde/rojo por base).
-5. Agregar `dev` (puerto 3000), `build` y `start`, y sumar `npm run build` al CI.
+```bash
+npm run build
+npm run start
+```
+
+Configura `NEXT_PUBLIC_API_URL` antes de compilar. Next.js incorpora ese valor en el código que recibe el navegador.
 
 | Qué ya está listo en el backend | Dónde |
 |---|---|
