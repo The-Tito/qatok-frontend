@@ -1,0 +1,37 @@
+import type { Metadata } from 'next';
+import { Chakra_Petch, IBM_Plex_Mono, Silkscreen } from 'next/font/google';
+import type { ReactNode } from 'react';
+import './globals.css';
+
+const title = Chakra_Petch({
+  subsets: ['latin'],
+  weight: ['600', '700'],
+  variable: '--font-chakra-petch',
+  display: 'swap',
+});
+
+const label = Silkscreen({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-silkscreen',
+  display: 'swap',
+});
+
+const body = IBM_Plex_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-ibm-plex-mono',
+  display: 'swap',
+});
+
+export const metadata: Metadata = {
+  title: "Estado de la API · QATO'K",
+};
+
+export default function RootLayout({ children }: { children: ReactNode }) {
+  return (
+    <html lang="es" className={`${title.variable} ${label.variable} ${body.variable}`}>
+      <body>{children}</body>
+    </html>
+  );
+}

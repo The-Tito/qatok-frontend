@@ -1,19 +1,33 @@
 // Lint de la interfaz de QATO'K.
 // Regla central (guía §7.6, convenciones §6.8): la interfaz solo consume la API del backend,
 // nunca importa un driver de base de datos.
-// Al crear la app Next.js (issue del esqueleto), agrega aquí la configuración de Next
-// conservando el bloque de no-restricted-imports.
 import js from '@eslint/js';
+import next from '@next/eslint-plugin-next';
 import tseslint from 'typescript-eslint';
 import prettier from 'eslint-config-prettier';
 import globals from 'globals';
 
 export default tseslint.config(
   {
-    ignores: ['**/node_modules/**', '.next/**', 'out/**', '**/coverage/**', '.ci-backend/**'],
+    ignores: [
+      '**/node_modules/**',
+      '.next/**',
+      'next-env.d.ts',
+      'out/**',
+      '**/coverage/**',
+      '.ci-backend/**',
+    ],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
+  {
+    files: ['src/**/*.{ts,tsx}'],
+    plugins: { '@next/next': next },
+    rules: {
+      ...next.configs.recommended.rules,
+      ...next.configs['core-web-vitals'].rules,
+    },
+  },
   {
     languageOptions: { globals: { ...globals.browser, ...globals.node } },
     rules: {
