@@ -6,6 +6,7 @@ import { LoadingCard, StateCard } from '../../../../../components/StateCard';
 import { findAdminSimulation } from '../../../../../lib/api';
 import { SimulationDataForm } from '../simulation-data-form';
 import { SIM_STATUS } from '../simulations-view';
+import { ContentEditor } from './content-editor';
 
 /** Editor de una simulación: datos (y, desde 6.2, contenido). Solo lectura si no es borrador. */
 export function SimulationAdminView({ simulationId }: { simulationId: string }) {
@@ -49,9 +50,11 @@ export function SimulationAdminView({ simulationId }: { simulationId: string }) 
         </span>
         <h1 className="admin-title">{data.title}</h1>
       </div>
-      <div className="admin-narrow">
-        <SimulationDataForm key={data.id} simulation={data} readOnly={!editable} />
-      </div>
+      <ContentEditor
+        simulationId={data.id}
+        readOnly={!editable}
+        aside={() => <SimulationDataForm key={data.id} simulation={data} readOnly={!editable} />}
+      />
     </div>
   );
 }

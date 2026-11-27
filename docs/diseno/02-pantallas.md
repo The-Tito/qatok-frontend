@@ -157,6 +157,8 @@ Todas bajo `/admin`, con `AdminShell`. Acceso: rol ADMIN (comprobar `user.role`;
 
 ### A2 · Editor de escenario — `/admin/simulaciones/nueva` y `/admin/simulaciones/[simulationId]`
 
+> Hecho en el issue 6.2: pasos plegables (uno abierto a la vez), tipo con contexto propio (listas un elemento por renglón; diálogo y cronología por filas), opciones (máx. 6) con valoración, siguiente paso, retroalimentación y hasta 3 consecuencias; subir, bajar y quitar pasos (las opciones que llevaban a un paso quitado pasan a «Termina»). Antes de guardar se valida con `SimulationContentInput` y se listan los problemas por ruta («Paso 1 · opción A · comentario»). `409 STALE_CONTENT_VERSION` muestra el aviso con «Recargar versión». Columna derecha: datos de la simulación y mapa de rutas (avisa de pasos a los que no llega ninguna opción). Lógica en `src/lib/content.ts` con pruebas.
+
 - **Datos:**
   - Metadatos: de la lista hasta que exista el `GET` individual (D5). Crear con `POST /api/admin/simulations` `SimulationInput` (luego se reemplaza la URL por la del ID). Guardar con `PUT /api/admin/simulations/:id`.
   - Contenido: `GET …/content` → `{ version, steps }`; `404 MISSING_CONTENT` = escenario vacío con `version: null`. Guardar con `PUT …/content` `{ version, steps }` → nueva `version`.
