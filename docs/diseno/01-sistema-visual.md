@@ -81,7 +81,7 @@ Implementación: `src/lib/skill-types.ts` (issue 0.2). Los colores no se repiten
 
 ## Componentes
 
-Todos en `src/components/`. Cada uno con su variante en la página de muestra `/dev/componentes`, solo visible en desarrollo (en producción da 404).
+Todos en `src/components/`. Cada uno con su variante en la página de muestra `/dev/components`, solo visible en desarrollo (en producción da 404).
 
 Hechos en el issue 0.3 (estilos en `src/components/ui.css`): `PixelButton`, `TypeChip`, `Chip`, `FeedbackBadge`, `ImpactBadge`, `ClassificationBadge` (en `Badges.tsx`), `LevelBar`, `StateCard` y `LoadingCard`, `SyncBanner`, `Sheet` (hoja inferior en móvil, diálogo centrado de 520 px desde 1024 px, con `<dialog>` modal) y las estructuras `StudentShell` (BottomNav debajo de 1024 px, barra superior desde 1024 px) y `AdminShell` (en `Shells.tsx`). Los componentes del juego (`OptionList`, `DialogBox`, `StepHeader`, `StepContext`, `Sprite`, `Sparkle`) y `Field` llegan con sus pantallas.
 

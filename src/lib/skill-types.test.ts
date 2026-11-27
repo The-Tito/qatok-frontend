@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { mainSkill, simulationType, skillType } from './skill-types';
+import {
+  mainSkill,
+  registerSkillTypes,
+  resetSkillTypes,
+  simulationType,
+  skillType,
+} from './skill-types';
 
 const COMUNICACION = 'e0000000-0000-4000-8000-000000000201';
 const CONFLICTOS = 'e0000000-0000-4000-8000-000000000202';
@@ -39,5 +45,22 @@ describe('mainSkill y simulationType', () => {
   it('sin habilidades es STONE', () => {
     expect(mainSkill([])).toBeNull();
     expect(simulationType([])).toBe('STONE');
+  });
+});
+
+describe('visual_type de la API (D1)', () => {
+  it('gana sobre la tabla provisional, en el objeto o registrado', () => {
+    resetSkillTypes();
+    expect(skillType({ id: COMUNICACION, visual_type: 'HEART' } as { id: string })).toBe('HEART');
+    registerSkillTypes([{ id: TIEMPO, visual_type: 'LEAF' } as { id: string }]);
+    expect(skillType(TIEMPO)).toBe('LEAF');
+    resetSkillTypes();
+  });
+
+  it('ignora valores nulos o desconocidos', () => {
+    registerSkillTypes([{ id: CONFLICTOS, visual_type: null } as { id: string }]);
+    registerSkillTypes([{ id: CONFLICTOS, visual_type: 'AZUL' } as { id: string }]);
+    expect(skillType(CONFLICTOS)).toBe('FIRE');
+    resetSkillTypes();
   });
 });

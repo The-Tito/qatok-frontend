@@ -6,6 +6,7 @@ import {
   type SimulationDifficulty,
 } from '@qatok/shared';
 import type { z } from 'zod';
+import { registerSkillTypes } from '../skill-types';
 import { request } from './client';
 
 export interface CatalogFilters {
@@ -28,6 +29,9 @@ export function getSimulation(simulationId: string, signal?: AbortSignal) {
   });
 }
 
-export function listSkills(signal?: AbortSignal) {
-  return request('/skills', { schema: SkillList, signal });
+export async function listSkills(signal?: AbortSignal) {
+  const list = await request('/skills', { schema: SkillList, signal });
+  // D1: si la API ya manda visual_type, queda registrado para todas las pantallas.
+  registerSkillTypes(list.items);
+  return list;
 }

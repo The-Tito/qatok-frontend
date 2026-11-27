@@ -32,23 +32,23 @@ Plan para construir la interfaz de QATO'K. Reemplaza al plan del 24 nov (contrat
 
 | Ruta | Pantalla | Acceso |
 |---|---|---|
-| `/` | Redirige: sin sesión → `/entrar`; estudiante → `/simulaciones`; admin → `/admin/simulaciones` | Todos |
-| `/entrar`, `/registro` | Entrar y Crear cuenta | Público |
-| `/simulaciones` | Catálogo | Estudiante |
-| `/simulaciones/[simulationId]` | Antes de jugar (y aviso 409 de partida en curso) | Estudiante |
-| `/jugar/[attemptId]` | Paso, resultado de la decisión, pausa, abandonada, completada y guardar evidencia | Dueño |
-| `/perfil` | Perfil | Estudiante |
-| `/perfil/habilidades/[skillId]` | Evolución de una habilidad (C-05) | Estudiante |
-| `/perfil/recomendaciones` | Recomendaciones (C-01) | Estudiante |
-| `/perfil/partidas` | Mis partidas | Estudiante |
-| `/perfil/partidas/[attemptId]` | Recorrido de un intento (C-03) | Dueño |
-| `/evidencias` | Evidencias | Estudiante |
-| `/evidencias/[evidenceId]` | Evidencia y enlaces (crear enlace es un diálogo) | Dueño |
+| `/` | Redirige: sin sesión → `/login`; estudiante → `/simulations`; admin → `/admin/simulations` | Todos |
+| `/login`, `/register` | Entrar y Crear cuenta | Público |
+| `/simulations` | Catálogo | Estudiante |
+| `/simulations/[simulationId]` | Antes de jugar (y aviso 409 de partida en curso) | Estudiante |
+| `/play/[attemptId]` | Paso, resultado de la decisión, pausa, abandonada, completada y guardar evidencia | Dueño |
+| `/profile` | Perfil | Estudiante |
+| `/profile/skills/[skillId]` | Evolución de una habilidad (C-05) | Estudiante |
+| `/profile/recommendations` | Recomendaciones (C-01) | Estudiante |
+| `/profile/attempts` | Mis partidas | Estudiante |
+| `/profile/attempts/[attemptId]` | Recorrido de un intento (C-03) | Dueño |
+| `/evidence` | Evidencias | Estudiante |
+| `/evidence/[evidenceId]` | Evidencia y enlaces (crear enlace es un diálogo) | Dueño |
 | `/e/[token]` | Evidencia pública | Público |
-| `/cuenta` | Mi cuenta (eliminar es un diálogo) | Usuario |
-| `/admin/simulaciones` | Simulaciones | Admin |
-| `/admin/simulaciones/nueva`, `/admin/simulaciones/[simulationId]` | Editor (solo lectura si está publicada o inactiva) | Admin |
-| `/admin/habilidades` | Habilidades | Admin |
+| `/account` | Mi cuenta (eliminar es un diálogo) | Usuario |
+| `/admin/simulations` | Simulaciones | Admin |
+| `/admin/simulations/new`, `/admin/simulations/[simulationId]` | Editor (solo lectura si está publicada o inactiva) | Admin |
+| `/admin/skills` | Habilidades | Admin |
 
 Las hojas y confirmaciones (pausa, guardar evidencia, crear enlace, eliminar cuenta, confirmaciones de admin) son componentes, no rutas.
 
@@ -58,7 +58,7 @@ Las hojas y confirmaciones (pausa, guardar evidencia, crear enlace, eliminar cue
 |---|---|---|---|
 | 0.1 | Base | Repo y estilos: `.gitattributes` (`* text=auto eol=lf`), tokens de 01 en `globals.css`, fuentes con `next/font`, variables de movimiento y regla de movimiento reducido, logo y favicon, sprites en `public/sprites/` | — |
 | 0.2 | Base | Cliente de la API y sesión: un solo `request()` con `Bearer`, errores por `code` y 401 que cierra la sesión; TanStack Query; guardas por rol; mapa de tipos de habilidad (D1 provisional); Vitest con sus pruebas | 0.1 |
-| 0.3 | Base | Estructuras y componentes: estructura del estudiante (BottomNav en móvil, barra superior desde 1024 px), estructura de admin, botones, chips, FeedbackBadge, barra de nivel, StateCard, hoja/diálogo responsive, aviso de sincronización; página `/dev/componentes` | 0.1 |
+| 0.3 | Base | Estructuras y componentes: estructura del estudiante (BottomNav en móvil, barra superior desde 1024 px), estructura de admin, botones, chips, FeedbackBadge, barra de nivel, StateCard, hoja/diálogo responsive, aviso de sincronización; página `/dev/components` | 0.1 |
 | 1.1 | Cuenta | Entrar y Crear cuenta (409 de correo repetido), redirección por rol en `/`, Salir | 0.2, 0.3 |
 | 1.2 | Cuenta | Mi cuenta: ver, cambiar el nombre y eliminar la cuenta con confirmación fuerte | 1.1 |
 | 2.1 | Catálogo | Catálogo: búsqueda, filtros por dificultad y habilidad, paginación y aviso de partida en curso | 1.1 |

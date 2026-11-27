@@ -34,7 +34,7 @@ export function typedSkills(skills: SimulationSummary['skills']): TypedSkill[] {
   return [...skills]
     .sort((a, b) => b.weight - a.weight || a.name.localeCompare(b.name, 'es'))
     .map((skill) => {
-      const type = skillType(skill.id);
+      const type = skillType(skill);
       return {
         id: skill.id,
         name: skill.name,
