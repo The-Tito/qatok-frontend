@@ -104,6 +104,8 @@ Una sola ruta con cuatro vistas: **paso**, **resultado de la decisión**, **comp
 
 ### 10 · Evidencias — `/evidencias`
 
+> Hecho en el issue 5.1 (lista y detalle) con los prototipos v2 `EvidenciasV2` y `EvidenciaDetalleV2`: filtro por habilidad en la URL (`?habilidad=`), «Cargar más» de 12 en 12, vacío por habilidad con «Ver recomendaciones», privacidad con `PATCH /api/evidence/:id { visibility }` desde el botón de la barra, y eliminar con confirmación (`DELETE`). Los enlaces llegan en 5.2.
+
 - **Acceso:** usuario. **Prototipo:** `Evidencias.dc.html`. **Datos:** `GET /api/evidencias?id_habilidad` (F3a, provisional).
 - **Tarjeta:** franja de tipos, trofeo, título, «{simulación} · {fecha}», chips de habilidades y pie «● Privada / Pública» + «{n} enlaces activos».
 - **Estados:** vacío («Cada simulación completada puede guardarse como una evidencia»), cargando, error.

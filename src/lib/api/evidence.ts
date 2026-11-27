@@ -1,5 +1,11 @@
 // Evidencias (contrato: F3a · /api/evidence).
-import { EvidenceDetail, EvidenceList, EvidenceMutation } from '@qatok/shared';
+import {
+  Deletion,
+  EvidenceDetail,
+  EvidenceList,
+  EvidenceMutation,
+  EvidenceUpdate,
+} from '@qatok/shared';
 import { request } from './client';
 
 export interface EvidenceListQuery {
@@ -21,4 +27,19 @@ export function createEvidence(input: { attempt_id: string; title?: string }) {
 
 export function getEvidence(evidenceId: string, signal?: AbortSignal) {
   return request(evidencePath(evidenceId), { schema: EvidenceDetail, signal });
+}
+
+export function updateEvidence(
+  evidenceId: string,
+  input: { title?: string; visibility?: 'PRIVATE' | 'PUBLIC' },
+) {
+  return request(evidencePath(evidenceId), {
+    method: 'PATCH',
+    body: input,
+    schema: EvidenceUpdate,
+  });
+}
+
+export function deleteEvidence(evidenceId: string) {
+  return request(evidencePath(evidenceId), { method: 'DELETE', schema: Deletion });
 }
