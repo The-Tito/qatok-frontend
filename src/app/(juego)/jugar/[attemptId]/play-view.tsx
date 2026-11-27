@@ -2,7 +2,6 @@
 
 import type { PlayerStep } from '@qatok/shared';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import Link from 'next/link';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { ImpactBadge } from '../../../../components/Badges';
 import { PixelButton } from '../../../../components/PixelButton';
@@ -12,6 +11,7 @@ import { Sparkle } from '../../../../components/Sprites';
 import { LoadingCard, StateCard } from '../../../../components/StateCard';
 import { getAttempt, getSimulation, isApiError, respondStep } from '../../../../lib/api';
 import { typedSkills } from '../../../../lib/simulation';
+import { AbandonedView, CompletedView, PauseSheet } from './end-views';
 import type { SkillTypeKey } from '../../../../lib/skill-types';
 
 type AttemptDetail = Awaited<ReturnType<typeof getAttempt>>;
@@ -40,8 +40,10 @@ export function PlayView({ attemptId }: { attemptId: string }) {
     enabled: Boolean(simulationId),
     retry: false,
   });
-  // Decisión que se está mostrando (resultado antes del siguiente paso).
+  // Decisiones de esta sesión (para «Tus decisiones») y la que se está mostrando.
+  const [decisions, setDecisions] = useState<SessionDecision[]>([]);
   const [showing, setShowing] = useState<SessionDecision | null>(null);
+  const [pausing, setPausing] = useState(false);
 
   if (attempt.isError) {
     return isApiError(attempt.error, 'NOT_FOUND', 'VALIDATION_ERROR') ? (
@@ -68,42 +70,60 @@ export function PlayView({ attemptId }: { attemptId: string }) {
     : 'STONE';
   const title = simulation.data?.title ?? 'Simulación';
 
+  const pause = (
+    <PauseSheet
+      open={pausing}
+      onClose={() => setPausing(false)}
+      attempt={detail.attempt}
+      simulationTitle={title}
+      type={type}
+    />
+  );
+
   if (showing) {
     return (
-      <DecisionScreen
-        decision={showing}
-        type={type}
-        simulationTitle={title}
-        onContinue={() => setShowing(null)}
-      />
+      <>
+        <DecisionScreen
+          decision={showing}
+          type={type}
+          simulationTitle={title}
+          onContinue={() => setShowing(null)}
+          onPause={showing.recorded.next_step ? () => setPausing(true) : undefined}
+        />
+        {pause}
+      </>
     );
   }
 
-  if (detail.attempt.status !== 'IN_PROGRESS' || !detail.current_step) {
-    // Partida completada o abandonada: sus vistas llegan en el issue 3.3.
+  if (detail.attempt.status === 'ABANDONED') return <AbandonedView simulationTitle={title} />;
+  if (detail.attempt.status === 'COMPLETED' || !detail.current_step) {
     return (
-      <StateCard
-        kind="empty"
-        title={
-          detail.attempt.status === 'ABANDONED' ? 'Partida abandonada' : 'Simulación completada'
-        }
-        message="Puedes ver tus partidas en el perfil o elegir otra simulación."
-        action={{ label: 'Ir al catálogo', href: '/simulaciones' }}
+      <CompletedView
+        attempt={detail.attempt}
+        simulationTitle={title}
+        type={type}
+        decisions={decisions}
+        responseCount={detail.responses.length}
       />
     );
   }
 
   return (
-    <StepScreen
-      key={detail.current_step.id}
-      detail={detail}
-      step={detail.current_step}
-      type={type}
-      simulationTitle={title}
-      onDecided={(decision) => {
-        setShowing(decision);
-      }}
-    />
+    <>
+      {pause}
+      <StepScreen
+        key={detail.current_step.id}
+        detail={detail}
+        step={detail.current_step}
+        type={type}
+        simulationTitle={title}
+        onPause={() => setPausing(true)}
+        onDecided={(decision) => {
+          setDecisions((previous) => [...previous, decision]);
+          setShowing(decision);
+        }}
+      />
+    </>
   );
 }
 
@@ -111,20 +131,25 @@ function StepHeader({
   label,
   simulationTitle,
   icon,
+  onPause,
 }: {
   label: string;
   simulationTitle: string;
   icon?: { src: string; width: number; height: number };
+  /** Sin pausa (última decisión ya enviada) el botón no se muestra. */
+  onPause?: () => void;
 }) {
   return (
     <header className="step-header">
       <div className="step-header-inner">
-        <Link href="/simulaciones" className="step-pause" aria-label="Pausar y salir">
-          <span aria-hidden="true">II</span>
-          <span className="step-pause-text" aria-hidden="true">
-            Pausar
-          </span>
-        </Link>
+        {onPause ? (
+          <button type="button" className="step-pause" aria-label="Pausar" onClick={onPause}>
+            <span aria-hidden="true">II</span>
+            <span className="step-pause-text" aria-hidden="true">
+              Pausar
+            </span>
+          </button>
+        ) : null}
         <div className="step-header-text">
           <span className="step-header-step">{label}</span>
           <span className="step-header-title">{simulationTitle}</span>
@@ -149,12 +174,14 @@ function StepScreen({
   step,
   type,
   simulationTitle,
+  onPause,
   onDecided,
 }: {
   detail: AttemptDetail;
   step: PlayerStep;
   type: SkillTypeKey;
   simulationTitle: string;
+  onPause: () => void;
   onDecided: (decision: SessionDecision) => void;
 }) {
   const queryClient = useQueryClient();
@@ -197,6 +224,7 @@ function StepScreen({
         label={`Paso ${step.order} · ${meta.label}`}
         simulationTitle={simulationTitle}
         icon={{ src: `/sprites/${meta.sprite}.svg`, width: meta.width, height: meta.height }}
+        onPause={onPause}
       />
 
       <main className="step" data-state="ready">
@@ -296,11 +324,13 @@ function DecisionScreen({
   type,
   simulationTitle,
   onContinue,
+  onPause,
 }: {
   decision: SessionDecision;
   type: SkillTypeKey;
   simulationTitle: string;
   onContinue: () => void;
+  onPause?: () => void;
 }) {
   const { recorded } = decision;
   const feedback = FEEDBACK[recorded.feedback.type];
@@ -315,6 +345,7 @@ function DecisionScreen({
       <StepHeader
         label={`Paso ${decision.stepOrder} · Resultado`}
         simulationTitle={simulationTitle}
+        onPause={onPause}
       />
       <main className="step decision">
         <section className="step-situation" aria-label="Resultado">
