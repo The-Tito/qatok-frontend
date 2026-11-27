@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Evidencias (web)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Chakra+Petch:wght@600;700&amp;family=Silkscreen:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#2A2238}a:hover{color:#5E5470}
+.pf{font-family:'Chakra Petch',sans-serif}
+.sk{font-family:'Silkscreen',monospace;text-transform:uppercase;letter-spacing:.04em}
+.px{border:3px solid #2A2238;box-shadow:4px 4px 0 #2A2238}
+.seg{background-image:repeating-linear-gradient(90deg,transparent 0 14px,#2A2238 14px 16px)}
+svg.sp{shape-rendering:crispEdges;display:block}
+button{font:inherit;cursor:pointer}
+button:disabled{cursor:not-allowed}
+input,select,textarea{font:inherit;color:#2A2238}
+input:focus,select:focus,textarea:focus{outline:3px solid #E8A33D;outline-offset:2px}
+::placeholder{color:#8C8577}
+</style>
+</helmet>
+<div style="min-height:820px;background:#FFFFFF;color:#2A2238;font-family:'IBM Plex Mono',monospace;display:flex;flex-direction:column">
+  <header style="background:#2A2238;color:#FFFFFF;padding:0 32px">
+    <div style="max-width:1120px;margin:0 auto;min-height:64px;display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+      <span class="pf" style="font-size:22px;font-weight:700">QATO'K</span>
+      <nav aria-label="Principal" style="display:flex;gap:4px;flex-grow:1;flex-wrap:wrap">
+        <a href="CatalogoWeb.dc.html" class="sk" style="min-height:44px;box-sizing:border-box;display:flex;align-items:center;gap:8px;padding:0 14px;color:#FFFFFF;text-decoration:none;font-size:12px"><svg class="sp" width="20" height="20" viewBox="0 0 11 11" aria-hidden="true"><path fill="#FFFFFF" d="M5 0h1v3h-1z M4 3h3v1h-3z M3 4h5v1h-5z M0 5h11v1h-11z M3 6h5v1h-5z M4 7h3v1h-3z M5 8h1v3h-1z"/></svg>Jugar</a><a href="PerfilV2Web.dc.html" class="sk" style="min-height:44px;box-sizing:border-box;display:flex;align-items:center;gap:8px;padding:0 14px;color:#FFFFFF;text-decoration:none;font-size:12px"><svg class="sp" width="20" height="20" viewBox="0 0 12 12" aria-hidden="true"><path fill="#FFFFFF" d="M3 0h6v6h-6z M1 7h10v5h-10z"/></svg>Perfil</a><a href="EvidenciasV2Web.dc.html" aria-current="page" class="sk" style="min-height:44px;box-sizing:border-box;display:flex;align-items:center;gap:8px;padding:0 14px;background:#FFFFFF;color:#2A2238;text-decoration:none;font-size:12px;font-weight:700"><svg class="sp" width="20" height="20" viewBox="0 0 12 12" aria-hidden="true"><path fill="#2A2238" d="M1 0h10v1h-10z M2 1h8v4h-8z M3 5h6v1h-6z M4 6h4v1h-4z M5 7h2v2h-2z M3 9h6v1h-6z M2 10h8v2h-8z"/></svg>Evidencias</a>
+      </nav>
+      <span style="font-size:13px"><a href="MiCuentaWeb.dc.html" style="color:#FFFFFF">Ana López</a> · <a href="LoginWeb.dc.html" style="color:#FFFFFF">Salir</a></span>
+    </div>
+  </header>
+  <main style="padding:28px 32px 56px;flex-grow:1">
+    <div style="max-width:1120px;margin:0 auto;width:100%;box-sizing:border-box;display:flex;flex-direction:column;gap:20px">
+      <div style="display:flex;flex-direction:column;gap:6px">
+        
+        <span class="sk" style="font-size:11px;color:#5E5470">Tus logros</span>
+        <h1 class="pf" style="margin:0;font-size:38px;font-weight:700;line-height:1">Evidencias</h1>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap">
+        <div role="group" aria-label="Filtrar por habilidad" style="display:flex;flex-direction:column;gap:8px">
+      <span class="sk" style="font-size:10px;color:#5E5470">Filtrar por habilidad</span>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <sc-for list="{{chips}}" as="k" hint-placeholder-count="4">
+          <sc-if value="{{k.on}}" hint-placeholder-val="{{ false }}">
+            <button type="button" aria-pressed="true" onClick="{{k.pick}}" class="sk" style="min-height:44px;font-size:11px;padding:0 10px;border:3px solid #2A2238;background:{{k.onBg}};color:{{k.onFg}};font-weight:700;box-shadow:3px 3px 0 #2A2238">{{k.label}}</button>
+          </sc-if>
+          <sc-if value="{{k.off}}" hint-placeholder-val="{{ true }}">
+            <button type="button" aria-pressed="false" onClick="{{k.pick}}" class="sk" style="min-height:44px;font-size:11px;padding:0 10px;border:3px solid #2A2238;background:#FFFFFF;color:#2A2238">{{k.label}}</button>
+          </sc-if>
+        </sc-for>
+      </div>
+    </div>
+        <span class="sk" style="font-size:11px;color:#5E5470">{{count}}</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:24px;align-items:start">
+        <sc-if value="{{show}}" hint-placeholder-val="{{ true }}">
+      <a href="EvidenciaDetalleV2Web.dc.html" class="px" style="display:flex;flex-direction:column;background:#FFFFFF;color:#2A2238;text-decoration:none">
+        <div style="height:10px;display:flex;border-bottom:3px solid #2A2238"><span style="flex:6;background:#E8A33D"></span><span style="flex:4;background:#D9483B"></span></div>
+        <div style="padding:14px;display:flex;gap:14px">
+          <div style="width:56px;height:56px;flex-shrink:0;border:3px solid #2A2238;background:#FCEBC8;display:flex;align-items:center;justify-content:center"><svg class="sp" width="40" height="40" viewBox="0 0 16 16" aria-hidden="true"><path fill="#2A2238" d="M2 0h12v1h-12z M0 1h16v5h-16z M1 6h14v1h-14z M3 7h10v1h-10z M5 8h6v1h-6z M6 9h4v2h-4z M4 11h8v2h-8z M2 13h12v3h-12z"/><path fill="#E8A33D" d="M3 1h10v5h-10z M1 2h1v3h-1z M14 2h1v3h-1z M4 6h8v1h-8z M6 7h4v1h-4z M7 8h2v2h-2z M5 11h6v1h-6z"/><path fill="#FCEBC8" d="M4 2h1v3h-1z M5 2h1v1h-1z"/><path fill="#B07A22" d="M11 2h1v4h-1z M10 5h1v1h-1z M9 6h2v1h-2z M8 8h1v2h-1z M9 11h2v1h-2z"/><path fill="#6B3E2E" d="M3 14h10v1h-10z"/><path fill="#E8A33D" d="M6 14h4v1h-4z"/></svg></div>
+          <div style="display:flex;flex-direction:column;gap:6px;min-width:0">
+            <h2 class="pf" style="margin:0;font-size:19px;font-weight:700;line-height:1.15">Manejo de un cliente molesto</h2>
+            <span style="font-size:12px;color:#5E5470">Cliente molesto por un retraso · 1 oct 2026</span>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <span class="sk" style="font-size:9px;padding:3px 5px;border:2px solid #2A2238;background:#FCEBC8;color:#7A4A0B">Comunicación</span>
+              <span class="sk" style="font-size:9px;padding:3px 5px;border:2px solid #2A2238;background:#F9D7D2;color:#8A1F16">Conflictos</span>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;border-top:3px dashed #E4DCCB;padding:10px 14px">
+          <span class="sk" style="font-size:10px">● Privada</span>
+          <span class="sk" style="font-size:10px">1 enlace activo</span>
+        </div>
+      </a>
+    </sc-if>
+        <sc-if value="{{empty}}" hint-placeholder-val="{{ false }}">
+      <div style="border:3px dashed #8C8577;padding:16px;display:flex;flex-direction:column;gap:12px">
+        <p style="margin:0;font-size:13px;line-height:1.5;color:#5E5470">Aún no tienes evidencias de {{skillName}}.</p>
+        <a href="RecomendacionesWeb.dc.html" class="sk" style="align-self:flex-start;min-height:44px;display:flex;align-items:center;padding:0 12px;border:3px solid #2A2238;background:#FFFFFF;text-decoration:none;font-size:11px;font-weight:700">Ver recomendaciones ▶</a>
+      </div>
+    </sc-if>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+        <sc-if value="{{more}}" hint-placeholder-val="{{ false }}">
+      <button type="button" class="sk" style="height:48px;min-width:240px;border:3px solid #2A2238;background:#FFFFFF;color:#2A2238;font-size:12px;font-weight:700">Cargar más</button>
+    </sc-if>
+        <sc-if value="{{show}}" hint-placeholder-val="{{ true }}">
+      <span style="font-size:12px;color:#5E5470;text-align:center">{{pageLabel}}</span>
+    </sc-if>
+      </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"masPaginas": {"editor": "boolean", "default": false}, "$preview": {"width": 1280, "height": 820}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { k: 0 }; }
+  renderVals() {
+    const filters = [
+      { label: 'Todas', onBg: '#2A2238', onFg: '#FFFFFF', name: '', has: true },
+      { label: 'Comunicación', onBg: '#FCEBC8', onFg: '#7A4A0B', name: 'Comunicación efectiva', has: true },
+      { label: 'Conflictos', onBg: '#F9D7D2', onFg: '#8A1F16', name: 'Resolución de conflictos', has: true },
+      { label: 'Tiempo', onBg: '#E9DDF7', onFg: '#4B2A7A', name: 'Gestión del tiempo', has: false },
+    ];
+    const picked = this.state.k ?? 0;
+    const chips = filters.map((f, i) => ({ ...f, on: i === picked, off: i !== picked, pick: () => this.setState({ k: i }) }));
+    const f = filters[picked];
+    const more = !!this.props.masPaginas && f.has;
+    return {
+      chips, show: f.has, empty: !f.has, skillName: f.name, more,
+      count: f.has ? '1 evidencia' : '0 evidencias',
+      pageLabel: more ? 'Mostrando 1 de [TOTAL]' : 'Mostrando 1 de 1',
+    };
+  }
+}
+</script>
+</body>
+</html>

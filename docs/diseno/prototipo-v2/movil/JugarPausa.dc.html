@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Pausa</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Chakra+Petch:wght@600;700&amp;family=Silkscreen:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#2A2238}a:hover{color:#5E5470}
+.pf{font-family:'Chakra Petch',sans-serif}
+.sk{font-family:'Silkscreen',monospace;text-transform:uppercase;letter-spacing:.04em}
+.px{border:3px solid #2A2238;box-shadow:4px 4px 0 #2A2238}
+.seg{background-image:repeating-linear-gradient(90deg,transparent 0 14px,#2A2238 14px 16px)}
+svg.sp{shape-rendering:crispEdges;display:block}
+button{font:inherit;cursor:pointer}
+button:disabled{cursor:not-allowed}
+input,select,textarea{font:inherit;color:#2A2238}
+input:focus,select:focus,textarea:focus{outline:3px solid #E8A33D;outline-offset:2px}
+::placeholder{color:#8C8577}
+</style>
+</helmet>
+<div style="width:390px;height:844px;box-sizing:border-box;background:#2A2238;color:#2A2238;font-family:'IBM Plex Mono',monospace;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;position:relative">
+  <a href="JugarTarea.dc.html" aria-label="Volver a la partida" style="position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.04) 0 6px,transparent 6px 12px)"></a>
+
+  <section role="dialog" aria-labelledby="titulo-pausa" style="position:relative;background:#FFFFFF;border-top:3px solid #2A2238;padding:18px 20px 28px;display:flex;flex-direction:column;gap:16px">
+    <div style="align-self:center;width:48px;height:6px;background:#E4DCCB"></div>
+
+    <sc-if value="{{menu}}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <h2 id="titulo-pausa" class="pf" style="margin:0;font-size:24px;font-weight:700">Pausa</h2>
+          <a href="JugarTarea.dc.html" aria-label="Seguir jugando" class="sk" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:3px solid #2A2238;text-decoration:none;font-size:13px;font-weight:700">✕</a>
+        </div>
+        <div style="border:3px solid #2A2238;background:{{c.tint}};padding:12px 14px;display:flex;flex-direction:column;gap:4px">
+          <span class="sk" style="font-size:10px;color:{{c.dark}}">Partida en curso · iniciada el 11 nov 2026</span>
+          <span style="font-size:14px;font-weight:600">Tres entregas para mañana</span>
+        </div>
+        <p style="margin:0;font-size:13px;line-height:1.55;color:#5E5470">Tus decisiones ya están guardadas. Puedes volver cuando quieras desde el catálogo.</p>
+        <a href="JugarTarea.dc.html" class="sk px" style="height:56px;display:flex;align-items:center;justify-content:center;background:{{c.dark}};color:#FFFFFF;text-decoration:none;font-size:15px;font-weight:700">Seguir jugando ▶</a>
+        <a href="CatalogoV2.dc.html" class="sk" style="height:48px;display:flex;align-items:center;justify-content:center;border:3px solid #2A2238;background:#FFFFFF;text-decoration:none;font-size:12px;font-weight:700">Salir y continuar después</a>
+        <button type="button" onClick="{{ask}}" class="sk" style="height:48px;border:3px solid #2A2238;background:#FFFFFF;color:#8A1F16;font-size:12px;font-weight:700">Abandonar partida</button>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{confirm}}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <h2 class="pf" style="margin:0;font-size:24px;font-weight:700">¿Abandonar la partida?</h2>
+        <div style="border:3px solid #2A2238;background:#F9D7D2;padding:12px 14px;display:flex;flex-direction:column;gap:6px">
+          <span class="sk" style="font-size:10px;color:#8A1F16">✕ No se puede deshacer</span>
+          <span style="font-size:13px;line-height:1.55;color:#8A1F16">La partida queda como abandonada y no cuenta para tu progreso. Podrás empezar esta simulación de nuevo.</span>
+        </div>
+        <a href="JugarAbandonada.dc.html" class="sk px" style="height:56px;display:flex;align-items:center;justify-content:center;background:#8A1F16;color:#FFFFFF;text-decoration:none;font-size:15px;font-weight:700">Sí, abandonar</a>
+        <button type="button" onClick="{{back}}" class="sk" style="height:48px;border:3px solid #2A2238;background:#FFFFFF;color:#2A2238;font-size:12px;font-weight:700">Cancelar</button>
+      </div>
+    </sc-if>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"tipo": {"editor": "enum", "options": ["Voz", "Fuego", "Reloj", "Hoja", "Chispa", "Corazón", "Mente", "Piedra"], "default": "Reloj"}, "vista": {"editor": "enum", "options": ["Menú", "Confirmar"], "default": "Menú"}, "$preview": {"width": 390, "height": 844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { confirm: null }; }
+  renderVals() {
+    const types = {
+      'Voz': ['#E8A33D', '#7A4A0B', '#FCEBC8'], 'Fuego': ['#D9483B', '#8A1F16', '#F9D7D2'],
+      'Reloj': ['#8A5CC7', '#4B2A7A', '#E9DDF7'], 'Hoja': ['#4FA35A', '#1F5A28', '#D6EFD5'],
+      'Chispa': ['#E2703A', '#7E3410', '#FBDCC9'], 'Corazón': ['#D66BA0', '#7D2453', '#F8D9E8'],
+      'Mente': ['#9AA33A', '#4E5414', '#EEF0CF'], 'Piedra': ['#8C8577', '#45403A', '#E8E4DC'],
+    };
+    const name = this.props.tipo ?? 'Reloj';
+    const [base, dark, tint] = types[name] ?? types['Reloj'];
+    const confirm = this.state.confirm ?? (this.props.vista === 'Confirmar');
+    return {
+      c: { name, base, dark, tint }, confirm, menu: !confirm,
+      ask: () => this.setState({ confirm: true }),
+      back: () => this.setState({ confirm: false }),
+    };
+  }
+}
+</script>
+</body>
+</html>

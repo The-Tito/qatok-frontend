@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Admin: simulaciones</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Chakra+Petch:wght@600;700&amp;family=Silkscreen:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#2A2238}a:hover{color:#5E5470}
+.pf{font-family:'Chakra Petch',sans-serif}
+.sk{font-family:'Silkscreen',monospace;text-transform:uppercase;letter-spacing:.04em}
+.px{border:3px solid #2A2238;box-shadow:4px 4px 0 #2A2238}
+svg.sp{shape-rendering:crispEdges;display:block}
+button{font:inherit;cursor:pointer}
+th,td{text-align:left;vertical-align:middle}
+</style>
+</helmet>
+<div style="min-height:900px;background:#FFFFFF;color:#2A2238;font-family:'IBM Plex Mono',monospace;display:flex;flex-direction:column">
+  <header style="background:#2A2238;color:#FFFFFF;padding:0 32px">
+    <div style="max-width:1280px;margin:0 auto;min-height:64px;display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+      <span style="display:flex;align-items:baseline;gap:10px"><span class="pf" style="font-size:22px;font-weight:700">QATO'K</span><span class="sk" style="font-size:10px;padding:3px 6px;border:2px solid #FFFFFF">Admin</span></span>
+      <nav aria-label="Administración" style="display:flex;gap:4px;flex-grow:1;flex-wrap:wrap">
+        <a href="AdminSimulacionesV2.dc.html" aria-current="page" class="sk" style="padding:10px 14px;background:#FFFFFF;color:#2A2238;text-decoration:none;font-size:12px;font-weight:700">Simulaciones</a>
+        <a href="AdminHabilidadesV2.dc.html" class="sk" style="padding:10px 14px;color:#FFFFFF;text-decoration:none;font-size:12px">Habilidades</a>
+      </nav>
+      <span style="font-size:13px">Carla Ruiz · <a href="AdminEntrar.dc.html" style="color:#FFFFFF">Salir</a></span>
+    </div>
+  </header>
+
+  <main style="padding:36px 32px 56px">
+    <div style="max-width:1280px;margin:0 auto;display:flex;flex-direction:column;gap:24px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <h1 class="pf" style="margin:0;font-size:38px;font-weight:700;line-height:1">Simulaciones</h1>
+          <span style="font-size:14px;color:#5E5470">Solo las publicadas aparecen en el catálogo de estudiantes.</span>
+        </div>
+        <a href="AdminEditorV2.dc.html" class="sk px" style="height:50px;padding:0 20px;display:flex;align-items:center;background:#2A2238;color:#FFFFFF;text-decoration:none;font-size:13px;font-weight:700">+ Nueva simulación</a>
+      </div>
+
+      <div style="display:flex;gap:8px;flex-wrap:wrap" role="tablist" aria-label="Estado">
+        <sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
+          <sc-if value="{{t.on}}" hint-placeholder-val="{{ false }}">
+            <button type="button" role="tab" aria-selected="true" onClick="{{t.pick}}" class="sk" style="height:40px;padding:0 14px;border:3px solid #2A2238;background:#2A2238;color:#FFFFFF;font-size:11px;font-weight:700">{{t.label}}</button>
+          </sc-if>
+          <sc-if value="{{t.off}}" hint-placeholder-val="{{ true }}">
+            <button type="button" role="tab" aria-selected="false" onClick="{{t.pick}}" class="sk" style="height:40px;padding:0 14px;border:3px solid #2A2238;background:#FFFFFF;color:#2A2238;font-size:11px">{{t.label}}</button>
+          </sc-if>
+        </sc-for>
+      </div>
+
+      <div class="px" style="overflow-x:auto">
+        <table style="width:100%;min-width:900px;border-collapse:collapse;font-size:14px">
+          <thead>
+            <tr style="background:#F5F3EF;border-bottom:3px solid #2A2238">
+              <th class="sk" style="padding:14px 16px;font-size:11px">Título</th>
+              <th class="sk" style="padding:14px 16px;font-size:11px">Estado</th>
+              <th class="sk" style="padding:14px 16px;font-size:11px">Dificultad</th>
+              <th class="sk" style="padding:14px 16px;font-size:11px">Duración</th>
+              <th class="sk" style="padding:14px 16px;font-size:11px">Habilidades</th>
+              <th class="sk" style="padding:14px 16px;font-size:11px">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:3px solid #E4DCCB">
+              <td style="padding:16px;font-weight:600">Cliente molesto por un retraso</td>
+              <td style="padding:16px"><span class="sk" style="font-size:10px;padding:4px 8px;border:2px solid #2A2238;background:#D6EFD5;color:#1F5A28">● Publicada</span></td>
+              <td style="padding:16px">Intermedia</td>
+              <td style="padding:16px">15 min</td>
+              <td style="padding:16px"><span style="display:flex;gap:6px;flex-wrap:wrap"><span class="sk" style="font-size:9px;padding:3px 5px;border:2px solid #2A2238;background:#FCEBC8;color:#7A4A0B">Comunicación 0.6</span><span class="sk" style="font-size:9px;padding:3px 5px;border:2px solid #2A2238;background:#F9D7D2;color:#8A1F16">Conflictos 0.4</span></span></td>
+              <td style="padding:16px"><span style="display:flex;gap:8px"><a href="AdminEditorLectura.dc.html" class="sk" style="font-size:11px;font-weight:700">Ver contenido</a><button type="button" class="sk" style="border:0;background:none;padding:0;color:#8A1F16;font-size:11px;font-weight:700;text-decoration:underline">Desactivar</button></span></td>
+            </tr>
+            <tr style="border-bottom:3px solid #E4DCCB">
+              <td style="padding:16px;font-weight:600">Tres entregas para mañana</td>
+              <td style="padding:16px"><span class="sk" style="font-size:10px;padding:4px 8px;border:2px solid #2A2238;background:#D6EFD5;color:#1F5A28">● Publicada</span></td>
+              <td style="padding:16px">Básica</td>
+              <td style="padding:16px">10 min</td>
+              <td style="padding:16px"><span style="display:flex;gap:6px;flex-wrap:wrap"><span class="sk" style="font-size:9px;padding:3px 5px;border:2px solid #2A2238;background:#E9DDF7;color:#4B2A7A">Tiempo 0.7</span><span class="sk" style="font-size:9px;padding:3px 5px;border:2px solid #2A2238;background:#FCEBC8;color:#7A4A0B">Comunicación 0.3</span></span></td>
+              <td style="padding:16px"><span style="display:flex;gap:8px"><a href="AdminEditorLectura.dc.html" class="sk" style="font-size:11px;font-weight:700">Ver contenido</a><button type="button" class="sk" style="border:0;background:none;padding:0;color:#8A1F16;font-size:11px;font-weight:700;text-decoration:underline">Desactivar</button></span></td>
+            </tr>
+            <tr>
+              <td style="padding:16px;font-weight:600">Presentación ante dirección</td>
+              <td style="padding:16px"><span class="sk" style="font-size:10px;padding:4px 8px;border:2px dashed #2A2238;background:#FFFFFF">○ Borrador</span></td>
+              <td style="padding:16px">Avanzada</td>
+              <td style="padding:16px;color:#5E5470">—</td>
+              <td style="padding:16px"><span class="sk" style="font-size:9px;padding:3px 5px;border:2px solid #2A2238;background:#E9DDF7;color:#4B2A7A">Tiempo 0.5</span></td>
+              <td style="padding:16px"><span style="display:flex;gap:8px"><a href="AdminEditorV2.dc.html" class="sk" style="font-size:11px;font-weight:700">Editar</a><button type="button" class="sk" style="border:0;background:none;padding:0;color:#8A1F16;font-size:11px;font-weight:700;text-decoration:underline">Eliminar</button></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <span style="font-size:13px;color:#5E5470">3 simulaciones · ordenadas por título</span>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { tab: 0 }; }
+  renderVals() {
+    const picked = this.state.tab ?? 0;
+    const tabs = ['Todas · 3', 'Borrador · 1', 'Publicada · 2', 'Inactiva · 0'].map((label, i) => ({
+      label, on: i === picked, off: i !== picked, pick: () => this.setState({ tab: i }),
+    }));
+    return { tabs };
+  }
+}
+</script>
+</body>
+</html>

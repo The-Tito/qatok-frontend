@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Admin: conflicto de versión</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Chakra+Petch:wght@600;700&amp;family=Silkscreen:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#2A2238}a:hover{color:#5E5470}
+.pf{font-family:'Chakra Petch',sans-serif}
+.sk{font-family:'Silkscreen',monospace;text-transform:uppercase;letter-spacing:.04em}
+.px{border:3px solid #2A2238;box-shadow:4px 4px 0 #2A2238}
+.seg{background-image:repeating-linear-gradient(90deg,transparent 0 14px,#2A2238 14px 16px)}
+svg.sp{shape-rendering:crispEdges;display:block}
+button{font:inherit;cursor:pointer}
+button:disabled{cursor:not-allowed}
+input,select,textarea{font:inherit;color:#2A2238}
+input:focus,select:focus,textarea:focus{outline:3px solid #E8A33D;outline-offset:2px}
+::placeholder{color:#8C8577}
+</style>
+</helmet>
+<div style="min-height:1000px;background:#FFFFFF;color:#2A2238;font-family:'IBM Plex Mono',monospace;display:flex;flex-direction:column">
+  <header style="background:#2A2238;color:#FFFFFF;padding:0 32px">
+    <div style="max-width:1280px;margin:0 auto;min-height:64px;display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+      <span style="display:flex;align-items:baseline;gap:10px"><span class="pf" style="font-size:22px;font-weight:700">QATO'K</span><span class="sk" style="font-size:10px;padding:3px 6px;border:2px solid #FFFFFF">Admin</span></span>
+      <nav aria-label="Administración" style="display:flex;gap:4px;flex-grow:1;flex-wrap:wrap">
+        <a href="AdminSimulacionesV2.dc.html" aria-current="page" class="sk" style="padding:10px 14px;background:#FFFFFF;color:#2A2238;text-decoration:none;font-size:12px;font-weight:700">Simulaciones</a>
+        <a href="AdminHabilidadesV2.dc.html" class="sk" style="padding:10px 14px;color:#FFFFFF;text-decoration:none;font-size:12px">Habilidades</a>
+      </nav>
+      <span style="font-size:13px">Carla Ruiz · <a href="#" style="color:#FFFFFF">Salir</a></span>
+    </div>
+  </header>
+
+  <div style="border-bottom:3px solid #2A2238;background:#F5F3EF;padding:18px 32px">
+    <div style="max-width:1280px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <a href="AdminSimulacionesV2.dc.html" class="sk" style="font-size:11px">◀ Simulaciones</a>
+        <h1 class="pf" style="margin:0;font-size:32px;font-weight:700;line-height:1">Presentación ante dirección</h1>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+        <span class="sk" style="font-size:10px;padding:4px 8px;border:2px dashed #2A2238;background:#FFFFFF">○ Borrador</span>
+        <span class="sk" style="font-size:10px;padding:4px 8px;border:2px solid #2A2238;background:#FCEBC8;color:#7A4A0B">◆ Sin guardar</span>
+        <button type="button" disabled class="sk" style="height:46px;padding:0 16px;border:3px dashed #8C8577;background:#FFFFFF;color:#5E5470;font-size:12px;font-weight:700">Guardar borrador</button>
+        <button type="button" disabled class="sk" style="height:46px;padding:0 16px;border:3px dashed #8C8577;background:#FFFFFF;color:#5E5470;font-size:12px;font-weight:700">Publicar ▶</button>
+      </div>
+    </div>
+  </div>
+
+  <main style="padding:28px 32px 56px">
+    <div style="max-width:1280px;margin:0 auto;display:flex;flex-direction:column;gap:24px">
+      <section role="alert" class="px" style="background:#FCEBC8;padding:18px 20px;display:flex;gap:20px;align-items:center;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;gap:6px;flex:1 1 520px">
+          <span class="sk" style="font-size:11px;align-self:flex-start;padding:4px 8px;border:2px solid #2A2238;background:#FFFFFF;color:#7A4A0B">◆ 409 · Cambios en conflicto</span>
+          <span class="pf" style="font-size:24px;font-weight:700;line-height:1.15">Alguien guardó otra versión del borrador</span>
+          <span style="font-size:14px;color:#7A4A0B;line-height:1.5">Tu versión era la [N]; la actual es la [N+1]. Tus cambios siguen en pantalla para que los copies antes de recargar.</span>
+        </div>
+        <button type="button" class="sk px" style="height:50px;padding:0 20px;background:#7A4A0B;color:#FFFFFF;font-size:13px;font-weight:700">Recargar versión</button>
+      </section>
+
+      <section aria-label="Contenido" style="display:flex;flex-direction:column;gap:16px">
+        <h2 class="sk" style="margin:0;font-size:15px">Pasos del escenario · tus cambios</h2>
+        <article class="px" style="display:flex;flex-direction:column">
+          <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:#F5F3EF;border-bottom:3px solid #2A2238;flex-wrap:wrap">
+            <span class="pf" style="font-size:22px;font-weight:700">01</span>
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600">Tipo
+              <select style="height:44px;border:3px solid #2A2238;background:#FFFFFF;padding:0 8px;font-size:13px"><option>Correo</option><option>Reunión</option><option>Conversación</option><option>Tarea</option><option>Incidente</option></select>
+            </label>
+          </div>
+          <div style="padding:18px 16px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px">
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Título del paso
+              <input type="text" placeholder="[Título que escribiste]" style="height:44px;box-sizing:border-box;border:3px solid #2A2238;background:#F5F3EF;padding:0 10px;font-size:14px">
+            </label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Descripción
+              <input type="text" placeholder="[Descripción que escribiste]" style="height:44px;box-sizing:border-box;border:3px solid #2A2238;background:#F5F3EF;padding:0 10px;font-size:14px">
+            </label>
+            <label style="grid-column:1 / -1;display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Cuerpo del correo<textarea rows="3" placeholder="[Texto que escribiste]" style="border:3px solid #2A2238;background:#F5F3EF;padding:10px;font-size:14px;resize:vertical"></textarea></label>
+          </div>
+        </article>
+      </section>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview": {"width": 1440, "height": 1000}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

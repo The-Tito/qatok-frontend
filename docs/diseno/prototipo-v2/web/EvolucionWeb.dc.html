@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Evolución de una habilidad (web)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Chakra+Petch:wght@600;700&amp;family=Silkscreen:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#2A2238}a:hover{color:#5E5470}
+.pf{font-family:'Chakra Petch',sans-serif}
+.sk{font-family:'Silkscreen',monospace;text-transform:uppercase;letter-spacing:.04em}
+.px{border:3px solid #2A2238;box-shadow:4px 4px 0 #2A2238}
+.seg{background-image:repeating-linear-gradient(90deg,transparent 0 14px,#2A2238 14px 16px)}
+svg.sp{shape-rendering:crispEdges;display:block}
+button{font:inherit;cursor:pointer}
+button:disabled{cursor:not-allowed}
+input,select,textarea{font:inherit;color:#2A2238}
+input:focus,select:focus,textarea:focus{outline:3px solid #E8A33D;outline-offset:2px}
+::placeholder{color:#8C8577}
+</style>
+</helmet>
+<div style="min-height:900px;background:#FFFFFF;color:#2A2238;font-family:'IBM Plex Mono',monospace;display:flex;flex-direction:column">
+  <header style="background:#2A2238;color:#FFFFFF;padding:0 32px">
+    <div style="max-width:1120px;margin:0 auto;min-height:64px;display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+      <span class="pf" style="font-size:22px;font-weight:700">QATO'K</span>
+      <nav aria-label="Principal" style="display:flex;gap:4px;flex-grow:1;flex-wrap:wrap">
+        <a href="CatalogoWeb.dc.html" class="sk" style="min-height:44px;box-sizing:border-box;display:flex;align-items:center;gap:8px;padding:0 14px;color:#FFFFFF;text-decoration:none;font-size:12px"><svg class="sp" width="20" height="20" viewBox="0 0 11 11" aria-hidden="true"><path fill="#FFFFFF" d="M5 0h1v3h-1z M4 3h3v1h-3z M3 4h5v1h-5z M0 5h11v1h-11z M3 6h5v1h-5z M4 7h3v1h-3z M5 8h1v3h-1z"/></svg>Jugar</a><a href="PerfilV2Web.dc.html" aria-current="page" class="sk" style="min-height:44px;box-sizing:border-box;display:flex;align-items:center;gap:8px;padding:0 14px;background:#FFFFFF;color:#2A2238;text-decoration:none;font-size:12px;font-weight:700"><svg class="sp" width="20" height="20" viewBox="0 0 12 12" aria-hidden="true"><path fill="#2A2238" d="M3 0h6v6h-6z M1 7h10v5h-10z"/></svg>Perfil</a><a href="EvidenciasV2Web.dc.html" class="sk" style="min-height:44px;box-sizing:border-box;display:flex;align-items:center;gap:8px;padding:0 14px;color:#FFFFFF;text-decoration:none;font-size:12px"><svg class="sp" width="20" height="20" viewBox="0 0 12 12" aria-hidden="true"><path fill="#FFFFFF" d="M1 0h10v1h-10z M2 1h8v4h-8z M3 5h6v1h-6z M4 6h4v1h-4z M5 7h2v2h-2z M3 9h6v1h-6z M2 10h8v2h-8z"/></svg>Evidencias</a>
+      </nav>
+      <span style="font-size:13px"><a href="MiCuentaWeb.dc.html" style="color:#FFFFFF">Ana López</a> · <a href="LoginWeb.dc.html" style="color:#FFFFFF">Salir</a></span>
+    </div>
+  </header>
+  <main style="padding:28px 32px 56px;flex-grow:1">
+    <div style="max-width:1120px;margin:0 auto;width:100%;box-sizing:border-box;display:flex;flex-direction:column;gap:20px">
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <a href="PerfilV2Web.dc.html" class="sk" style="font-size:11px;min-height:44px;display:inline-flex;align-items:center">◀ Perfil</a>
+        <span class="sk" style="font-size:11px;color:#5E5470">Tu progreso</span>
+        <h1 class="pf" style="margin:0;font-size:38px;font-weight:700;line-height:1">Evolución de una habilidad</h1>
+      </div>
+      <div role="group" aria-label="Habilidad" style="display:flex;gap:8px;flex-wrap:wrap">
+      <sc-for list="{{chips}}" as="k" hint-placeholder-count="3">
+        <sc-if value="{{k.on}}" hint-placeholder-val="{{ false }}">
+          <button type="button" aria-pressed="true" onClick="{{k.pick}}" class="sk" style="min-height:44px;font-size:11px;padding:0 10px;border:3px solid #2A2238;background:{{k.tint}};color:{{k.dark}};font-weight:700;box-shadow:3px 3px 0 #2A2238">{{k.label}}</button>
+        </sc-if>
+        <sc-if value="{{k.off}}" hint-placeholder-val="{{ true }}">
+          <button type="button" aria-pressed="false" onClick="{{k.pick}}" class="sk" style="min-height:44px;font-size:11px;padding:0 10px;border:3px solid #2A2238;background:#FFFFFF;color:#2A2238">{{k.label}}</button>
+        </sc-if>
+      </sc-for>
+    </div>
+      <div style="display:flex;gap:32px;flex-wrap:wrap;align-items:flex-start">
+        <div style="flex:999 1 560px;min-width:0"><section class="px" style="background:#FFFFFF;display:flex;flex-direction:column">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 12px;background:#2A2238;color:#FFFFFF">
+        <span class="sk" style="font-size:10px">{{s.type}}</span>
+        <span class="sk" style="font-size:10px">{{s.cls}}</span>
+      </div>
+      <div style="padding:12px;display:flex;justify-content:space-between;align-items:flex-end;gap:12px">
+        <span style="display:flex;flex-direction:column;gap:4px"><h1 class="pf" style="margin:0;font-size:22px;font-weight:700;line-height:1.1">{{s.name}}</h1><span style="font-size:12px;color:#5E5470">Objetivo {{s.target}}</span></span>
+        <span style="display:flex;flex-direction:column;align-items:flex-end"><span class="pf" style="font-size:40px;font-weight:700;line-height:1">{{s.level}}</span><span class="sk" style="font-size:9px;color:#5E5470">Nivel actual</span></span>
+      </div>
+      <div style="padding:0 8px 10px">
+        <svg role="img" aria-label="{{s.aria}}" width="100%" viewBox="0 0 346 210" style="display:block;shape-rendering:crispEdges;max-width:720px;height:auto">
+          <rect x="34" y="10" width="304" height="180" fill="#F5F3EF"></rect>
+          <path d="M34 100H338 M34 145H338 M34 55H338" stroke="#E4DCCB" stroke-width="2" fill="none"></path>
+          <path d="M34 10V190H338" stroke="#2A2238" stroke-width="3" fill="none"></path>
+          <text x="28" y="194" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10" fill="#5E5470">0</text>
+          <text x="28" y="104" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10" fill="#5E5470">50</text>
+          <text x="28" y="14" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="10" fill="#5E5470">100</text>
+          <path d="M34 {{s.ty}}H338" stroke="#2A2238" stroke-width="3" stroke-dasharray="8 6" fill="none"></path>
+          <text x="334" y="{{s.tyLabel}}" text-anchor="end" font-family="Silkscreen, monospace" font-size="10" fill="#2A2238">OBJETIVO {{s.target}}</text>
+          <path d="{{s.path}}" stroke="{{s.base}}" stroke-width="6" fill="none"></path>
+          <path d="{{s.marks}}" fill="{{s.dark}}" stroke="#2A2238" stroke-width="2"></path>
+        </svg>
+      </div>
+    </section></div>
+        <div style="flex:1 1 320px;min-width:0"><section style="display:flex;flex-direction:column;gap:8px">
+      <h2 class="sk" style="margin:0;font-size:12px">Partidas que cuentan</h2>
+      <ol style="list-style:none;margin:0;padding:0;border:3px solid #2A2238;display:flex;flex-direction:column">
+        <sc-for list="{{s.points}}" as="p" hint-placeholder-count="3">
+          <li style="display:flex;gap:12px;align-items:center;padding:10px 12px;border-bottom:3px solid #E4DCCB">
+            <span style="display:flex;flex-direction:column;gap:3px;flex-grow:1;min-width:0">
+              <span style="font-size:13px;font-weight:600">{{p.title}}</span>
+              <span class="sk" style="font-size:9px;color:#5E5470">{{p.date}} · peso {{p.weight}}</span>
+            </span>
+            <span class="pf" style="font-size:20px;font-weight:700">{{p.score}}</span>
+          </li>
+        </sc-for>
+      </ol>
+      <span style="font-size:12px;line-height:1.5;color:#5E5470">Tu nivel combina la última partida completada de cada simulación que entrena esta habilidad.</span>
+    </section></div>
+      </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"habilidad": {"editor": "enum", "options": ["Comunicación efectiva", "Resolución de conflictos", "Gestión del tiempo"], "default": "Comunicación efectiva"}, "$preview": {"width": 1280, "height": 900}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { k: null }; }
+  renderVals() {
+    const data = {
+      com: { label: 'Comunicación', name: 'Comunicación efectiva', type: 'Tipo Voz', base: '#E8A33D', dark: '#7A4A0B', tint: '#FCEBC8', level: 75, target: 75, cls: '▲ Fortaleza',
+        points: [['20 sep 2026', 'Cliente molesto por un retraso', 37.5, 0.6], ['1 oct 2026', 'Cliente molesto por un retraso', 92.5, 0.6], ['10 oct 2026', 'Tres entregas para mañana', 40, 0.3]] },
+      con: { label: 'Conflictos', name: 'Resolución de conflictos', type: 'Tipo Fuego', base: '#D9483B', dark: '#8A1F16', tint: '#F9D7D2', level: 92.5, target: 70, cls: '▲ Fortaleza',
+        points: [['20 sep 2026', 'Cliente molesto por un retraso', 37.5, 0.4], ['1 oct 2026', 'Cliente molesto por un retraso', 92.5, 0.4]] },
+      tie: { label: 'Tiempo', name: 'Gestión del tiempo', type: 'Tipo Reloj', base: '#8A5CC7', dark: '#4B2A7A', tint: '#E9DDF7', level: 40, target: 60, cls: '▼ Área de mejora',
+        points: [['10 oct 2026', 'Tres entregas para mañana', 40, 0.7]] },
+    };
+    const keyByProp = { 'Comunicación efectiva': 'com', 'Resolución de conflictos': 'con', 'Gestión del tiempo': 'tie' };
+    const key = this.state.k ?? keyByProp[this.props.habilidad] ?? 'com';
+    const d = data[key];
+    const y = (v) => Math.round(190 - v * 1.8);
+    const n = d.points.length;
+    const xs = d.points.map((_, i) => n === 1 ? 186 : Math.round(54 + i * (264 / (n - 1))));
+    let path = 'M34 ' + y(d.points[0][2]);
+    d.points.forEach((p, i) => { path += (i === 0 ? '' : 'H' + xs[i] + 'V' + y(p[2])); });
+    path += 'H338';
+    const ty = y(d.target);
+    const s = {
+      ...d, path, ty, tyLabel: ty > 30 ? ty - 8 : ty + 18,
+      aria: 'Puntuaciones de ' + d.name + ': ' + d.points.map((p) => p[2]).join(', ') + '. Objetivo ' + d.target + '.',
+      marks: d.points.map((p, i) => 'M' + (xs[i] - 6) + ' ' + (y(p[2]) - 6) + 'h12v12h-12z').join(' '),
+      points: d.points.map(([date, title, score, weight]) => ({ date, title, score, weight })),
+    };
+    const chips = Object.entries(data).map(([k, v]) => ({
+      label: v.label, tint: v.tint, dark: v.dark, on: k === key, off: k !== key, pick: () => this.setState({ k }),
+    }));
+    return { s, chips };
+  }
+}
+</script>
+</body>
+</html>

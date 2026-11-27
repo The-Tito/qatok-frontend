@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Resultado de la decisión</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Chakra+Petch:wght@600;700&amp;family=Silkscreen:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#2A2238}a:hover{color:#5E5470}
+.pf{font-family:'Chakra Petch',sans-serif}
+.sk{font-family:'Silkscreen',monospace;text-transform:uppercase;letter-spacing:.04em}
+.px{border:3px solid #2A2238;box-shadow:4px 4px 0 #2A2238}
+svg.sp{shape-rendering:crispEdges;display:block}
+</style>
+</helmet>
+<div style="width:390px;height:844px;box-sizing:border-box;background:#FFFFFF;color:#2A2238;font-family:'IBM Plex Mono',monospace;display:flex;flex-direction:column;overflow:hidden">
+
+  <header style="height:64px;flex-shrink:0;display:flex;align-items:center;gap:10px;padding:0 16px;background:{{c.tint}};border-bottom:3px solid #2A2238">
+    <a href="JugarPausa.dc.html" aria-label="Pausar y salir" class="sk" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:3px solid #2A2238;background:#FFFFFF;text-decoration:none;font-size:14px;font-weight:700;flex-shrink:0">II</a>
+    <div style="display:flex;flex-direction:column;gap:2px;flex-grow:1;min-width:0">
+      <span class="sk" style="font-size:10px;color:{{c.dark}}">Paso 1 · Resultado</span>
+      <span style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Cliente molesto por un retraso</span>
+    </div>
+  </header>
+
+  <div style="padding:22px 16px 0;display:flex;flex-direction:column;gap:16px;flex-grow:1">
+    <div class="px" style="background:#D6EFD5;padding:18px 16px;display:flex;align-items:center;gap:14px;position:relative">
+      <svg class="sp" width="56" height="56" viewBox="0 0 11 11" aria-hidden="true"><path fill="#1F5A28" d="M5 0h1v3h-1z M4 3h3v1h-3z M3 4h5v1h-5z M0 5h11v1h-11z M3 6h5v1h-5z M4 7h3v1h-3z M5 8h1v3h-1z"/><path fill="#4FA35A" d="M5 2h1v2h-1z M4 4h3v3h-3z M2 5h2v1h-2z M7 5h2v1h-2z M5 7h1v2h-1z"/><path fill="#FFFFFF" d="M5 5h1v1h-1z"/></svg>
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <span class="sk" style="font-size:11px;color:#1F5A28">Retroalimentación</span>
+        <span class="pf" style="font-size:34px;font-weight:700;line-height:1;color:#1F5A28">¡Acierto!</span>
+      </div>
+      <svg class="sp" style="position:absolute;right:16px;top:12px" width="14" height="14" viewBox="0 0 11 11" aria-hidden="true"><path fill="#4FA35A" d="M5 0h1v3h-1z M4 3h3v1h-3z M3 4h5v1h-5z M0 5h11v1h-11z M3 6h5v1h-5z M4 7h3v1h-3z M5 8h1v3h-1z"/></svg>
+      <svg class="sp" style="position:absolute;right:40px;bottom:14px" width="21" height="21" viewBox="0 0 11 11" aria-hidden="true"><path fill="#4FA35A" d="M5 0h1v3h-1z M4 3h3v1h-3z M3 4h5v1h-5z M0 5h11v1h-11z M3 6h5v1h-5z M4 7h3v1h-3z M5 8h1v3h-1z"/></svg>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <span class="sk" style="font-size:11px;color:#5E5470">Elegiste</span>
+      <p style="margin:0;font-size:14px;line-height:1.5;font-weight:600">Responder de inmediato: disculparte y proponer una llamada</p>
+    </div>
+
+    <section style="display:flex;flex-direction:column;gap:8px">
+      <h2 class="sk" style="margin:0;font-size:12px">Consecuencia</h2>
+      <div style="border:3px solid #2A2238;background:#FFFFFF;padding:12px 14px;display:flex;gap:12px;align-items:flex-start">
+        <span class="sk" style="font-size:11px;font-weight:700;padding:4px 6px;border:2px solid #2A2238;background:#D6EFD5;color:#1F5A28;flex-shrink:0">▲ Positiva</span>
+        <span style="font-size:14px;line-height:1.5">El cliente agradece la rapidez y acepta la llamada</span>
+      </div>
+    </section>
+
+    <section class="px" style="background:#FFFFFF;padding:14px 16px;display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;gap:10px;align-items:flex-start">
+        <svg class="sp" style="flex-shrink:0;margin-top:2px" width="24" height="22" viewBox="0 0 12 11" aria-hidden="true"><path fill="#FFFFFF" d="M1 1h10v6h-10z"/><path fill="#2A2238" d="M1 0h10v1h-10z M0 1h1v6h-1z M11 1h1v6h-1z M1 7h10v1h-10z M2 8h2v1h-2z M2 9h1v1h-1z M2 3h2v2h-2z M5 3h2v2h-2z M8 3h2v2h-2z"/></svg>
+        <p style="margin:0;font-size:14px;line-height:1.55">Responder rápido baja la tensión del cliente.</p>
+      </div>
+      <div style="border-top:3px dashed #E4DCCB;padding-top:12px;display:flex;flex-direction:column;gap:4px">
+        <span class="sk" style="font-size:11px;color:{{c.dark}}">Consejo para el siguiente paso</span>
+        <p style="margin:0;font-size:14px;line-height:1.55">Mantén el tono empático durante la llamada.</p>
+      </div>
+    </section>
+  </div>
+
+  <div style="padding:14px 16px 24px;display:flex;flex-direction:column;gap:10px">
+    <span class="sk" style="font-size:10px;color:#5E5470;align-self:center">✓ Decisión guardada</span>
+    <a href="JugarConversacionV2.dc.html" class="sk px" style="display:flex;justify-content:center;align-items:center;gap:10px;height:56px;background:{{c.dark}};color:#FFFFFF;text-decoration:none;font-size:16px;font-weight:700">Siguiente paso ▶</a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"tipo":{"editor":"enum","options":["Voz","Fuego","Reloj","Hoja","Chispa","Corazón","Mente","Piedra"],"default":"Voz"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const types = {
+      'Voz': ['#E8A33D', '#7A4A0B', '#FCEBC8'], 'Fuego': ['#D9483B', '#8A1F16', '#F9D7D2'],
+      'Reloj': ['#8A5CC7', '#4B2A7A', '#E9DDF7'], 'Hoja': ['#4FA35A', '#1F5A28', '#D6EFD5'],
+      'Chispa': ['#E2703A', '#7E3410', '#FBDCC9'], 'Corazón': ['#D66BA0', '#7D2453', '#F8D9E8'],
+      'Mente': ['#9AA33A', '#4E5414', '#EEF0CF'], 'Piedra': ['#8C8577', '#45403A', '#E8E4DC'],
+    };
+    const name = this.props.tipo ?? 'Voz';
+    const [base, dark, tint] = types[name] ?? types['Voz'];
+    return { c: { name, base, dark, tint } };
+  }
+}
+</script>
+</body>
+</html>

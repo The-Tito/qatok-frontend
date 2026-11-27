@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Partida en curso (web)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Chakra+Petch:wght@600;700&amp;family=Silkscreen:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#2A2238}a:hover{color:#5E5470}
+.pf{font-family:'Chakra Petch',sans-serif}
+.sk{font-family:'Silkscreen',monospace;text-transform:uppercase;letter-spacing:.04em}
+.px{border:3px solid #2A2238;box-shadow:4px 4px 0 #2A2238}
+.seg{background-image:repeating-linear-gradient(90deg,transparent 0 14px,#2A2238 14px 16px)}
+svg.sp{shape-rendering:crispEdges;display:block}
+button{font:inherit;cursor:pointer}
+button:disabled{cursor:not-allowed}
+input,select,textarea{font:inherit;color:#2A2238}
+input:focus,select:focus,textarea:focus{outline:3px solid #E8A33D;outline-offset:2px}
+::placeholder{color:#8C8577}
+</style>
+</helmet>
+<div style="min-height:900px;background:#FFFFFF;color:#2A2238;font-family:'IBM Plex Mono',monospace;display:flex;flex-direction:column">
+  <header style="background:#2A2238;color:#FFFFFF;padding:0 32px">
+    <div style="max-width:1120px;margin:0 auto;min-height:64px;display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+      <span class="pf" style="font-size:22px;font-weight:700">QATO'K</span>
+      <nav aria-label="Principal" style="display:flex;gap:4px;flex-grow:1;flex-wrap:wrap">
+        <a href="CatalogoWeb.dc.html" aria-current="page" class="sk" style="min-height:44px;box-sizing:border-box;display:flex;align-items:center;gap:8px;padding:0 14px;background:#FFFFFF;color:#2A2238;text-decoration:none;font-size:12px;font-weight:700"><svg class="sp" width="20" height="20" viewBox="0 0 11 11" aria-hidden="true"><path fill="#2A2238" d="M5 0h1v3h-1z M4 3h3v1h-3z M3 4h5v1h-5z M0 5h11v1h-11z M3 6h5v1h-5z M4 7h3v1h-3z M5 8h1v3h-1z"/></svg>Jugar</a><a href="PerfilV2Web.dc.html" class="sk" style="min-height:44px;box-sizing:border-box;display:flex;align-items:center;gap:8px;padding:0 14px;color:#FFFFFF;text-decoration:none;font-size:12px"><svg class="sp" width="20" height="20" viewBox="0 0 12 12" aria-hidden="true"><path fill="#FFFFFF" d="M3 0h6v6h-6z M1 7h10v5h-10z"/></svg>Perfil</a><a href="EvidenciasV2Web.dc.html" class="sk" style="min-height:44px;box-sizing:border-box;display:flex;align-items:center;gap:8px;padding:0 14px;color:#FFFFFF;text-decoration:none;font-size:12px"><svg class="sp" width="20" height="20" viewBox="0 0 12 12" aria-hidden="true"><path fill="#FFFFFF" d="M1 0h10v1h-10z M2 1h8v4h-8z M3 5h6v1h-6z M4 6h4v1h-4z M5 7h2v2h-2z M3 9h6v1h-6z M2 10h8v2h-8z"/></svg>Evidencias</a>
+      </nav>
+      <span style="font-size:13px"><a href="MiCuentaWeb.dc.html" style="color:#FFFFFF">Ana López</a> · <a href="LoginWeb.dc.html" style="color:#FFFFFF">Salir</a></span>
+    </div>
+  </header>
+  <main style="padding:28px 32px 56px;flex-grow:1">
+    <div style="max-width:1120px;margin:0 auto;width:100%;box-sizing:border-box;display:flex;flex-direction:column;gap:20px">
+      <a href="CatalogoWeb.dc.html" class="sk" style="font-size:11px;min-height:44px;display:inline-flex;align-items:center">◀ Catálogo</a>
+      <div style="display:flex;gap:40px;flex-wrap:wrap;align-items:flex-start">
+        <section style="flex:1 1 560px;min-width:0;display:flex;flex-direction:column;gap:16px">
+          <div class="px" style="height:240px;background:{{c.tint}};position:relative;overflow:hidden">
+            <span class="sk" style="position:absolute;right:16px;top:16px;font-size:11px;font-weight:700;padding:6px 8px;border:2px solid #2A2238;background:#FFFFFF;color:{{c.dark}}">Tipo {{c.name}}</span>
+            <svg class="sp" style="position:absolute;left:calc(50% - 72px);top:44px" width="144" height="144" viewBox="0 0 16 16" aria-hidden="true"><path fill="#2A2238" d="M5 0h6v1h-6z M3 1h10v1h-10z M2 2h12v8h-12z M4 10h8v1h-8z M2 11h12v1h-12z M1 12h14v4h-14z"/><path fill="#6B3E2E" d="M5 1h6v1h-6z M3 2h10v3h-10z M3 5h1v4h-1z M12 5h1v4h-1z"/><path fill="#9A5E44" d="M6 2h3v1h-3z M4 3h2v1h-2z"/><path fill="#E8B48A" d="M5 4h6v1h-6z M4 5h8v4h-8z M5 9h6v1h-6z M6 10h4v1h-4z"/><path fill="#C98E64" d="M6 10h4v1h-4z"/><path fill="#2A2238" d="M5 5h1v1h-1z M6 6h1v1h-1z M10 5h1v1h-1z M9 6h1v1h-1z M5 7h2v1h-2z M9 7h2v1h-2z M7 8h2v1h-2z M6 9h1v1h-1z M9 9h1v1h-1z"/><path fill="{{c.base}}" d="M3 11h10v1h-10z M2 12h12v3h-12z"/><path fill="#2A2238" fill-opacity=".28" d="M2 12h2v3h-2z M12 12h2v3h-2z"/><path fill="#FFFFFF" d="M6 11h4v1h-4z M7 12h2v1h-2z"/></svg>
+            <div style="position:absolute;left:0;right:0;bottom:0;height:32px;background:{{c.base}};border-top:3px solid #2A2238"></div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center"><span class="sk" style="font-size:11px">★ Básica</span><span class="sk" style="font-size:11px;color:#5E5470">· 10 min · Puedes pausar</span></div>
+          <h1 class="pf" style="margin:0;font-size:38px;font-weight:700;line-height:1.05">Tres entregas para mañana</h1>
+          <p style="margin:0;font-size:15px;line-height:1.6;color:#5E5470">Tienes tres tareas con la misma fecha límite y no llegas a todas.</p>
+        </section>
+        <aside style="flex:1 1 360px;min-width:0;display:flex;flex-direction:column;gap:20px">
+          <section role="alert" class="px" style="background:{{c.tint}};padding:14px;display:flex;flex-direction:column;gap:10px">
+      <span class="pf" style="font-size:20px;font-weight:700;line-height:1.15">Ya tienes esta partida en curso</span>
+      <span style="font-size:13px;color:{{c.dark}};line-height:1.5">Iniciada el 11 nov 2026. Sigue donde te quedaste o empieza de cero.</span>
+      <a href="JugarTareaWeb.dc.html" class="sk px" style="height:52px;display:flex;align-items:center;justify-content:center;background:{{c.dark}};color:#FFFFFF;text-decoration:none;font-size:14px;font-weight:700">Continuar ▶</a>
+      <a href="JugarPausaWeb.dc.html" class="sk" style="height:46px;display:flex;align-items:center;justify-content:center;border:3px solid #2A2238;background:#FFFFFF;color:#2A2238;text-decoration:none;font-size:11px;font-weight:700">Abandonar y empezar de nuevo</a>
+    </section>
+          <section class="px" style="background:#FFFFFF;padding:12px 14px;display:flex;flex-direction:column;gap:12px">
+      <h2 class="sk" style="margin:0;font-size:12px">Entrena</h2>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;justify-content:space-between;gap:8px"><span style="font-size:13px;font-weight:600">Gestión del tiempo</span><span class="sk" style="font-size:11px;color:#4B2A7A">Reloj · 70%</span></div>
+        <div style="height:18px;border:3px solid #2A2238;background:#F5F3EF;position:relative"><div class="seg" style="position:absolute;inset:0;width:40%;background-color:#8A5CC7"></div><div style="position:absolute;left:60%;top:-7px;bottom:-7px;width:3px;background:#2A2238"></div></div>
+        <span style="font-size:11px;color:#5E5470">Tu nivel 40 · esperado 60</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;justify-content:space-between;gap:8px"><span style="font-size:13px;font-weight:600">Comunicación efectiva</span><span class="sk" style="font-size:11px;color:#7A4A0B">Voz · 30%</span></div>
+        <div style="height:18px;border:3px solid #2A2238;background:#F5F3EF;position:relative"><div class="seg" style="position:absolute;inset:0;width:75%;background-color:#E8A33D"></div><div style="position:absolute;left:50%;top:-7px;bottom:-7px;width:3px;background:#2A2238"></div></div>
+        <span style="font-size:11px;color:#5E5470">Tu nivel 75 · esperado 50</span>
+      </div>
+    </section>
+        </aside>
+      </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"tipo": {"editor": "enum", "options": ["Voz", "Fuego", "Reloj", "Hoja", "Chispa", "Corazón", "Mente", "Piedra"], "default": "Reloj"}, "$preview": {"width": 1280, "height": 900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const types = {
+      'Voz': ['#E8A33D', '#7A4A0B', '#FCEBC8'], 'Fuego': ['#D9483B', '#8A1F16', '#F9D7D2'],
+      'Reloj': ['#8A5CC7', '#4B2A7A', '#E9DDF7'], 'Hoja': ['#4FA35A', '#1F5A28', '#D6EFD5'],
+      'Chispa': ['#E2703A', '#7E3410', '#FBDCC9'], 'Corazón': ['#D66BA0', '#7D2453', '#F8D9E8'],
+      'Mente': ['#9AA33A', '#4E5414', '#EEF0CF'], 'Piedra': ['#8C8577', '#45403A', '#E8E4DC'],
+    };
+    const name = this.props.tipo ?? 'Reloj';
+    const [base, dark, tint] = types[name] ?? types['Reloj'];
+
+    return { c: { name, base, dark, tint } };
+  }
+}
+</script>
+</body>
+</html>
