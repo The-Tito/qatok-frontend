@@ -607,3 +607,70 @@
     display: none;
   }
 }
+
+/* ---- Campo de formulario ------------------------------------------------ */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.field-input {
+  width: 100%;
+  height: 46px;
+  padding: 0 12px;
+  border: var(--border) solid var(--color-ink);
+  border-radius: 0;
+  background: var(--color-fill);
+  color: var(--color-ink);
+  font: inherit;
+  font-size: 15px;
+}
+
+.field-input::placeholder {
+  color: var(--color-stone);
+}
+
+.field-input[aria-invalid='true'] {
+  border-color: var(--color-incorrect-fg);
+  background: var(--color-incorrect-bg);
+}
+
+.field-message {
+  display: flex;
+  gap: 6px;
+  color: var(--color-ink-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.field-message[data-error] {
+  color: var(--color-incorrect-fg);
+  font-weight: 500;
+}
+
+.field-message[data-error] a {
+  color: var(--color-incorrect-fg);
+  font-weight: 600;
+}
+
+.field-message-icon {
+  font-family: var(--font-silkscreen), monospace;
+  font-size: 11px;
+}
+
+/* Aviso de formulario (error general) */
+.form-alert {
+  padding: 10px 12px;
+  border: var(--border-thin) solid var(--color-incorrect-fg);
+  background: var(--color-incorrect-bg);
+  color: var(--color-incorrect-fg);
+  font-size: 13px;
+  line-height: 1.5;
+}

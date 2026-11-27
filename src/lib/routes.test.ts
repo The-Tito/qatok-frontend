@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { homeFor, loginUrl, safeNext } from './routes';
+import { afterLogin, homeFor, loginUrl, safeNext } from './routes';
 
 describe('routes', () => {
   it('lleva a cada rol a su inicio', () => {
@@ -16,7 +16,23 @@ describe('routes', () => {
   });
 
   it('arma la URL de entrar con la ruta de regreso', () => {
-    expect(loginUrl('/perfil')).toBe('/login?next=%2Fperfil');
-    expect(loginUrl('https://malo.com')).toBe('/login');
+    expect(loginUrl('/perfil')).toBe('/entrar?next=%2Fperfil');
+    expect(loginUrl('https://malo.com')).toBe('/entrar');
+  });
+});
+
+describe('afterLogin', () => {
+  it('respeta la ruta de regreso del área del rol', () => {
+    expect(afterLogin('STUDENT', '/perfil?tab=1')).toBe('/perfil?tab=1');
+    expect(afterLogin('ADMIN', '/admin/habilidades')).toBe('/admin/habilidades');
+  });
+
+  it('ignora rutas de otra área, externas o de la propia entrada', () => {
+    expect(afterLogin('STUDENT', '/admin/simulaciones')).toBe('/simulaciones');
+    expect(afterLogin('ADMIN', '/perfil')).toBe('/admin/simulaciones');
+    expect(afterLogin('STUDENT', '//malo.com')).toBe('/simulaciones');
+    expect(afterLogin('STUDENT', '/entrar')).toBe('/simulaciones');
+    expect(afterLogin('ADMIN', null)).toBe('/admin/simulaciones');
+    expect(afterLogin('STUDENT', '/administracion')).toBe('/administracion');
   });
 });

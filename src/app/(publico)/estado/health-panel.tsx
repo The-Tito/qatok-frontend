@@ -2,7 +2,7 @@
 
 import { NombreBase, type Salud } from '@qatok/shared';
 import { useEffect, useState } from 'react';
-import { getHealth } from '../lib/api';
+import { getHealth } from '../../../lib/api';
 
 const databases = {
   relacional: 'PostgreSQL',

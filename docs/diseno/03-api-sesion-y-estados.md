@@ -107,7 +107,7 @@ Descartados (plan v2, 2026-11-27): la API está completa (contrato 0.6.0) y cada
 
 ## Implementación (issue 0.2)
 
-- `src/lib/api/client.ts`: `request(path, { method, body, schema, auth, query, signal })` y `apiUrl()`. Un 401 **con token enviado** borra la sesión y llama al manejador que registra `src/app/providers.tsx` (limpia la caché de TanStack Query y va a `/login?next=`; desde el issue 1.1, `/entrar`). Un 401 de `/auth/login` (sin token) no cierra nada.
+- `src/lib/api/client.ts`: `request(path, { method, body, schema, auth, query, signal })` y `apiUrl()`. Un 401 **con token enviado** borra la sesión y llama al manejador que registra `src/app/providers.tsx` (limpia la caché de TanStack Query y va a `/entrar?next=`). Un 401 de `/auth/login` (sin token) no cierra nada.
 - `src/lib/api/errors.ts`: `ApiError`, `ContractError`, `errorMessage()`, `isApiError(error, ...codes)` y `fieldErrors()`. La API manda `details.fields` como **lista** `[{ field, message }]` con mensajes en inglés: la pantalla muestra su propio texto por campo.
 - `src/lib/session.ts` y `src/lib/use-session.ts`: sesión en `localStorage` con aviso a los componentes (`useSyncExternalStore`) y entre pestañas.
 - `src/lib/routes.ts`: rutas de inicio por rol y `next` seguro (solo rutas internas).
