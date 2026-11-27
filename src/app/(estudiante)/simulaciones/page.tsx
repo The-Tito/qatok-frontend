@@ -1,9 +1,14 @@
 import type { Metadata } from 'next';
-import { StateCard } from '../../../components/StateCard';
+import { Suspense } from 'react';
+import { CatalogView } from './catalog-view';
+import './catalog.css';
 
 export const metadata: Metadata = { title: 'Simulaciones' };
 
-// Marcador hasta el issue 2.1 (Catálogo).
 export default function CatalogPage() {
-  return <StateCard kind="empty" title="Catálogo" message="Esta pantalla llega en el issue 2.1." />;
+  return (
+    <Suspense>
+      <CatalogView />
+    </Suspense>
+  );
 }

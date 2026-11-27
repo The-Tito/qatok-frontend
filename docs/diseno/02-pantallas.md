@@ -37,11 +37,11 @@ Contenedor: ancho completo hasta 480 px, centrado en pantallas mayores, fondo bl
 
 ### 2 · Catálogo — `/simulaciones`
 
-- **Acceso:** usuario. **Prototipo:** `Catalogo.dc.html`.
+- **Acceso:** usuario. **Prototipo:** `prototipo-v2/movil/CatalogoV2.dc.html` y `prototipo-v2/web/CatalogoWeb.dc.html`. Hecho en el issue 2.1.
 - **Datos:**
   - `GET /api/me` (o la sesión) → «Hola, {nombre}».
   - `GET /api/simulations?search&difficulty&skill_id&limit&offset` → tarjetas.
-  - `GET /api/skills` → chips de filtro por habilidad (con su tipo).
+  - `GET /api/skills` → chips de filtro por habilidad. El chip muestra el nombre corto del tipo («Voz», como el diseño) con el nombre de la habilidad en `aria-label` y `title`; si el tipo es `STONE` o lo comparten dos habilidades, muestra el nombre de la habilidad.
   - `GET /api/attempts?status=IN_PROGRESS&limit=1` → banner «Partida en curso». El título sale del catálogo cargado o de `GET /api/simulations/:id`.
 - **Tarjeta:** franja de tipos por peso, dificultad, duración (`estimated_duration` nulo → no se muestra), título, descripción (2 líneas máximo) y un `TypeChip` por habilidad con su peso en %.
 - **Interacción:** buscar con espera de 300 ms; un solo filtro de dificultad y uno de habilidad activos (se combinan); los filtros se reflejan en la URL. «Cargar más» con `offset` cuando `items.length < total`. Tocar una tarjeta → `/simulaciones/{id}`. Banner → `/jugar/{attemptId}`.

@@ -11,3 +11,4 @@ export * from './auth';
 export * from './health';
 export * from './attempts';
 export * from './evidence';
+export * from './catalog';
