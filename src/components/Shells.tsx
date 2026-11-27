@@ -17,22 +17,22 @@ interface NavItem {
 
 const STUDENT_NAV: NavItem[] = [
   {
-    href: '/simulaciones',
+    href: '/simulations',
     label: 'Jugar',
-    also: ['/jugar'],
+    also: ['/play'],
     icon: {
       viewBox: '0 0 11 11',
       d: 'M5 0h1v3h-1z M4 3h3v1h-3z M3 4h5v1h-5z M0 5h11v1h-11z M3 6h5v1h-5z M4 7h3v1h-3z M5 8h1v3h-1z',
     },
   },
   {
-    href: '/perfil',
+    href: '/profile',
     label: 'Perfil',
-    also: ['/cuenta'],
+    also: ['/account'],
     icon: { viewBox: '0 0 12 12', d: 'M3 0h6v6h-6z M1 7h10v5h-10z' },
   },
   {
-    href: '/evidencias',
+    href: '/evidence',
     label: 'Evidencias',
     icon: {
       viewBox: '0 0 12 12',
@@ -42,8 +42,8 @@ const STUDENT_NAV: NavItem[] = [
 ];
 
 const ADMIN_NAV: { href: string; label: string; also?: string[] }[] = [
-  { href: '/admin/simulaciones', label: 'Simulaciones' },
-  { href: '/admin/habilidades', label: 'Habilidades' },
+  { href: '/admin/simulations', label: 'Simulaciones' },
+  { href: '/admin/skills', label: 'Habilidades' },
 ];
 
 function isActive(pathname: string, href: string, also: string[] = []) {
@@ -89,7 +89,7 @@ export function StudentShell({ children }: { children: ReactNode }) {
     <div className="student-shell">
       <header className="topbar" data-variant="student">
         <div className="topbar-inner">
-          <Link href="/simulaciones" className="topbar-brand">
+          <Link href="/simulations" className="topbar-brand">
             QATO&apos;K
           </Link>
           <nav aria-label="Principal" className="topbar-nav">
@@ -105,7 +105,7 @@ export function StudentShell({ children }: { children: ReactNode }) {
               </Link>
             ))}
           </nav>
-          <UserMenu accountHref="/cuenta" />
+          <UserMenu accountHref="/account" />
         </div>
       </header>
       <main className="shell-main">{children}</main>
@@ -133,7 +133,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
     <div className="admin-shell">
       <header className="topbar" data-variant="admin">
         <div className="topbar-inner">
-          <Link href="/admin/simulaciones" className="topbar-brand">
+          <Link href="/admin/simulations" className="topbar-brand">
             QATO&apos;K <span className="topbar-badge">Admin</span>
           </Link>
           <nav aria-label="Administración" className="topbar-nav">

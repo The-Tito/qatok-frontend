@@ -27,7 +27,7 @@ src/lib/api/
 3. Respuesta 2xx: validar con `schema.safeParse`. Si no coincide, lanzar `ContractError` y registrarlo con `console.error` (es un desacuerdo con el backend, no un error del usuario). 204 → `undefined`.
 4. Respuesta no 2xx: parsear con `ErrorRespuesta`. Lanzar `ApiError { status, code, message, details }`. Si el cuerpo no es válido, usar `code = 'UNKNOWN'`.
 5. Fallo de red: `ApiError { status: 0, code: 'NETWORK' }`.
-6. 401 en una ruta con sesión: borrar la sesión y redirigir a `/entrar?next=<ruta actual>`.
+6. 401 en una ruta con sesión: borrar la sesión y redirigir a `/login?next=<ruta actual>`.
 
 Las pantallas usan TanStack Query (`@tanstack/react-query`) para caché, reintentos y estados de carga. Sin reintentos automáticos en mutaciones; en consultas, uno solo y nunca ante 4xx.
 
@@ -36,7 +36,7 @@ Las pantallas usan TanStack Query (`@tanstack/react-query`) para caché, reinten
 - Guardar `{ token, user }` en `localStorage` con la clave `qatok.session`. Leer con `try/catch`: si falla o está corrupto, no hay sesión.
 - El JWT dura 8 horas. No decodificarlo para autorizar: el rol se toma de `user.role` y la API vuelve a comprobarlo.
 - Al cargar la app con sesión guardada: `GET /api/me` para refrescar `user`; un 401 cierra la sesión.
-- «Salir»: borrar la sesión, limpiar la caché de consultas e ir a `/entrar`.
+- «Salir»: borrar la sesión, limpiar la caché de consultas e ir a `/login`.
 - Guardas en el cliente: `(estudiante)` exige sesión; `(admin)` exige `role = 'ADMIN'` y muestra el 403 si no. Son de experiencia de usuario, no de seguridad: la seguridad la aplica la API.
 
 Estructura sugerida del App Router:
@@ -45,22 +45,22 @@ Estructura sugerida del App Router:
 src/app/
   layout.tsx                      fuentes, globals.css, QueryClientProvider
   page.tsx                        redirige por sesión y rol
-  (publico)/entrar/page.tsx
-  (publico)/registro/page.tsx
+  (publico)/login/page.tsx
+  (publico)/register/page.tsx
   (publico)/e/[token]/page.tsx
   (estudiante)/layout.tsx         guarda de sesión, columna móvil
-  (estudiante)/simulaciones/page.tsx
-  (estudiante)/simulaciones/[simulationId]/page.tsx
-  (estudiante)/jugar/[attemptId]/page.tsx
-  (estudiante)/perfil/page.tsx
-  (estudiante)/evidencias/page.tsx
-  (estudiante)/evidencias/[evidenceId]/page.tsx
+  (estudiante)/simulations/page.tsx
+  (estudiante)/simulations/[simulationId]/page.tsx
+  (juego)/play/[attemptId]/page.tsx       sin menú principal
+  (estudiante)/profile/page.tsx
+  (estudiante)/evidence/page.tsx
+  (estudiante)/evidence/[evidenceId]/page.tsx
   (admin)/admin/layout.tsx        guarda de rol, AdminShell
-  (admin)/admin/simulaciones/page.tsx
-  (admin)/admin/simulaciones/nueva/page.tsx
-  (admin)/admin/simulaciones/[simulationId]/page.tsx
-  (admin)/admin/habilidades/page.tsx
-  dev/componentes/page.tsx        solo en desarrollo (notFound() en producción)
+  (admin)/admin/simulations/page.tsx
+  (admin)/admin/simulations/new/page.tsx
+  (admin)/admin/simulations/[simulationId]/page.tsx
+  (admin)/admin/skills/page.tsx
+  dev/components/page.tsx         solo en desarrollo (notFound() en producción)
 ```
 
 Las páginas con datos son componentes de cliente (`'use client'`), porque el token vive en el navegador.
@@ -73,7 +73,7 @@ Decidir siempre por `code`, nunca por el texto de `message`. El estado visual de
 |---|---|---|---|
 | `VALIDATION_ERROR` (400) | Formularios | Error bajo cada campo de `details.fields` | Foco en el primer campo con error |
 | `INVALID_CREDENTIALS` (401) | Entrar | «Correo o contraseña incorrectos» | — |
-| `UNAUTHENTICATED` (401) | Cualquier ruta con sesión | «Tu sesión terminó» | Cerrar sesión y volver a `/entrar?next=` |
+| `UNAUTHENTICATED` (401) | Cualquier ruta con sesión | «Tu sesión terminó» | Cerrar sesión y volver a `/login?next=` |
 | `ACCOUNT_INACTIVE` (403) | Entrar | «Tu cuenta está desactivada» | — |
 | `FORBIDDEN` (403) | Admin | «Esta zona es para administración» | Ir al catálogo |
 | `NOT_FOUND` (404) | Detalles | «Esto ya no está disponible» | Volver a la lista |
@@ -107,12 +107,12 @@ Descartados (plan v2, 2026-11-27): la API está completa (contrato 0.6.0) y cada
 
 ## Implementación (issue 0.2)
 
-- `src/lib/api/client.ts`: `request(path, { method, body, schema, auth, query, signal })` y `apiUrl()`. Un 401 **con token enviado** borra la sesión y llama al manejador que registra `src/app/providers.tsx` (limpia la caché de TanStack Query y va a `/entrar?next=`). Un 401 de `/auth/login` (sin token) no cierra nada.
+- `src/lib/api/client.ts`: `request(path, { method, body, schema, auth, query, signal })` y `apiUrl()`. Un 401 **con token enviado** borra la sesión y llama al manejador que registra `src/app/providers.tsx` (limpia la caché de TanStack Query y va a `/login?next=`). Un 401 de `/auth/login` (sin token) no cierra nada.
 - `src/lib/api/errors.ts`: `ApiError`, `ContractError`, `errorMessage()`, `isApiError(error, ...codes)` y `fieldErrors()`. La API manda `details.fields` como **lista** `[{ field, message }]` con mensajes en inglés: la pantalla muestra su propio texto por campo.
 - `src/lib/session.ts` y `src/lib/use-session.ts`: sesión en `localStorage` con aviso a los componentes (`useSyncExternalStore`) y entre pestañas.
 - `src/lib/routes.ts`: rutas de inicio por rol y `next` seguro (solo rutas internas).
 - `src/components/RequireSession.tsx`: guarda de los grupos `(estudiante)` y `(admin)`; refresca `GET /api/me` una vez por carga y muestra el 403 si el rol no coincide.
 - Pruebas (Vitest, `npm run test`, incluido en `npm run verificar`): cliente con `fetch` simulado, errores, sesión, rutas y tipos de habilidad.
-- «Salir» (`src/lib/use-sign-out.ts`): `clearSession({ signOut: true })`, limpia la caché y va a `/entrar` sin ruta de regreso. Una sesión vencida, en cambio, vuelve a `/entrar?next=`.
+- «Salir» (`src/lib/use-sign-out.ts`): `clearSession({ signOut: true })`, limpia la caché y va a `/login` sin ruta de regreso. Una sesión vencida, en cambio, vuelve a `/login?next=`.
 - Después de entrar (`afterLogin` en `src/lib/routes.ts`): la ruta de regreso solo se usa si es del área del rol (`/admin/…` para admin, el resto para estudiante).
 - Mi cuenta (issue 1.2): `PATCH /api/me` actualiza la caché `['me', id]` y la sesión guardada (el nombre cambia en el encabezado). Eliminar cuenta cuenta lo que se pierde con `GET /api/attempts?limit=1` (`total`) y `GET /api/evidence?limit=100` (suma de `active_shares`), y tras `DELETE /api/me` cierra la sesión.

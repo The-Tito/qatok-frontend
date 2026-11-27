@@ -1,16 +1,16 @@
 // Rutas de la app (04 · Rutas). Un solo lugar para cambiarlas.
 import type { Account } from '@qatok/shared';
 
-export const LOGIN_PATH = '/entrar';
-export const REGISTER_PATH = '/registro';
-export const STUDENT_HOME = '/simulaciones';
-export const ADMIN_HOME = '/admin/simulaciones';
+export const LOGIN_PATH = '/login';
+export const REGISTER_PATH = '/register';
+export const STUDENT_HOME = '/simulations';
+export const ADMIN_HOME = '/admin/simulations';
 
 export function homeFor(role: Account['role']) {
   return role === 'ADMIN' ? ADMIN_HOME : STUDENT_HOME;
 }
 
-/** /entrar?next=<ruta> para volver después de entrar. Solo acepta rutas internas. */
+/** /login?next=<ruta> para volver después de entrar. Solo acepta rutas internas. */
 export function loginUrl(next?: string) {
   const safe = safeNext(next);
   return safe ? `${LOGIN_PATH}?next=${encodeURIComponent(safe)}` : LOGIN_PATH;

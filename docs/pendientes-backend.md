@@ -36,7 +36,7 @@ Lista de lo que la interfaz necesita o encontró del lado de **The-Tito/qatok-ba
 
 **Qué falta.** `GET /api/admin/simulations/:simulationId` → `200 AdminSimulation` (cualquier estado), `404 NOT_FOUND`. Hoy las rutas de `backend/src/routes/simulation-admin.routes.ts` permiten listar, crear, actualizar, eliminar, leer y guardar contenido, publicar y desactivar, pero no leer una sola; `/content` solo trae los pasos.
 
-**Por qué.** El editor (`/admin/simulaciones/[id]`) necesita título, estado, dificultad y habilidades. Abierto desde la lista, el frontend reutiliza los datos ya cargados; con un enlace directo o al recargar, tiene que recorrer la lista completa para encontrarla.
+**Por qué.** El editor (`/admin/simulations/[id]`) necesita título, estado, dificultad y habilidades. Abierto desde la lista, el frontend reutiliza los datos ya cargados; con un enlace directo o al recargar, tiene que recorrer la lista completa para encontrarla.
 
 **Qué hace el frontend.** Funciona sin la ruta. Cuando exista, basta con poner `HAS_ADMIN_SIMULATION_GET = true` en `src/lib/api/admin.ts`.
 

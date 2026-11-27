@@ -6,10 +6,10 @@ La app Next.js consume solo la API del backend y es responsive (menos de 768 px,
 
 | Área | Rutas |
 |---|---|
-| Público | `/` (redirige por sesión y rol), `/entrar`, `/registro`, `/e/[token]` (evidencia compartida), `/estado` (salud de la API) |
-| Estudiante | `/simulaciones`, `/simulaciones/[id]`, `/jugar/[attemptId]`, `/perfil`, `/perfil/habilidades/[skillId]`, `/perfil/recomendaciones`, `/perfil/partidas`, `/perfil/partidas/[attemptId]`, `/evidencias`, `/evidencias/[id]`, `/cuenta` |
-| Administración | `/admin/simulaciones`, `/admin/simulaciones/nueva`, `/admin/simulaciones/[id]` (editor y publicar), `/admin/habilidades` |
-| Desarrollo | `/dev/componentes` (muestra de componentes; 404 en producción) |
+| Público | `/` (redirige por sesión y rol), `/login`, `/register`, `/e/[token]` (evidencia compartida), `/status` (salud de la API) |
+| Estudiante | `/simulations`, `/simulations/[id]`, `/play/[attemptId]`, `/profile`, `/profile/skills/[skillId]`, `/profile/recommendations`, `/profile/attempts`, `/profile/attempts/[attemptId]`, `/evidence`, `/evidence/[id]`, `/account` |
+| Administración | `/admin/simulations`, `/admin/simulations/new`, `/admin/simulations/[id]` (editor y publicar), `/admin/skills` |
+| Desarrollo | `/dev/components` (muestra de componentes; 404 en producción) |
 
 Con el dataset del backend se entra como estudiante con `ana.lopez@ejemplo.com` o `bruno.diaz@ejemplo.com` y como administradora con `carla.ruiz@ejemplo.com` (contraseña de demostración del README del backend).
 
@@ -19,7 +19,7 @@ Con el dataset del backend se entra como estudiante con `ana.lopez@ejemplo.com` 
 - **No** se usan Route Handlers (`app/api/*`) ni Server Actions como backend.
 - **No** hay credenciales de bases en el entorno: la única variable es `NEXT_PUBLIC_API_URL`.
 - Los tipos y esquemas se importan de `@qatok/shared`; no se redefinen.
-- Las rutas y los textos de la interfaz están en español, como define el plan v2 ([docs/diseno/04](docs/diseno/04-plan-de-implementacion.md)); el código (componentes, funciones, tipos) en inglés.
+- Las rutas de las vistas se nombran en inglés. La interfaz se escribe en español.
 
 ## Preparar tu máquina
 
@@ -36,7 +36,7 @@ npm run verificar
 npm run dev
 ```
 
-Sigue el [inicio rápido del backend](https://github.com/The-Tito/qatok-backend#inicio-rápido) para inicializar las bases y arrancar la API en `http://localhost:4000/api`. Abre `http://localhost:3000` para entrar, o `http://localhost:3000/estado` para ver el estado y la latencia de cada motor. La API permite ese origen mediante CORS.
+Sigue el [inicio rápido del backend](https://github.com/The-Tito/qatok-backend#inicio-rápido) para inicializar las bases y arrancar la API en `http://localhost:4000/api`. Abre `http://localhost:3000` para entrar, o `http://localhost:3000/status` para ver el estado y la latencia de cada motor. La API permite ese origen mediante CORS.
 
 ## Tipos compartidos: `src/shared/`
 
