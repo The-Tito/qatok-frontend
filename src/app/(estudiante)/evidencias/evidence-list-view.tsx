@@ -67,7 +67,7 @@ export function EvidenceListView() {
               key={skill.id}
               type="button"
               className="filter-chip evidence-skill-chip"
-              data-type={skillType(skill.id)}
+              data-type={skillType(skill)}
               aria-pressed={skill.id === skillId}
               onClick={() => pick(skill.id === skillId ? undefined : skill.id)}
             >
@@ -123,7 +123,7 @@ export function EvidenceListView() {
                         (skill) => (
                           <span
                             key={skill.id}
-                            data-type={skillType(skill.id)}
+                            data-type={skillType(skill)}
                             style={{ flexGrow: 1 }}
                           />
                         ),
@@ -144,7 +144,7 @@ export function EvidenceListView() {
                             <span
                               key={skill.id}
                               className="chip skill-row-chip"
-                              data-type={skillType(skill.id)}
+                              data-type={skillType(skill)}
                             >
                               {skill.name}
                             </span>

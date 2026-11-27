@@ -1,19 +1,34 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
+import type { AdminSimulation } from '@qatok/shared';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
 import { LoadingCard, StateCard } from '../../../../../components/StateCard';
 import { findAdminSimulation } from '../../../../../lib/api';
 import { SimulationDataForm } from '../simulation-data-form';
 import { SIM_STATUS } from '../simulations-view';
+
+type AdminSimulationList = { items: AdminSimulation[]; total: number };
 import { ContentEditor } from './content-editor';
 import { PublishPanel } from './publish-panel';
 
 /** Editor de una simulación: datos (y, desde 6.2, contenido). Solo lectura si no es borrador. */
 export function SimulationAdminView({ simulationId }: { simulationId: string }) {
+  const queryClient = useQueryClient();
   const simulation = useQuery({
     queryKey: ['admin-simulation', simulationId],
     queryFn: ({ signal }) => findAdminSimulation(simulationId, signal),
+    // Si se llega desde la lista, se usan sus datos (sin pedir nada); con enlace directo, se busca.
+    initialData: () => {
+      for (const [, page] of queryClient.getQueriesData<AdminSimulationList>({
+        queryKey: ['admin-simulations'],
+      })) {
+        const found = page?.items.find((item) => item.id === simulationId);
+        if (found) return found;
+      }
+      return undefined;
+    },
+    initialDataUpdatedAt: () => queryClient.getQueryState(['admin-simulations'])?.dataUpdatedAt,
   });
 
   if (simulation.isError) {

@@ -91,10 +91,10 @@ export function EvolutionView({ skillId }: { skillId: string }) {
                 key={item.id}
                 href={`/perfil/habilidades/${item.id}`}
                 className="filter-chip evolution-chip"
-                data-type={skillType(item.id)}
+                data-type={skillType(item)}
                 aria-current={item.id === skillId ? 'page' : undefined}
               >
-                {SKILL_TYPES[skillType(item.id)].label}
+                {SKILL_TYPES[skillType(item)].label}
               </Link>
             ))}
           </nav>

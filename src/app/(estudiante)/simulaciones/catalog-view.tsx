@@ -248,7 +248,7 @@ export function CatalogView() {
  * respaldo o lo comparten dos habilidades, se usa el nombre de la habilidad.
  */
 function filterLabels(skills: { id: string; name: string }[]) {
-  const typed = skills.map((skill) => ({ ...skill, type: skillType(skill.id) }));
+  const typed = skills.map((skill) => ({ ...skill, type: skillType(skill) }));
   return typed.map((skill) => {
     const shared = typed.filter((other) => other.type === skill.type).length > 1;
     const label = skill.type === 'STONE' || shared ? skill.name : SKILL_TYPES[skill.type].label;

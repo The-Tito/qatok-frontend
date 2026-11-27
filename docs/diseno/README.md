@@ -28,7 +28,7 @@ Cada `prototipo/*.dc.html` es HTML con estilos en línea. No se ejecuta tal cual
 
 | # | Decisión | Propuesta | Bloquea |
 |---|---|---|---|
-| D1 | Cómo se sabe el tipo visual (color) de una habilidad | Agregar `visual_type` a la habilidad en el backend y elegirlo en Admin › Habilidades. Mientras tanto, mapa local por ID con respaldo `STONE` | Paso 3 (mapa local), paso 10 (selector admin) |
+| D1 | Cómo se sabe el tipo visual (color) de una habilidad (pedido al backend en `docs/pendientes-backend.md`) | Agregar `visual_type` a la habilidad en el backend y elegirlo en Admin › Habilidades. Mientras tanto, mapa local por ID con respaldo `STONE` | Paso 3 (mapa local), paso 10 (selector admin) |
 | D2 | Datos simulados para pantallas cuyo endpoint aún no existe | MSW solo en desarrollo, activado con `NEXT_PUBLIC_API_MOCKS=true`. Cambia la regla de «una sola variable de entorno» | Paso 2 |
 | D3 | Ruta pública de una evidencia y quién arma `url_publica` | Ruta `/e/[token]`. El backend necesita la URL base del frontend para construir `url_publica` | Paso 9 |
 | D4 | Contrato de F3a y F3b (perfil, evidencias, compartir) | Reescribirlo en inglés como F1 y F2 antes de conectar esas pantallas; hasta entonces se usan tipos provisionales aislados | Pasos 8 y 9 |

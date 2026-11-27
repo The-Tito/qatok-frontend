@@ -144,7 +144,7 @@ Todas bajo `/admin`, con `AdminShell`. Acceso: rol ADMIN (comprobar `user.role`;
 
 ### A1 · Simulaciones — `/admin/simulaciones`
 
-> Hecho en el issue 6.1: filtro por estado en la URL (`?estado=`) con contadores, tabla ordenada por título, «Editar» (borrador) o «Ver contenido», «Desactivar» (publicada) y «Eliminar» (borrador) con confirmación. Datos de la simulación en `/admin/simulaciones/nueva` y `/admin/simulaciones/[id]` (crear borrador con `POST`, guardar con `PUT`; solo lectura si no es borrador). Mientras no exista `GET /api/admin/simulations/:id` (D5), la simulación se busca en la lista. Habilidades: tabla con «En uso» calculado desde las simulaciones, formulario de crear/editar (409 `SKILL_ALREADY_EXISTS` bajo Nombre) y eliminar con confirmación (409 `SKILL_IN_USE` como aviso). El selector de tipo visual del diseño no se hizo: depende de D1.
+> Hecho en el issue 6.1: filtro por estado en la URL (`?estado=`) con contadores, tabla ordenada por título, «Editar» (borrador) o «Ver contenido», «Desactivar» (publicada) y «Eliminar» (borrador) con confirmación. Datos de la simulación en `/admin/simulaciones/nueva` y `/admin/simulaciones/[id]` (crear borrador con `POST`, guardar con `PUT`; solo lectura si no es borrador). Mientras no exista `GET /api/admin/simulations/:id` (D5), el editor reutiliza los datos de la lista ya cargada y, con enlace directo, la busca en la lista (`HAS_ADMIN_SIMULATION_GET` en `src/lib/api/admin.ts` para cambiar a la ruta individual). Habilidades: tabla con «En uso» calculado desde las simulaciones, formulario de crear/editar (409 `SKILL_ALREADY_EXISTS` bajo Nombre) y eliminar con confirmación (409 `SKILL_IN_USE` como aviso). El selector de tipo visual está listo y se activa con `visual_type` en el contrato (D1).
 
 - **Datos:** `GET /api/admin/simulations?status&limit&offset` → tabla con título, estado (● Publicada, ○ Borrador, ■ Inactiva), dificultad, duración, habilidades con peso y acciones.
 - **Pestañas:** Todas, Borrador, Publicada e Inactiva, con el `total` de cada una (una consulta por estado con `limit=1`). La pestaña activa va en la URL.
@@ -180,7 +180,7 @@ Todas bajo `/admin`, con `AdminShell`. Acceso: rol ADMIN (comprobar `user.role`;
 
 - **Datos:** `GET /api/skills`; `POST /api/admin/skills`; `PUT /api/admin/skills/:id`; `DELETE /api/admin/skills/:id`.
 - **Diseño:** tabla (tipo, nombre, categoría, objetivo, acciones) y formulario lateral para crear o editar (nombre, descripción, categoría, objetivo opcional de 0 a 100 y tipo visual).
-- **Tipo visual:** el selector de 8 tipos depende de D1. Mientras no exista el campo en la API, se muestra deshabilitado con el tipo del mapa local.
+- **Tipo visual:** selector de 8 tipos. Se activa solo cuando `SkillInput` de `shared/` incluya `visual_type` (D1, ver `docs/pendientes-backend.md`); mientras tanto se muestra deshabilitado con el tipo actual.
 - **Eliminar:** botón «Eliminar» con confirmación. `409 SKILL_IN_USE` → «Esta habilidad está asignada a una simulación». El prototipo muestra «En uso» porque la API no informa el uso de antemano: se descubre al intentar eliminar.
 - **Errores:** `409 SKILL_ALREADY_EXISTS` → error bajo Nombre.
 

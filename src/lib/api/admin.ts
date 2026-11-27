@@ -13,6 +13,7 @@ import {
 } from '@qatok/shared';
 import type { z } from 'zod';
 import { request } from './client';
+import { isApiError } from './errors';
 
 const simPath = (id: string) => `/admin/simulations/${encodeURIComponent(id)}`;
 
@@ -28,10 +29,25 @@ export function listAdminSimulations(
 }
 
 /**
- * PROVISIONAL (D5): no hay GET /api/admin/simulations/:id. Se busca en la lista (hasta 100
- * por página, recorriendo páginas). Devuelve null si no está.
+ * D5: el backend aún no tiene GET /api/admin/simulations/:id (propuesto en
+ * docs/pendientes-backend.md). Cuando exista, cambiar esta constante a true: el editor lo usará
+ * en lugar de recorrer la lista.
+ */
+export const HAS_ADMIN_SIMULATION_GET = false;
+
+/**
+ * Una simulación de admin por ID, o null si no existe. Sin la ruta individual se busca en la
+ * lista (100 por página, recorriendo páginas).
  */
 export async function findAdminSimulation(id: string, signal?: AbortSignal) {
+  if (HAS_ADMIN_SIMULATION_GET) {
+    try {
+      return await request(simPath(id), { schema: AdminSimulation, signal });
+    } catch (error) {
+      if (isApiError(error, 'NOT_FOUND')) return null;
+      throw error;
+    }
+  }
   for (let offset = 0; ; offset += 100) {
     const page = await listAdminSimulations({ limit: 100, offset }, signal);
     const found = page.items.find((item) => item.id === id);

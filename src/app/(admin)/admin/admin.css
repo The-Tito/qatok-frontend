@@ -431,3 +431,40 @@
   font-size: 13px;
   line-height: 1.5;
 }
+
+/* Selector de tipo visual (D1) */
+.type-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.type-picker-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.type-picker-option {
+  min-height: 36px;
+  cursor: pointer;
+}
+
+.type-picker-option[aria-checked='true'] {
+  box-shadow: var(--shadow-sm);
+  outline: 2px solid var(--color-ink);
+  font-weight: 700;
+}
+
+.type-picker:disabled .type-picker-option {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.type-picker:disabled .type-picker-option[aria-checked='true'] {
+  opacity: 1;
+}

@@ -167,11 +167,7 @@ export function SimulationsView() {
                   <td>
                     <span className="admin-chips">
                       {simulation.skills.map((skill) => (
-                        <span
-                          key={skill.id}
-                          className="chip chip-sm"
-                          data-type={skillType(skill.id)}
-                        >
+                        <span key={skill.id} className="chip chip-sm" data-type={skillType(skill)}>
                           {skill.name} {skill.weight}
                         </span>
                       ))}

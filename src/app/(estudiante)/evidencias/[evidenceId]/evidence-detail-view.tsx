@@ -123,11 +123,7 @@ export function EvidenceDetailView({ evidenceId }: { evidenceId: string }) {
             <p className="evidence-description">{content.description}</p>
             <div className="evidence-summary-skills">
               {content.skills.map((skill) => (
-                <span
-                  key={skill.id}
-                  className="chip skill-row-chip"
-                  data-type={skillType(skill.id)}
-                >
+                <span key={skill.id} className="chip skill-row-chip" data-type={skillType(skill)}>
                   {skill.name}
                 </span>
               ))}

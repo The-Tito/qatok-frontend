@@ -16,7 +16,13 @@ import {
   listSkills,
   updateSkill,
 } from '../../../../lib/api';
-import { SKILL_TYPES, skillType } from '../../../../lib/skill-types';
+import {
+  SKILL_TYPES,
+  SKILL_TYPE_KEYS,
+  SUPPORTS_VISUAL_TYPE,
+  skillType,
+  type SkillTypeKey,
+} from '../../../../lib/skill-types';
 
 type Errors = Partial<Record<'name' | 'description' | 'category' | 'target_level', string>>;
 
@@ -87,7 +93,7 @@ export function SkillsView() {
               </thead>
               <tbody>
                 {skills.data.items.map((skill) => {
-                  const type = skillType(skill.id);
+                  const type = skillType(skill);
                   return (
                     <tr key={skill.id}>
                       <td>
@@ -184,6 +190,7 @@ function SkillForm({ skill, onDone }: { skill: Skill | null; onDone: (message: s
   const formRef = useRef<HTMLFormElement>(null);
   const [errors, setErrors] = useState<Errors>({});
   const [failed, setFailed] = useState<string | null>(null);
+  const [visualType, setVisualType] = useState<SkillTypeKey>(skill ? skillType(skill) : 'STONE');
 
   const save = useMutation({
     mutationFn: (input: Parameters<typeof createSkill>[0]) =>
@@ -217,6 +224,8 @@ function SkillForm({ skill, onDone }: { skill: Skill | null; onDone: (message: s
       description: String(data.get('description') ?? ''),
       category: String(data.get('category') ?? ''),
       target_level: target === '' ? null : Number(target),
+      // D1: solo se manda cuando el contrato (shared/) ya tiene el campo.
+      ...(SUPPORTS_VISUAL_TYPE ? { visual_type: visualType } : {}),
     });
     setFailed(null);
     if (!parsed.success) {
@@ -283,10 +292,29 @@ function SkillForm({ skill, onDone }: { skill: Skill | null; onDone: (message: s
           error={errors.target_level}
         />
       </div>
-      <p className="account-note">
-        Tipo visual: lo decide el backend (D1, pendiente). Mientras tanto, las habilidades nuevas
-        usan Piedra.
-      </p>
+      <fieldset className="type-picker" disabled={!SUPPORTS_VISUAL_TYPE}>
+        <legend className="field-label">Tipo visual</legend>
+        <div className="type-picker-options" role="radiogroup" aria-label="Tipo visual">
+          {SKILL_TYPE_KEYS.map((key) => (
+            <button
+              key={key}
+              type="button"
+              role="radio"
+              aria-checked={visualType === key}
+              className="chip type-picker-option"
+              data-type={key}
+              onClick={() => setVisualType(key)}
+            >
+              {SKILL_TYPES[key].label}
+            </button>
+          ))}
+        </div>
+        <p className="account-note">
+          {SUPPORTS_VISUAL_TYPE
+            ? 'Define el color en el juego y en el perfil.'
+            : 'Se activa cuando la API guarde el tipo de la habilidad (visual_type, D1). Mientras tanto se muestra el tipo actual.'}
+        </p>
+      </fieldset>
       {failed ? (
         <p className="form-alert" role="alert">
           {failed}

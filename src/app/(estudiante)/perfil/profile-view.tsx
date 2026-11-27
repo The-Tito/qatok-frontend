@@ -236,7 +236,7 @@ function DataGap({ text }: { text: string }) {
 }
 
 function SkillRow({ skill }: { skill: ProfileSkill }) {
-  const type = skillType(skill.id);
+  const type = skillType(skill);
   const value = formatLevel(skill.current_level);
   return (
     <Link href={`/perfil/habilidades/${skill.id}`} className="skill-row" data-type={type}>
