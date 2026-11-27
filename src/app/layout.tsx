@@ -25,7 +25,9 @@ const body = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Estado de la API · QATO'K",
+  title: { default: "QATO'K", template: "%s · QATO'K" },
+  description:
+    'Practica decisiones del trabajo, mira sus consecuencias y sube de nivel tus habilidades.',
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

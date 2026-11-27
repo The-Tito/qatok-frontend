@@ -64,6 +64,8 @@ Cada habilidad tiene un «tipo» visual con tres colores: `base` (decoración, f
 | `MIND` | Mente | `#9AA33A` | `#4E5414` | `#EEF0CF` | Libre |
 | `STONE` | Piedra | `#8C8577` | `#45403A` | `#E8E4DC` | Respaldo para habilidades sin tipo |
 
+En `globals.css` cada tipo tiene `--type-<clave>-base|dark|tint`. Un elemento con `data-type="VOICE"` (o cualquier otra clave) fija `--type-base`, `--type-dark` y `--type-tint`, que son las únicas variables que usan los componentes; sin `data-type` valen las de `STONE`.
+
 Reglas:
 
 1. **Color de una simulación** = tipo de su habilidad con mayor `weight` (empate: la primera por nombre). La segunda habilidad aparece como franja proporcional a su peso en tarjetas.
@@ -120,6 +122,10 @@ Todos en `src/components/`. Cada uno con su variante en la página de muestra `/
 | `BottomNav` | Catálogo, Perfil, Evidencias | 72 px, 3 destinos: Jugar, Perfil, Evidencias. El activo con fondo ink y `aria-current="page"` |
 | `AdminShell` | Admin | Barra superior ink con «QATO'K · Admin», navegación Simulaciones / Habilidades y usuario con «Salir» |
 | `Field` | Formularios | `<label>` + control con borde 3 px y fondo `fill`. Error: borde y fondo de `incorrect`, mensaje debajo con ✕ y `aria-describedby` |
+
+## Logo
+
+Propuesta 4 (cuadro de diálogo), sacada de `prototipo-v2/movil/Logo.dc.html`: `public/logo.svg` (símbolo 16×16), `public/logo-texto.svg` (palabra «QATOK» 64×15) y `src/app/icon.svg` (favicon). Escalar por múltiplos enteros.
 
 ## Sprites
 

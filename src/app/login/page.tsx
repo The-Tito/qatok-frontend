@@ -4,7 +4,7 @@ import { LoginPanel } from './login-panel';
 import './login.css';
 
 export const metadata: Metadata = {
-  title: "Iniciar sesión · QATO'K",
+  title: 'Iniciar sesión',
 };
 
 export default function LoginPage() {

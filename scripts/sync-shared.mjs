@@ -27,6 +27,9 @@ const archivosTs = (dir) =>
         .sort()
     : [];
 
+// Los saltos de línea se normalizan a LF: en Windows el backend puede estar con CRLF.
+const leer = (archivo) => readFileSync(archivo, 'utf8').replace(/\r\n/g, '\n');
+
 const enOrigen = archivosTs(origen);
 const enDestino = archivosTs(destino);
 
@@ -37,8 +40,7 @@ if (comprobar) {
     const b = join(destino, f);
     if (!existsSync(b)) diferencias.push(`falta en la copia: ${f}`);
     else if (!existsSync(a)) diferencias.push(`sobra en la copia: ${f}`);
-    else if (readFileSync(a, 'utf8') !== readFileSync(b, 'utf8'))
-      diferencias.push(`distinto: ${f}`);
+    else if (leer(a) !== leer(b)) diferencias.push(`distinto: ${f}`);
   }
   if (diferencias.length > 0) {
     console.error('src/shared/ no coincide con qatok-backend/shared/src:');
@@ -61,7 +63,7 @@ try {
 
 rmSync(destino, { recursive: true, force: true });
 mkdirSync(destino, { recursive: true });
-for (const f of enOrigen) writeFileSync(join(destino, f), readFileSync(join(origen, f)));
+for (const f of enOrigen) writeFileSync(join(destino, f), leer(join(origen, f)));
 writeFileSync(
   join(destino, 'ORIGEN.md'),
   `# src/shared/ — NO EDITAR\n\nCopia de solo lectura de \`shared/src/\` de [The-Tito/qatok-backend](https://github.com/The-Tito/qatok-backend), fuente única del contrato.\n\n- Commit de origen: \`${commit}\`\n- Para actualizarla: \`npm run sync:shared\` (con \`qatok-backend\` en la carpeta hermana) y commit propio.\n- Cualquier cambio se hace primero en el backend.\n`,
