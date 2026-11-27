@@ -54,6 +54,8 @@ npm run start
 
 Configura `NEXT_PUBLIC_API_URL` antes de compilar. Next.js incorpora ese valor en el código que recibe el navegador.
 
+El diseño de todas las pantallas, el sistema visual y el plan de implementación están en [docs/diseno/](docs/diseno/README.md).
+
 | Qué ya está listo en el backend | Dónde |
 |---|---|
 | Contrato de los endpoints, con ejemplos JSON para simularlos mientras no existan | `docs/api/contrato-v0.md` |

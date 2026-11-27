@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Entrar</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Chakra+Petch:wght@600;700&amp;family=Silkscreen:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#2A2238}a:hover{color:#5E5470}
+.pf{font-family:'Chakra Petch',sans-serif}
+.sk{font-family:'Silkscreen',monospace;text-transform:uppercase;letter-spacing:.04em}
+.px{border:3px solid #2A2238;box-shadow:4px 4px 0 #2A2238}
+svg.sp{shape-rendering:crispEdges;display:block}
+input:focus{outline:3px solid #E8A33D;outline-offset:2px}
+</style>
+</helmet>
+<main style="width:390px;height:844px;box-sizing:border-box;background:#FFFFFF;color:#2A2238;font-family:'IBM Plex Mono',monospace;position:relative;overflow:hidden;display:flex;flex-direction:column">
+
+  <div style="padding:56px 24px 0;display:flex;flex-direction:column;align-items:center;gap:14px;position:relative">
+    <svg class="sp" style="position:absolute;left:34px;top:60px" width="21" height="21" viewBox="0 0 11 11" aria-hidden="true"><path fill="#D9483B" d="M5 0h1v3h-1z M4 3h3v1h-3z M3 4h5v1h-5z M0 5h11v1h-11z M3 6h5v1h-5z M4 7h3v1h-3z M5 8h1v3h-1z"/></svg>
+    <svg class="sp" style="position:absolute;right:40px;top:110px" width="21" height="21" viewBox="0 0 11 11" aria-hidden="true"><path fill="#8A5CC7" d="M5 0h1v3h-1z M4 3h3v1h-3z M3 4h5v1h-5z M0 5h11v1h-11z M3 6h5v1h-5z M4 7h3v1h-3z M5 8h1v3h-1z"/></svg>
+    <svg class="sp" style="position:absolute;right:76px;top:48px" width="14" height="14" viewBox="0 0 11 11" aria-hidden="true"><path fill="#4FA35A" d="M5 0h1v3h-1z M4 3h3v1h-3z M3 4h5v1h-5z M0 5h11v1h-11z M3 6h5v1h-5z M4 7h3v1h-3z M5 8h1v3h-1z"/></svg>
+    <span class="sk" style="font-size:11px;border:2px dashed #8C8577;color:#5E5470;padding:6px 10px">[Logo]</span>
+    <h1 class="pf" style="margin:0;font-size:64px;line-height:1;font-weight:700;letter-spacing:.02em">QATO'K</h1>
+    <p style="margin:0;font-size:14px;line-height:1.6;text-align:center;color:#5E5470;max-width:300px">Practica decisiones del trabajo, mira sus consecuencias y sube de nivel tus habilidades.</p>
+  </div>
+
+  <form style="margin:28px 24px 0;padding:22px 20px;background:#FFFFFF;display:flex;flex-direction:column;gap:16px" class="px">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <h2 class="sk" style="margin:0;font-size:16px">Entrar</h2>
+      <span class="sk" style="font-size:11px;color:#5E5470">Player 1</span>
+    </div>
+    <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Correo
+      <input type="email" value="ana.lopez@ejemplo.com" style="height:46px;box-sizing:border-box;border:3px solid #2A2238;background:#F5F3EF;padding:0 12px;font:inherit;font-weight:400;font-size:15px;color:#2A2238">
+    </label>
+    <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Contraseña
+      <input type="password" value="contrasena" style="height:46px;box-sizing:border-box;border:3px solid #2A2238;background:#F5F3EF;padding:0 12px;font:inherit;font-weight:400;font-size:15px;color:#2A2238">
+    </label>
+    <a href="Catalogo.dc.html" class="sk px" style="display:flex;justify-content:center;align-items:center;gap:10px;height:52px;background:#2A2238;color:#FFFFFF;text-decoration:none;font-size:15px;font-weight:700;margin-top:4px">Entrar ▶</a>
+    <p style="margin:0;font-size:13px;text-align:center">¿Primera vez? <a href="#" style="font-weight:600">Crear cuenta</a></p>
+  </form>
+
+  <div style="margin-top:auto;height:150px;position:relative">
+    <svg class="sp" style="position:absolute;left:28px;top:18px" width="64" height="24" viewBox="0 0 16 6" aria-hidden="true"><path fill="#FFFFFF" d="M3 0h4v1h-4z M9 1h3v1h-3z M1 1h8v1h-8z M0 2h14v3h-14z M1 5h12v1h-12z"/></svg>
+    <svg class="sp" style="position:absolute;right:30px;top:36px" width="48" height="18" viewBox="0 0 16 6" aria-hidden="true"><path fill="#FFFFFF" d="M3 0h4v1h-4z M9 1h3v1h-3z M1 1h8v1h-8z M0 2h14v3h-14z M1 5h12v1h-12z"/></svg>
+    <svg class="sp" style="position:absolute;left:160px;bottom:44px" width="60" height="60" viewBox="0 0 16 16" aria-hidden="true"><path fill="#2A2238" d="M5 0h6v1h-6z M3 1h10v1h-10z M2 2h12v8h-12z M4 10h8v1h-8z M2 11h12v1h-12z M1 12h14v4h-14z"/><path fill="#4A3328" d="M5 1h6v1h-6z M3 2h10v3h-10z M3 5h1v1h-1z M12 5h1v1h-1z"/><path fill="#7A5A48" d="M6 2h3v1h-3z M4 3h2v1h-2z"/><path fill="#F2C9A0" d="M5 4h6v1h-6z M4 5h8v1h-8z M3 6h10v3h-10z M4 9h8v1h-8z M6 10h4v1h-4z"/><path fill="#D9A57C" d="M6 10h4v1h-4z M4 9h1v1h-1z M11 9h1v1h-1z"/><path fill="#2A2238" d="M5 6h2v2h-2z M9 6h2v2h-2z"/><path fill="#FFFFFF" d="M5 6h1v1h-1z M9 6h1v1h-1z"/><path fill="#E89A8A" d="M4 8h1v1h-1z M11 8h1v1h-1z"/><path fill="#B0705A" d="M7 8h2v1h-2z"/><path fill="#E8A33D" d="M3 11h10v1h-10z M2 12h12v3h-12z"/><path fill="#2A2238" fill-opacity=".28" d="M2 12h2v3h-2z M12 12h2v3h-2z"/><path fill="#FFFFFF" d="M6 11h4v1h-4z M7 12h2v1h-2z"/></svg>
+    <div style="position:absolute;left:0;right:0;bottom:0;height:44px;background:#2A2238;background-image:repeating-linear-gradient(90deg,#2A2238 0 12px,#3B3150 12px 24px)"></div>
+    <div style="position:absolute;left:0;right:0;bottom:44px;height:6px;background:#4FA35A"></div>
+  </div>
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

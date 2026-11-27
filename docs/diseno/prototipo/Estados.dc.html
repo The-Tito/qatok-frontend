@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Estados y errores</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Chakra+Petch:wght@600;700&amp;family=Silkscreen:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#2A2238}a:hover{color:#5E5470}
+.pf{font-family:'Chakra Petch',sans-serif}
+.sk{font-family:'Silkscreen',monospace;text-transform:uppercase;letter-spacing:.04em}
+.px{border:3px solid #2A2238;box-shadow:4px 4px 0 #2A2238}
+svg.sp{shape-rendering:crispEdges;display:block}
+button{font:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="width:1440px;height:1240px;box-sizing:border-box;padding:64px 80px;background:#FFFFFF;color:#2A2238;font-family:'IBM Plex Mono',monospace;display:flex;flex-direction:column;gap:36px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:32px">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <h1 class="pf" style="margin:0;font-size:48px;font-weight:700;line-height:1">Estados y errores</h1>
+      <p style="margin:0;font-size:15px;color:#5E5470;max-width:820px;line-height:1.6">Cada pantalla decide qué mostrar por el campo <b>code</b> del error de la API, nunca por el texto. Ninguna caída borra lo que el usuario ya guardó.</p>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px">
+
+    <article style="display:flex;flex-direction:column;gap:10px">
+      <span class="sk" style="font-size:11px;color:#5E5470">Cargando</span>
+      <div class="px" style="height:250px;box-sizing:border-box;padding:18px;display:flex;flex-direction:column;gap:12px">
+        <div style="height:18px;width:60%;background:#F5F3EF"></div>
+        <div style="height:80px;background:#F5F3EF;border:3px solid #E4DCCB"></div>
+        <div style="height:80px;background:#F5F3EF;border:3px solid #E4DCCB"></div>
+        <div style="display:flex;align-items:center;gap:10px"><span class="sk" style="font-size:10px">Cargando</span><div style="flex-grow:1;height:10px;border:2px solid #2A2238;position:relative"><div style="position:absolute;inset:0;width:40%;background-image:repeating-linear-gradient(90deg,#2A2238 0 8px,transparent 8px 12px)"></div></div></div>
+      </div>
+      <span style="font-size:12px;color:#5E5470">Bloques del tamaño final; nunca un spinner a pantalla completa.</span>
+    </article>
+
+    <article style="display:flex;flex-direction:column;gap:10px">
+      <span class="sk" style="font-size:11px;color:#5E5470">Sin resultados</span>
+      <div class="px" style="height:250px;box-sizing:border-box;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center">
+        <svg class="sp" width="33" height="33" viewBox="0 0 11 11" aria-hidden="true"><path fill="#8C8577" d="M5 0h1v3h-1z M4 3h3v1h-3z M3 4h5v1h-5z M0 5h11v1h-11z M3 6h5v1h-5z M4 7h3v1h-3z M5 8h1v3h-1z"/></svg>
+        <span class="pf" style="font-size:19px;font-weight:700">Nada por aquí</span>
+        <span style="font-size:13px;color:#5E5470;line-height:1.5">Ninguna simulación coincide con tu búsqueda.</span>
+        <button type="button" class="sk" style="height:44px;padding:0 14px;border:3px solid #2A2238;background:#FFFFFF;color:#2A2238;font-size:11px;font-weight:700">Quitar filtros</button>
+      </div>
+      <span style="font-size:12px;color:#5E5470">Catálogo, evidencias o perfil sin datos.</span>
+    </article>
+
+    <article style="display:flex;flex-direction:column;gap:10px">
+      <span class="sk" style="font-size:11px;color:#5E5470">503 · DATABASE_UNAVAILABLE</span>
+      <div class="px" style="height:250px;box-sizing:border-box;padding:18px;display:flex;flex-direction:column;gap:12px;background:#F5F3EF">
+        <span class="sk" style="font-size:11px;align-self:flex-start;padding:4px 8px;border:2px solid #2A2238;background:#FFFFFF">✕ Sin conexión</span>
+        <span class="pf" style="font-size:20px;font-weight:700;line-height:1.15">No pudimos cargar esta pantalla</span>
+        <span style="font-size:13px;color:#5E5470;line-height:1.5">Lo que ya guardaste está a salvo. Intenta de nuevo en unos segundos.</span>
+        <button type="button" class="sk px" style="margin-top:auto;height:46px;background:#2A2238;color:#FFFFFF;font-size:12px;font-weight:700">Reintentar</button>
+      </div>
+      <span style="font-size:12px;color:#5E5470">Mismo texto sin importar qué base falló.</span>
+    </article>
+
+    <article style="display:flex;flex-direction:column;gap:10px">
+      <span class="sk" style="font-size:11px;color:#5E5470">Perfil · datos incompletos</span>
+      <div class="px" style="height:250px;box-sizing:border-box;padding:18px;display:flex;flex-direction:column;gap:12px">
+        <div style="border:3px dashed #2A2238;padding:10px 12px;display:flex;flex-direction:column;gap:4px">
+          <span class="sk" style="font-size:10px">◆ Parte de tu perfil no cargó</span>
+          <span style="font-size:12px;line-height:1.5;color:#5E5470">Tus habilidades y recomendaciones aparecerán en cuanto vuelvan a estar disponibles.</span>
+        </div>
+        <div style="height:18px;border:3px solid #E4DCCB;background:#F5F3EF"></div>
+        <div style="height:18px;border:3px solid #E4DCCB;background:#F5F3EF"></div>
+        <span style="font-size:12px;color:#5E5470">Resumen y evidencias sí se muestran.</span>
+      </div>
+      <span style="font-size:12px;color:#5E5470">Si data_incomplete no está vacío: solo esa sección queda en gris.</span>
+    </article>
+
+    <article style="display:flex;flex-direction:column;gap:10px">
+      <span class="sk" style="font-size:11px;color:#5E5470">Sincronización · PENDING</span>
+      <div class="px" style="height:250px;box-sizing:border-box;padding:18px;display:flex;flex-direction:column;justify-content:center;gap:12px">
+        <div class="px" style="background:#2A2238;color:#FFFFFF;padding:12px 14px;display:flex;flex-direction:column;gap:8px">
+          <span class="sk" style="font-size:12px">Actualizando tu progreso…</span>
+          <div style="height:10px;border:2px solid #FFFFFF;position:relative"><div style="position:absolute;inset:0;width:55%;background-image:repeating-linear-gradient(90deg,#FFFFFF 0 8px,transparent 8px 12px)"></div></div>
+          <span style="font-size:12px;color:#E4DCCB;line-height:1.5">Tu intento ya está guardado.</span>
+        </div>
+      </div>
+      <span style="font-size:12px;color:#5E5470">graph = PENDING o pending_sync &gt; 0. Reconsultar el perfil cada 3 s, máximo 5 veces.</span>
+    </article>
+
+    <article style="display:flex;flex-direction:column;gap:10px">
+      <span class="sk" style="font-size:11px;color:#5E5470">409 · Intento en curso</span>
+      <div class="px" style="height:250px;box-sizing:border-box;padding:18px;display:flex;flex-direction:column;gap:12px;background:#E9DDF7">
+        <span class="pf" style="font-size:20px;font-weight:700;line-height:1.15">Ya tienes esta partida en curso</span>
+        <span style="font-size:13px;color:#4B2A7A;line-height:1.5">Tres entregas para mañana · iniciada el 11 nov</span>
+        <button type="button" class="sk px" style="margin-top:auto;height:46px;background:#4B2A7A;color:#FFFFFF;font-size:12px;font-weight:700">Continuar ▶</button>
+        <button type="button" class="sk" style="height:40px;border:3px solid #2A2238;background:#FFFFFF;color:#2A2238;font-size:11px;font-weight:700">Abandonar y empezar de nuevo</button>
+      </div>
+      <span style="font-size:12px;color:#5E5470">Usa el ID que llega en details para retomar.</span>
+    </article>
+
+    <article style="display:flex;flex-direction:column;gap:10px">
+      <span class="sk" style="font-size:11px;color:#5E5470">401 · UNAUTHENTICATED</span>
+      <div class="px" style="height:250px;box-sizing:border-box;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center">
+        <span class="pf" style="font-size:20px;font-weight:700">Tu sesión terminó</span>
+        <span style="font-size:13px;color:#5E5470;line-height:1.5">Entra de nuevo para seguir donde te quedaste.</span>
+        <button type="button" class="sk px" style="height:46px;padding:0 18px;background:#2A2238;color:#FFFFFF;font-size:12px;font-weight:700">Entrar</button>
+      </div>
+      <span style="font-size:12px;color:#5E5470">Borrar el token y volver a /entrar con la ruta de regreso.</span>
+    </article>
+
+    <article style="display:flex;flex-direction:column;gap:10px">
+      <span class="sk" style="font-size:11px;color:#5E5470">403 · FORBIDDEN</span>
+      <div class="px" style="height:250px;box-sizing:border-box;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center">
+        <span class="pf" style="font-size:20px;font-weight:700">Esta zona es para administración</span>
+        <span style="font-size:13px;color:#5E5470;line-height:1.5">Tu cuenta no tiene permiso para entrar aquí.</span>
+        <button type="button" class="sk" style="height:44px;padding:0 14px;border:3px solid #2A2238;background:#FFFFFF;color:#2A2238;font-size:11px;font-weight:700">Ir al catálogo</button>
+      </div>
+      <span style="font-size:12px;color:#5E5470">Rutas /admin con cuenta de estudiante.</span>
+    </article>
+
+    <article style="display:flex;flex-direction:column;gap:10px">
+      <span class="sk" style="font-size:11px;color:#5E5470">Público · 410 enlace vencido</span>
+      <div class="px" style="height:250px;box-sizing:border-box;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center">
+        <svg class="sp" width="36" height="36" viewBox="0 0 9 9" aria-hidden="true"><path fill="#2A2238" d="M2 0h5v1h-5z M1 1h1v1h-1z M7 1h1v1h-1z M0 2h1v5h-1z M8 2h1v5h-1z M1 7h1v1h-1z M7 7h1v1h-1z M2 8h5v1h-5z M4 2h1v3h-1z M5 4h2v1h-2z"/></svg>
+        <span class="pf" style="font-size:20px;font-weight:700">Este enlace ya venció</span>
+        <span style="font-size:13px;color:#5E5470;line-height:1.5">Pide a la persona que lo compartió un enlace nuevo.</span>
+      </div>
+      <span style="font-size:12px;color:#5E5470">Página pública, sin sesión.</span>
+    </article>
+
+    <article style="display:flex;flex-direction:column;gap:10px">
+      <span class="sk" style="font-size:11px;color:#5E5470">Público · 404 enlace no válido</span>
+      <div class="px" style="height:250px;box-sizing:border-box;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center">
+        <span class="pf" style="font-size:20px;font-weight:700">Este enlace no está disponible</span>
+        <span style="font-size:13px;color:#5E5470;line-height:1.5">Puede que se haya escrito mal o que su titular lo haya retirado.</span>
+      </div>
+      <span style="font-size:12px;color:#5E5470">No distingue entre inexistente y revocado.</span>
+    </article>
+
+    <article style="display:flex;flex-direction:column;gap:10px">
+      <span class="sk" style="font-size:11px;color:#5E5470">Admin · 409 STALE_CONTENT_VERSION</span>
+      <div class="px" style="height:250px;box-sizing:border-box;padding:18px;display:flex;flex-direction:column;gap:12px;background:#FCEBC8">
+        <span class="sk" style="font-size:11px;align-self:flex-start;padding:4px 8px;border:2px solid #2A2238;background:#FFFFFF;color:#7A4A0B">◆ Cambios en conflicto</span>
+        <span class="pf" style="font-size:19px;font-weight:700;line-height:1.15">Alguien guardó otra versión del borrador</span>
+        <span style="font-size:13px;color:#7A4A0B;line-height:1.5">Recarga para ver la versión actual. Tus cambios siguen en pantalla para que los copies.</span>
+        <button type="button" class="sk px" style="margin-top:auto;height:44px;background:#7A4A0B;color:#FFFFFF;font-size:12px;font-weight:700">Recargar versión</button>
+      </div>
+      <span style="font-size:12px;color:#5E5470">Editor de escenario y publicar.</span>
+    </article>
+
+    <article style="display:flex;flex-direction:column;gap:10px">
+      <span class="sk" style="font-size:11px;color:#5E5470">400 · VALIDATION_ERROR</span>
+      <div class="px" style="height:250px;box-sizing:border-box;padding:18px;display:flex;flex-direction:column;gap:8px">
+        <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Contraseña
+          <input type="password" value="corta" aria-invalid="true" style="height:44px;box-sizing:border-box;border:3px solid #8A1F16;background:#F9D7D2;padding:0 12px;font:inherit;font-size:14px;color:#2A2238">
+        </label>
+        <span style="font-size:12px;color:#8A1F16;line-height:1.5">✕ Debe tener al menos 8 caracteres.</span>
+        <span style="margin-top:auto;font-size:12px;color:#5E5470;line-height:1.5">El error va bajo su campo (details.fields) y el foco pasa al primer campo con error.</span>
+      </div>
+      <span style="font-size:12px;color:#5E5470">Validar antes con los esquemas Zod compartidos.</span>
+    </article>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1240}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
