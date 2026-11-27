@@ -60,12 +60,6 @@
   overflow-wrap: anywhere;
 }
 
-.account-note {
-  color: var(--color-ink-muted);
-  font-size: 12px;
-  line-height: 1.5;
-}
-
 .account-status {
   color: var(--color-correct-fg);
   font-size: 13px;
