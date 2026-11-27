@@ -72,31 +72,12 @@ Reglas:
 2. Nunca texto sobre `base`. Texto oscuro (`dark` o `ink`) sobre `tint`; texto blanco solo sobre `dark` o `ink`.
 3. El tipo siempre va acompañado de su nombre o del nombre de la habilidad: el color no es la única señal.
 
-Implementación (`src/lib/skill-types.ts`), mientras se resuelve la decisión D1:
+Implementación: `src/lib/skill-types.ts` (issue 0.2). Los colores no se repiten en TypeScript: viven en `globals.css` y se eligen con `data-type`.
 
-```ts
-export const SKILL_TYPES = {
-  VOICE: { label: 'Voz', base: '#E8A33D', dark: '#7A4A0B', tint: '#FCEBC8' },
-  FIRE: { label: 'Fuego', base: '#D9483B', dark: '#8A1F16', tint: '#F9D7D2' },
-  CLOCK: { label: 'Reloj', base: '#8A5CC7', dark: '#4B2A7A', tint: '#E9DDF7' },
-  LEAF: { label: 'Hoja', base: '#4FA35A', dark: '#1F5A28', tint: '#D6EFD5' },
-  SPARK: { label: 'Chispa', base: '#E2703A', dark: '#7E3410', tint: '#FBDCC9' },
-  HEART: { label: 'Corazón', base: '#D66BA0', dark: '#7D2453', tint: '#F8D9E8' },
-  MIND: { label: 'Mente', base: '#9AA33A', dark: '#4E5414', tint: '#EEF0CF' },
-  STONE: { label: 'Piedra', base: '#8C8577', dark: '#45403A', tint: '#E8E4DC' },
-} as const;
-export type SkillTypeKey = keyof typeof SKILL_TYPES;
-
-// Provisional (D1): mapa por ID. Se reemplaza por el campo de la API cuando exista.
-const BY_SKILL_ID: Record<string, SkillTypeKey> = {
-  'e0000000-0000-4000-8000-000000000201': 'VOICE',
-  'e0000000-0000-4000-8000-000000000202': 'FIRE',
-  'e0000000-0000-4000-8000-000000000203': 'CLOCK',
-};
-export const skillType = (skillId: string): SkillTypeKey => BY_SKILL_ID[skillId] ?? 'STONE';
-```
-
-Probar con pruebas unitarias: mapa conocido, respaldo `STONE` y la regla del mayor peso con empate.
+- `SKILL_TYPES`: clave → nombre («Voz», «Fuego»…).
+- `skillType(skillId)`: **provisional (D1)**, mapa por ID del dataset (`…0201` VOICE, `…0202` FIRE, `…0203` CLOCK) con respaldo `STONE`. Se reemplaza por el campo de la API cuando exista.
+- `mainSkill(skills)` y `simulationType(skills)`: la regla 1 de arriba (mayor `weight`, empate por nombre; sin habilidades, `STONE`).
+- Pruebas en `src/lib/skill-types.test.ts`.
 
 ## Componentes
 

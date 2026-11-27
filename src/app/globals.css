@@ -278,3 +278,57 @@ body {
   outline: 3px solid #e8a33d;
   outline-offset: 3px;
 }
+
+/* StateCard (base; el diseño completo llega en el issue 0.3) */
+.state-card {
+  display: grid;
+  justify-items: start;
+  gap: 0.75rem;
+  width: min(100% - 2rem, 31rem);
+  margin: clamp(1.5rem, 7vw, 4rem) auto;
+  padding: 1.25rem;
+  border: var(--border) solid var(--color-ink);
+  box-shadow: var(--shadow);
+  background: var(--color-surface);
+}
+
+.state-card-icon {
+  font-family: var(--font-silkscreen), monospace;
+  font-size: 1.5rem;
+}
+
+.state-card-title {
+  font-family: var(--font-chakra-petch), sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.state-card-message {
+  color: var(--color-ink-muted);
+}
+
+.state-card[data-kind='forbidden'],
+.state-card[data-kind='error'] {
+  background: var(--color-incorrect-bg);
+}
+
+.state-card[data-kind='forbidden'] .state-card-message,
+.state-card[data-kind='error'] .state-card-message {
+  color: var(--color-incorrect-fg);
+}
+
+.state-card-action {
+  display: inline-flex;
+  align-items: center;
+  min-height: 3rem;
+  padding: 0.5rem 1rem;
+  border: var(--border-thin) solid var(--color-ink);
+  box-shadow: var(--shadow-sm);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-family: var(--font-silkscreen), monospace;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+}

@@ -3,7 +3,7 @@
 import { LoginInput, type Account } from '@qatok/shared';
 import Link from 'next/link';
 import { useEffect, useState, type FormEvent } from 'react';
-import { AccountApiError, getCurrentAccount, login } from '../../lib/api';
+import { ApiError, getMe, login } from '../../lib/api';
 import { clearSession, readSession, saveSession } from '../../lib/session';
 
 type Field = keyof typeof LoginInput.shape;
@@ -32,13 +32,13 @@ export function LoginPanel() {
     }
 
     const signal = AbortSignal.any([controller.signal, AbortSignal.timeout(7000)]);
-    void getCurrentAccount(saved.token, signal)
+    void getMe(signal)
       .then((user) => {
         if (!controller.signal.aborted) setAccount(user);
       })
       .catch((error: unknown) => {
         if (controller.signal.aborted) return;
-        if (error instanceof AccountApiError && error.status === 401) {
+        if (error instanceof ApiError && error.status === 401) {
           clearSession();
           setMessage('Tu sesión terminó. Vuelve a entrar.');
         } else {
@@ -93,7 +93,7 @@ export function LoginPanel() {
       setAccount(session.user);
     } catch (error) {
       setMessage(
-        error instanceof AccountApiError
+        error instanceof ApiError
           ? (accountErrors[error.code] ?? connectionError)
           : connectionError,
       );

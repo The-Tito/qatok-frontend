@@ -103,9 +103,13 @@ Los mensajes viven en `src/lib/api/errors.ts` como un mapa `code → texto`, con
 
 ## Datos simulados (D2)
 
-Para avanzar las pantallas de F3a y F3b antes de que exista su backend:
+Descartados (plan v2, 2026-11-27): la API está completa (contrato 0.6.0) y cada pantalla se termina contra la API local con el dataset. No hay MSW ni fixtures.
 
-- MSW 2 (`msw`, dependencia de desarrollo) con manejadores en `src/mocks/handlers/`, activado solo si `NEXT_PUBLIC_API_MOCKS === 'true'` y `NODE_ENV !== 'production'`.
-- Fixtures en `src/mocks/fixtures/`, copiadas del dataset (`qatok-backend/database/seed/dataset.json`) con los mismos IDs `e0000000-0000-4000-8000-…`. No inventar datos nuevos: si falta algo, derivarlo del dataset. Por ejemplo, los niveles del perfil de Ana López salen de DEC-25: Comunicación 75, Conflictos 92.5 y Tiempo 40.
-- Mockear solo lo que no existe. F1, admin y F2 se prueban contra la API real (`npm run dev:api` en el backend).
-- Registrar la variable en `.env.example` con el comentario «solo desarrollo».
+## Implementación (issue 0.2)
+
+- `src/lib/api/client.ts`: `request(path, { method, body, schema, auth, query, signal })` y `apiUrl()`. Un 401 **con token enviado** borra la sesión y llama al manejador que registra `src/app/providers.tsx` (limpia la caché de TanStack Query y va a `/login?next=`; desde el issue 1.1, `/entrar`). Un 401 de `/auth/login` (sin token) no cierra nada.
+- `src/lib/api/errors.ts`: `ApiError`, `ContractError`, `errorMessage()`, `isApiError(error, ...codes)` y `fieldErrors()`. La API manda `details.fields` como **lista** `[{ field, message }]` con mensajes en inglés: la pantalla muestra su propio texto por campo.
+- `src/lib/session.ts` y `src/lib/use-session.ts`: sesión en `localStorage` con aviso a los componentes (`useSyncExternalStore`) y entre pestañas.
+- `src/lib/routes.ts`: rutas de inicio por rol y `next` seguro (solo rutas internas).
+- `src/components/RequireSession.tsx`: guarda de los grupos `(estudiante)` y `(admin)`; refresca `GET /api/me` una vez por carga y muestra el 403 si el rol no coincide.
+- Pruebas (Vitest, `npm run test`, incluido en `npm run verificar`): cliente con `fetch` simulado, errores, sesión, rutas y tipos de habilidad.

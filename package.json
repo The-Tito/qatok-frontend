@@ -12,12 +12,13 @@
     "format": "prettier --write \"**/*.{ts,tsx,js,mjs,json,css}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,mjs,json,css}\"",
     "typecheck": "tsc --noEmit -p .",
-    "verificar": "npm run lint && npm run format:check && npm run typecheck && npm run check:shared",
+    "verificar": "npm run lint && npm run format:check && npm run typecheck && npm run test && npm run check:shared",
     "sync:shared": "node scripts/sync-shared.mjs",
     "check:shared": "node scripts/sync-shared.mjs --check",
     "dev": "next dev --webpack",
     "build": "next build --webpack",
-    "start": "next start"
+    "start": "next start",
+    "test": "vitest run"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -33,9 +34,11 @@
     "prettier": "^3.10.1",
     "tailwindcss": "^4.3.5",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.73.0"
+    "typescript-eslint": "^8.73.0",
+    "vitest": "^5.1.2"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.108.4",
     "next": "^16.4.6",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",

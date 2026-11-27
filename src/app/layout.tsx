@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Chakra_Petch, IBM_Plex_Mono, Silkscreen } from 'next/font/google';
 import type { ReactNode } from 'react';
 import './globals.css';
+import { Providers } from './providers';
 
 const title = Chakra_Petch({
   subsets: ['latin'],
@@ -33,7 +34,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="es" className={`${title.variable} ${label.variable} ${body.variable}`}>
-      <body>{children}</body>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
