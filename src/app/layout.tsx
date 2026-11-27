@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Chakra_Petch, IBM_Plex_Mono, Silkscreen } from 'next/font/google';
 import type { ReactNode } from 'react';
 import './globals.css';
+import '../components/ui.css';
+import { Providers } from './providers';
 
 const title = Chakra_Petch({
   subsets: ['latin'],
@@ -25,13 +27,17 @@ const body = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Estado de la API · QATO'K",
+  title: { default: "QATO'K", template: "%s · QATO'K" },
+  description:
+    'Practica decisiones del trabajo, mira sus consecuencias y sube de nivel tus habilidades.',
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="es" className={`${title.variable} ${label.variable} ${body.variable}`}>
-      <body>{children}</body>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

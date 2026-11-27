@@ -1,29 +1,85 @@
+// Sesión en localStorage (DEC-F04): { token, user } con la clave qatok.session.
+// El rol se toma de user.role; el JWT no se decodifica. La API vuelve a comprobar todo.
 import { Session } from '@qatok/shared';
 
-const storageKey = 'qatok.session';
-type SavedSession = ReturnType<typeof Session.parse>;
+export const SESSION_KEY = 'qatok.session';
+export type SavedSession = ReturnType<typeof Session.parse>;
+
+const listeners = new Set<() => void>();
+let cachedRaw: string | null = null;
+let cachedSession: SavedSession | null = null;
+
+function readRaw(): string | null {
+  try {
+    return localStorage.getItem(SESSION_KEY);
+  } catch {
+    return null;
+  }
+}
+
+function notify() {
+  for (const listener of listeners) listener();
+}
 
 export function readSession(): SavedSession | null {
+  const raw = readRaw();
+  if (raw === cachedRaw) return cachedSession;
+  cachedRaw = raw;
+  cachedSession = null;
+  if (!raw) return null;
   try {
-    const value = localStorage.getItem(storageKey);
-    if (!value) return null;
-    const parsed = Session.safeParse(JSON.parse(value));
-    if (parsed.success) return parsed.data;
-    clearSession();
+    const parsed = Session.safeParse(JSON.parse(raw));
+    if (parsed.success) cachedSession = parsed.data;
   } catch {
-    clearSession();
+    // JSON dañado: se trata como sin sesión.
   }
-  return null;
+  if (!cachedSession) removeRaw();
+  return cachedSession;
 }
 
 export function saveSession(session: SavedSession) {
-  localStorage.setItem(storageKey, JSON.stringify(session));
+  signedOut = false;
+  localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+  notify();
 }
 
-export function clearSession() {
+/** Cambia solo los datos del usuario (por ejemplo, tras GET o PATCH /api/me). */
+export function updateSessionUser(user: SavedSession['user']) {
+  const current = readSession();
+  if (current) saveSession({ ...current, user });
+}
+
+function removeRaw() {
   try {
-    localStorage.removeItem(storageKey);
+    localStorage.removeItem(SESSION_KEY);
   } catch {
     // El almacenamiento puede estar bloqueado en el navegador.
   }
+}
+
+let signedOut = false;
+
+/** Borra la sesión. `signOut: true` cuando el usuario pulsó «Salir» (sin ruta de regreso). */
+export function clearSession({ signOut = false }: { signOut?: boolean } = {}) {
+  signedOut = signOut;
+  removeRaw();
+  notify();
+}
+
+/** true si la última sesión terminó con «Salir» y no por vencimiento. */
+export function endedBySignOut() {
+  return signedOut;
+}
+
+/** Para useSyncExternalStore: avisa en esta pestaña y cuando otra pestaña cambia la sesión. */
+export function subscribeSession(listener: () => void) {
+  listeners.add(listener);
+  const onStorage = (event: StorageEvent) => {
+    if (event.key === null || event.key === SESSION_KEY) listener();
+  };
+  window.addEventListener('storage', onStorage);
+  return () => {
+    listeners.delete(listener);
+    window.removeEventListener('storage', onStorage);
+  };
 }

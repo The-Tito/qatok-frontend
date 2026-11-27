@@ -64,41 +64,26 @@ Cada habilidad tiene un «tipo» visual con tres colores: `base` (decoración, f
 | `MIND` | Mente | `#9AA33A` | `#4E5414` | `#EEF0CF` | Libre |
 | `STONE` | Piedra | `#8C8577` | `#45403A` | `#E8E4DC` | Respaldo para habilidades sin tipo |
 
+En `globals.css` cada tipo tiene `--type-<clave>-base|dark|tint`. Un elemento con `data-type="VOICE"` (o cualquier otra clave) fija `--type-base`, `--type-dark` y `--type-tint`, que son las únicas variables que usan los componentes; sin `data-type` valen las de `STONE`.
+
 Reglas:
 
 1. **Color de una simulación** = tipo de su habilidad con mayor `weight` (empate: la primera por nombre). La segunda habilidad aparece como franja proporcional a su peso en tarjetas.
 2. Nunca texto sobre `base`. Texto oscuro (`dark` o `ink`) sobre `tint`; texto blanco solo sobre `dark` o `ink`.
 3. El tipo siempre va acompañado de su nombre o del nombre de la habilidad: el color no es la única señal.
 
-Implementación (`src/lib/skill-types.ts`), mientras se resuelve la decisión D1:
+Implementación: `src/lib/skill-types.ts` (issue 0.2). Los colores no se repiten en TypeScript: viven en `globals.css` y se eligen con `data-type`.
 
-```ts
-export const SKILL_TYPES = {
-  VOICE: { label: 'Voz', base: '#E8A33D', dark: '#7A4A0B', tint: '#FCEBC8' },
-  FIRE: { label: 'Fuego', base: '#D9483B', dark: '#8A1F16', tint: '#F9D7D2' },
-  CLOCK: { label: 'Reloj', base: '#8A5CC7', dark: '#4B2A7A', tint: '#E9DDF7' },
-  LEAF: { label: 'Hoja', base: '#4FA35A', dark: '#1F5A28', tint: '#D6EFD5' },
-  SPARK: { label: 'Chispa', base: '#E2703A', dark: '#7E3410', tint: '#FBDCC9' },
-  HEART: { label: 'Corazón', base: '#D66BA0', dark: '#7D2453', tint: '#F8D9E8' },
-  MIND: { label: 'Mente', base: '#9AA33A', dark: '#4E5414', tint: '#EEF0CF' },
-  STONE: { label: 'Piedra', base: '#8C8577', dark: '#45403A', tint: '#E8E4DC' },
-} as const;
-export type SkillTypeKey = keyof typeof SKILL_TYPES;
-
-// Provisional (D1): mapa por ID. Se reemplaza por el campo de la API cuando exista.
-const BY_SKILL_ID: Record<string, SkillTypeKey> = {
-  'e0000000-0000-4000-8000-000000000201': 'VOICE',
-  'e0000000-0000-4000-8000-000000000202': 'FIRE',
-  'e0000000-0000-4000-8000-000000000203': 'CLOCK',
-};
-export const skillType = (skillId: string): SkillTypeKey => BY_SKILL_ID[skillId] ?? 'STONE';
-```
-
-Probar con pruebas unitarias: mapa conocido, respaldo `STONE` y la regla del mayor peso con empate.
+- `SKILL_TYPES`: clave → nombre («Voz», «Fuego»…).
+- `skillType(skillId)`: **provisional (D1)**, mapa por ID del dataset (`…0201` VOICE, `…0202` FIRE, `…0203` CLOCK) con respaldo `STONE`. Se reemplaza por el campo de la API cuando exista.
+- `mainSkill(skills)` y `simulationType(skills)`: la regla 1 de arriba (mayor `weight`, empate por nombre; sin habilidades, `STONE`).
+- Pruebas en `src/lib/skill-types.test.ts`.
 
 ## Componentes
 
-Todos en `src/components/`. Cada uno con su variante en la página de muestra `/dev/componentes`, solo visible en desarrollo.
+Todos en `src/components/`. Cada uno con su variante en la página de muestra `/dev/componentes`, solo visible en desarrollo (en producción da 404).
+
+Hechos en el issue 0.3 (estilos en `src/components/ui.css`): `PixelButton`, `TypeChip`, `Chip`, `FeedbackBadge`, `ImpactBadge`, `ClassificationBadge` (en `Badges.tsx`), `LevelBar`, `StateCard` y `LoadingCard`, `SyncBanner`, `Sheet` (hoja inferior en móvil, diálogo centrado de 520 px desde 1024 px, con `<dialog>` modal) y las estructuras `StudentShell` (BottomNav debajo de 1024 px, barra superior desde 1024 px) y `AdminShell` (en `Shells.tsx`). Los componentes del juego (`OptionList`, `DialogBox`, `StepHeader`, `StepContext`, `Sprite`, `Sparkle`) y `Field` llegan con sus pantallas.
 
 | Componente | Prototipo | Especificación |
 |---|---|---|
@@ -120,6 +105,10 @@ Todos en `src/components/`. Cada uno con su variante en la página de muestra `/
 | `BottomNav` | Catálogo, Perfil, Evidencias | 72 px, 3 destinos: Jugar, Perfil, Evidencias. El activo con fondo ink y `aria-current="page"` |
 | `AdminShell` | Admin | Barra superior ink con «QATO'K · Admin», navegación Simulaciones / Habilidades y usuario con «Salir» |
 | `Field` | Formularios | `<label>` + control con borde 3 px y fondo `fill`. Error: borde y fondo de `incorrect`, mensaje debajo con ✕ y `aria-describedby` |
+
+## Logo
+
+Propuesta 4 (cuadro de diálogo), sacada de `prototipo-v2/movil/Logo.dc.html`: `public/logo.svg` (símbolo 16×16), `public/logo-texto.svg` (palabra «QATOK» 64×15) y `src/app/icon.svg` (favicon). Escalar por múltiplos enteros.
 
 ## Sprites
 

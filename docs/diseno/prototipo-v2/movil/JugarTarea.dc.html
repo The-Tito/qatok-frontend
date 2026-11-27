@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Paso de tarea</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Chakra+Petch:wght@600;700&amp;family=Silkscreen:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#2A2238}a:hover{color:#5E5470}
+.pf{font-family:'Chakra Petch',sans-serif}
+.sk{font-family:'Silkscreen',monospace;text-transform:uppercase;letter-spacing:.04em}
+.px{border:3px solid #2A2238;box-shadow:4px 4px 0 #2A2238}
+.seg{background-image:repeating-linear-gradient(90deg,transparent 0 14px,#2A2238 14px 16px)}
+svg.sp{shape-rendering:crispEdges;display:block}
+button{font:inherit;cursor:pointer}
+button:disabled{cursor:not-allowed}
+input,select,textarea{font:inherit;color:#2A2238}
+input:focus,select:focus,textarea:focus{outline:3px solid #E8A33D;outline-offset:2px}
+::placeholder{color:#8C8577}
+</style>
+</helmet>
+<div style="width:390px;height:844px;box-sizing:border-box;background:#FFFFFF;color:#2A2238;font-family:'IBM Plex Mono',monospace;display:flex;flex-direction:column;overflow:hidden;position:relative">
+  <header style="height:64px;flex-shrink:0;display:flex;align-items:center;gap:10px;padding:0 16px;background:{{c.tint}};border-bottom:3px solid #2A2238">
+    <a href="JugarPausa.dc.html" aria-label="Pausar" class="sk" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:3px solid #2A2238;background:#FFFFFF;text-decoration:none;font-size:14px;font-weight:700;flex-shrink:0">II</a>
+    <div style="display:flex;flex-direction:column;gap:2px;flex-grow:1;min-width:0">
+      <span class="sk" style="font-size:10px;color:{{c.dark}}">Paso 1 · Tarea</span>
+      <span style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Tres entregas para mañana</span>
+    </div>
+    <svg class="sp" width="25" height="30" viewBox="0 0 10 12" aria-hidden="true"><path fill="#2A2238" d="M0 1h10v11h-10z"/><path fill="#FFFFFF" d="M1 2h8v9h-8z"/><path fill="#8C8577" d="M3 0h4v2h-4z"/><path fill="#2A2238" d="M2 4h6v1h-6z M2 6h6v1h-6z M2 8h4v1h-4z"/></svg>
+  </header>
+
+  <div style="padding:16px 16px 0;display:flex;flex-direction:column;gap:14px;flex-grow:1;overflow:hidden">
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <h1 class="pf" style="margin:0;font-size:24px;font-weight:700">Tres tareas, un día</h1>
+      <p style="margin:0;font-size:13px;line-height:1.5;color:#5E5470">Son las 9:00 y tienes tres entregas para las 18:00.</p>
+    </div>
+
+    <article class="px" style="background:#FFFFFF;display:flex;flex-direction:column">
+      <div style="padding:10px 12px;border-bottom:3px solid #2A2238;display:flex;justify-content:space-between;align-items:center;gap:8px;background:#F5F3EF">
+        <span class="sk" style="font-size:10px">Entregables · 3</span>
+        <span class="sk" style="font-size:11px;font-weight:700;padding:5px 8px;border:2px solid #2A2238;background:{{c.tint}};color:{{c.dark}}">Plazo: 9 h</span>
+      </div>
+      <ul aria-label="Entregables" style="list-style:none;margin:0;padding:12px;display:flex;flex-direction:column;gap:8px">
+        <li style="display:flex;gap:10px;align-items:center;min-height:32px;font-size:14px;line-height:1.4"><span aria-hidden="true" style="width:18px;height:18px;border:3px solid #2A2238;background:#FFFFFF;flex-shrink:0;box-sizing:border-box"></span>Informe semanal de ventas</li>
+        <li style="display:flex;gap:10px;align-items:center;min-height:32px;font-size:14px;line-height:1.4"><span aria-hidden="true" style="width:18px;height:18px;border:3px solid #2A2238;background:#FFFFFF;flex-shrink:0;box-sizing:border-box"></span>Presentación para el cliente</li>
+        <li style="display:flex;gap:10px;align-items:center;min-height:32px;font-size:14px;line-height:1.4"><span aria-hidden="true" style="width:18px;height:18px;border:3px solid #2A2238;background:#FFFFFF;flex-shrink:0;box-sizing:border-box"></span>Revisión del contrato</li>
+      </ul>
+    </article>
+
+    <div style="display:flex;align-items:center;gap:8px">
+      <span class="sk" style="font-size:13px;font-weight:700">¿Qué haces?</span>
+      <span style="flex-grow:1;height:3px;background:#2A2238"></span>
+    </div>
+
+    <div role="radiogroup" aria-label="Opciones" style="display:flex;flex-direction:column;gap:10px">
+      <sc-for list="{{options}}" as="o" hint-placeholder-count="2">
+        <sc-if value="{{o.on}}" hint-placeholder-val="{{ false }}">
+          <button type="button" role="radio" aria-checked="true" onClick="{{o.pick}}" style="display:flex;gap:12px;align-items:flex-start;min-height:48px;padding:12px 14px;border:3px solid #2A2238;color:#2A2238;background:{{c.tint}};box-shadow:4px 4px 0 #2A2238">
+            <span class="sk" style="font-size:14px;width:14px;flex-shrink:0">▶</span>
+            <span style="font-size:14px;line-height:1.45;text-align:left;font-weight:600">{{o.text}}</span>
+          </button>
+        </sc-if>
+        <sc-if value="{{o.off}}" hint-placeholder-val="{{ true }}">
+          <button type="button" role="radio" aria-checked="false" onClick="{{o.pick}}" style="display:flex;gap:12px;align-items:flex-start;min-height:48px;padding:12px 14px;border:3px solid #2A2238;color:#2A2238;background:#FFFFFF">
+            <span class="sk" style="font-size:14px;width:14px;flex-shrink:0;color:#E4DCCB">▶</span>
+            <span style="font-size:14px;line-height:1.45;text-align:left">{{o.text}}</span>
+          </button>
+        </sc-if>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="padding:14px 16px 24px">
+    <a href="DecisionV2.dc.html" class="sk px" style="display:flex;justify-content:center;align-items:center;gap:10px;height:56px;background:{{c.dark}};color:#FFFFFF;text-decoration:none;font-size:16px;font-weight:700">Decidir ▶</a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"tipo": {"editor": "enum", "options": ["Voz", "Fuego", "Reloj", "Hoja", "Chispa", "Corazón", "Mente", "Piedra"], "default": "Reloj"}, "$preview": {"width": 390, "height": 844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { picked: 0 }; }
+  renderVals() {
+    const types = {
+      'Voz': ['#E8A33D', '#7A4A0B', '#FCEBC8'], 'Fuego': ['#D9483B', '#8A1F16', '#F9D7D2'],
+      'Reloj': ['#8A5CC7', '#4B2A7A', '#E9DDF7'], 'Hoja': ['#4FA35A', '#1F5A28', '#D6EFD5'],
+      'Chispa': ['#E2703A', '#7E3410', '#FBDCC9'], 'Corazón': ['#D66BA0', '#7D2453', '#F8D9E8'],
+      'Mente': ['#9AA33A', '#4E5414', '#EEF0CF'], 'Piedra': ['#8C8577', '#45403A', '#E8E4DC'],
+    };
+    const name = this.props.tipo ?? 'Reloj';
+    const [base, dark, tint] = types[name] ?? types['Reloj'];
+    const picked = this.state.picked ?? 0;
+    const texts = [
+      "Priorizar y avisar del riesgo a tiempo",
+      "Intentar terminar todo sin avisar",
+    ];
+    const options = texts.map((text, i) => {
+      const on = i === picked;
+      return { text, on, off: !on, pick: () => this.setState({ picked: i }) };
+    });
+    return { c: { name, base, dark, tint }, options };
+  }
+}
+</script>
+</body>
+</html>

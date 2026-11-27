@@ -25,6 +25,116 @@
   --shadow: 4px 4px 0 var(--color-ink);
   --shadow-sm: 3px 3px 0 var(--color-ink);
   --radius: 0;
+  --focus-ring: #e8a33d;
+
+  /* Tipos de habilidad (01 · Tipos de habilidad): base, dark y tint */
+  --type-voice-base: #e8a33d;
+  --type-voice-dark: #7a4a0b;
+  --type-voice-tint: #fcebc8;
+  --type-fire-base: #d9483b;
+  --type-fire-dark: #8a1f16;
+  --type-fire-tint: #f9d7d2;
+  --type-clock-base: #8a5cc7;
+  --type-clock-dark: #4b2a7a;
+  --type-clock-tint: #e9ddf7;
+  --type-leaf-base: #4fa35a;
+  --type-leaf-dark: #1f5a28;
+  --type-leaf-tint: #d6efd5;
+  --type-spark-base: #e2703a;
+  --type-spark-dark: #7e3410;
+  --type-spark-tint: #fbdcc9;
+  --type-heart-base: #d66ba0;
+  --type-heart-dark: #7d2453;
+  --type-heart-tint: #f8d9e8;
+  --type-mind-base: #9aa33a;
+  --type-mind-dark: #4e5414;
+  --type-mind-tint: #eef0cf;
+  --type-stone-base: #8c8577;
+  --type-stone-dark: #45403a;
+  --type-stone-tint: #e8e4dc;
+
+  /* Movimiento (DEC-F06): solo CSS, por pasos */
+  --mov-letra: 28ms;
+  --mov-rapido: 120ms;
+  --mov-medio: 320ms;
+  --mov-pasos-2: steps(2, jump-none);
+  --mov-pasos-4: steps(4, end);
+}
+
+/*
+ * Tipo activo: data-type="VOICE|FIRE|…" fija --type-base, --type-dark y --type-tint
+ * para que los componentes usen siempre las mismas tres variables.
+ */
+:root,
+[data-type='STONE'] {
+  --type-base: var(--type-stone-base);
+  --type-dark: var(--type-stone-dark);
+  --type-tint: var(--type-stone-tint);
+}
+
+[data-type='VOICE'] {
+  --type-base: var(--type-voice-base);
+  --type-dark: var(--type-voice-dark);
+  --type-tint: var(--type-voice-tint);
+}
+
+[data-type='FIRE'] {
+  --type-base: var(--type-fire-base);
+  --type-dark: var(--type-fire-dark);
+  --type-tint: var(--type-fire-tint);
+}
+
+[data-type='CLOCK'] {
+  --type-base: var(--type-clock-base);
+  --type-dark: var(--type-clock-dark);
+  --type-tint: var(--type-clock-tint);
+}
+
+[data-type='LEAF'] {
+  --type-base: var(--type-leaf-base);
+  --type-dark: var(--type-leaf-dark);
+  --type-tint: var(--type-leaf-tint);
+}
+
+[data-type='SPARK'] {
+  --type-base: var(--type-spark-base);
+  --type-dark: var(--type-spark-dark);
+  --type-tint: var(--type-spark-tint);
+}
+
+[data-type='HEART'] {
+  --type-base: var(--type-heart-base);
+  --type-dark: var(--type-heart-dark);
+  --type-tint: var(--type-heart-tint);
+}
+
+[data-type='MIND'] {
+  --type-base: var(--type-mind-base);
+  --type-dark: var(--type-mind-dark);
+  --type-tint: var(--type-mind-tint);
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+img[src^='/sprites/'],
+.pixelated {
+  image-rendering: pixelated;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 body {
