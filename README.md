@@ -2,7 +2,7 @@
 
 Interfaz de **QATO'K**, el proyecto final de Bases de Datos en la Nube. La API, las tres bases (PostgreSQL, MongoDB y Neo4j), la documentación y el plan de trabajo están en **[The-Tito/qatok-backend](https://github.com/The-Tito/qatok-backend)**.
 
-La app Next.js muestra el estado de la API y sus tres bases en la página inicial. Este es el primer paso del [#4 Esqueleto de la interfaz en Next.js](https://github.com/The-Tito/qatok-frontend/issues/4).
+La app Next.js muestra el estado de la API y sus tres bases en la página inicial. La vista `/login` usa la API para iniciar sesión con las cuentas del backend.
 
 ## Reglas que no se negocian (guía §7.6, convenciones §6.8)
 
@@ -10,6 +10,7 @@ La app Next.js muestra el estado de la API y sus tres bases en la página inicia
 - **No** se usan Route Handlers (`app/api/*`) ni Server Actions como backend.
 - **No** hay credenciales de bases en el entorno: la única variable es `NEXT_PUBLIC_API_URL`.
 - Los tipos y esquemas se importan de `@qatok/shared`; no se redefinen.
+- Las rutas de las vistas se nombran en inglés. La interfaz se escribe en español.
 
 ## Preparar tu máquina
 
