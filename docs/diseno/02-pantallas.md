@@ -78,6 +78,7 @@ Una sola ruta con cuatro vistas: **paso**, **resultado de la decisión**, **comp
   - `next_step` no nulo → «Siguiente paso» (vista paso con `next_step`, sin recargar).
   - `next_step` nulo → «Ver resultado» (vista completada).
   - `synchronization.graph = PENDING` no se muestra aquí: solo «✓ Decisión guardada».
+  - Hecho en el issue 3.2. El banner lleva `data-state="shown"` y `data-result="correct|partial|incorrect"` (DEC-F06); el foco pasa al título del banner para que se anuncie. En la última decisión el consejo se titula «Para la próxima». Las decisiones de la sesión se guardan en el estado de la vista (para «Tus decisiones» en 3.3).
 - **Vista completada** (`attempt.status = COMPLETED`): trofeo, «Simulación completada», título, `attempt.score` con un decimal como máximo («92.5 / 100»). «Tus decisiones»: las decisiones de esta sesión, guardadas en el estado del cliente (opción y retroalimentación). Si se recargó la página, esa lista no está: mostrar el enlace «Ver recorrido» (F3a). `SyncBanner` si la última respuesta trajo `PENDING`. Botones: «Guardar como evidencia» (F3a, `POST /api/evidencias` provisional), «Ver recorrido» y «Mi perfil».
 - **Vista abandonada:** StateCard «Abandonaste esta partida» + «Volver al catálogo».
 - **Pausa (II):** hoja con «Salir y continuar después» (ir al catálogo; el intento sigue en curso) y «Abandonar partida» (confirmación → `POST /api/attempts/:id/abandon`).
