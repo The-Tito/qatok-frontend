@@ -1,10 +1,13 @@
 import { Suspense, type ReactNode } from 'react';
 import { RequireSession } from '../../../components/RequireSession';
+import { AdminShell } from '../../../components/Shells';
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
   return (
     <Suspense>
-      <RequireSession role="ADMIN">{children}</RequireSession>
+      <RequireSession role="ADMIN">
+        <AdminShell>{children}</AdminShell>
+      </RequireSession>
     </Suspense>
   );
 }

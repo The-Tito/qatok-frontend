@@ -1,5 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { SESSION_KEY, clearSession, readSession, saveSession, updateSessionUser } from './session';
+import {
+  SESSION_KEY,
+  clearSession,
+  endedBySignOut,
+  readSession,
+  saveSession,
+  updateSessionUser,
+} from './session';
 import { ANA, installMemoryStorage } from './test-utils';
 
 const session = { token: 'jwt', user: ANA };
@@ -42,5 +49,17 @@ describe('session', () => {
       throw new Error('bloqueado');
     });
     expect(readSession()).toBeNull();
+  });
+});
+
+describe('endedBySignOut', () => {
+  it('distingue «Salir» de una sesión vencida', () => {
+    saveSession(session);
+    clearSession({ signOut: true });
+    expect(endedBySignOut()).toBe(true);
+    saveSession(session);
+    expect(endedBySignOut()).toBe(false);
+    clearSession();
+    expect(endedBySignOut()).toBe(false);
   });
 });

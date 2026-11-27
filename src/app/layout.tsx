@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Chakra_Petch, IBM_Plex_Mono, Silkscreen } from 'next/font/google';
 import type { ReactNode } from 'react';
 import './globals.css';
+import '../components/ui.css';
 import { Providers } from './providers';
 
 const title = Chakra_Petch({

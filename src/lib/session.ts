@@ -38,6 +38,7 @@ export function readSession(): SavedSession | null {
 }
 
 export function saveSession(session: SavedSession) {
+  signedOut = false;
   localStorage.setItem(SESSION_KEY, JSON.stringify(session));
   notify();
 }
@@ -56,9 +57,18 @@ function removeRaw() {
   }
 }
 
-export function clearSession() {
+let signedOut = false;
+
+/** Borra la sesión. `signOut: true` cuando el usuario pulsó «Salir» (sin ruta de regreso). */
+export function clearSession({ signOut = false }: { signOut?: boolean } = {}) {
+  signedOut = signOut;
   removeRaw();
   notify();
+}
+
+/** true si la última sesión terminó con «Salir» y no por vencimiento. */
+export function endedBySignOut() {
+  return signedOut;
 }
 
 /** Para useSyncExternalStore: avisa en esta pestaña y cuando otra pestaña cambia la sesión. */

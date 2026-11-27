@@ -5,10 +5,10 @@ import { useQuery } from '@tanstack/react-query';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, type ReactNode } from 'react';
 import { getMe } from '../lib/api';
-import { homeFor, loginUrl } from '../lib/routes';
-import { updateSessionUser } from '../lib/session';
+import { LOGIN_PATH, homeFor, loginUrl } from '../lib/routes';
+import { endedBySignOut, updateSessionUser } from '../lib/session';
 import { useSession } from '../lib/use-session';
-import { StateCard } from './StateCard';
+import { LoadingCard, StateCard } from './StateCard';
 
 interface RequireSessionProps {
   /** Rol exigido. Sin rol, basta con tener sesión. */
@@ -42,13 +42,17 @@ export function RequireSession({ role, children }: RequireSessionProps) {
 
   useEffect(() => {
     if (session === null) {
+      if (endedBySignOut()) {
+        router.replace(LOGIN_PATH);
+        return;
+      }
       const query = searchParams.toString();
       router.replace(loginUrl(query ? `${pathname}?${query}` : pathname));
     }
   }, [session, router, pathname, searchParams]);
 
   if (!session) {
-    return <StateCard kind="loading" title="Cargando…" />;
+    return <LoadingCard />;
   }
 
   if (role && session.user.role !== role) {
