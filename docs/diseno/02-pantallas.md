@@ -144,6 +144,8 @@ Todas bajo `/admin`, con `AdminShell`. Acceso: rol ADMIN (comprobar `user.role`;
 
 ### A1 · Simulaciones — `/admin/simulaciones`
 
+> Hecho en el issue 6.1: filtro por estado en la URL (`?estado=`) con contadores, tabla ordenada por título, «Editar» (borrador) o «Ver contenido», «Desactivar» (publicada) y «Eliminar» (borrador) con confirmación. Datos de la simulación en `/admin/simulaciones/nueva` y `/admin/simulaciones/[id]` (crear borrador con `POST`, guardar con `PUT`; solo lectura si no es borrador). Mientras no exista `GET /api/admin/simulations/:id` (D5), la simulación se busca en la lista. Habilidades: tabla con «En uso» calculado desde las simulaciones, formulario de crear/editar (409 `SKILL_ALREADY_EXISTS` bajo Nombre) y eliminar con confirmación (409 `SKILL_IN_USE` como aviso). El selector de tipo visual del diseño no se hizo: depende de D1.
+
 - **Datos:** `GET /api/admin/simulations?status&limit&offset` → tabla con título, estado (● Publicada, ○ Borrador, ■ Inactiva), dificultad, duración, habilidades con peso y acciones.
 - **Pestañas:** Todas, Borrador, Publicada e Inactiva, con el `total` de cada una (una consulta por estado con `limit=1`). La pestaña activa va en la URL.
 - **Acciones por estado:**
@@ -154,6 +156,10 @@ Todas bajo `/admin`, con `AdminShell`. Acceso: rol ADMIN (comprobar `user.role`;
 - **Errores:** `409 SIMULATION_NOT_EDITABLE` o `SIMULATION_NOT_PUBLISHED` → recargar la lista con un aviso.
 
 ### A2 · Editor de escenario — `/admin/simulaciones/nueva` y `/admin/simulaciones/[simulationId]`
+
+> Issue 6.3: bloque «Antes de publicar» con las mismas reglas que la API (al menos un paso, opciones en cada paso, una consecuencia por opción, sin ciclos, todos los pasos alcanzables, una habilidad y cambios guardados; `publishChecklist` en `src/lib/content.ts`). «Publicar ▶» pide confirmación y envía `POST …/publish { version }`; los 409 se explican por `code`. Publicada o inactiva: todo en solo lectura con un aviso. Se creó y publicó en la base local «Servidor caído en hora pico» con un paso INCIDENT, y se jugó como estudiante.
+
+> Hecho en el issue 6.2: pasos plegables (uno abierto a la vez), tipo con contexto propio (listas un elemento por renglón; diálogo y cronología por filas), opciones (máx. 6) con valoración, siguiente paso, retroalimentación y hasta 3 consecuencias; subir, bajar y quitar pasos (las opciones que llevaban a un paso quitado pasan a «Termina»). Antes de guardar se valida con `SimulationContentInput` y se listan los problemas por ruta («Paso 1 · opción A · comentario»). `409 STALE_CONTENT_VERSION` muestra el aviso con «Recargar versión». Columna derecha: datos de la simulación y mapa de rutas (avisa de pasos a los que no llega ninguna opción). Lógica en `src/lib/content.ts` con pruebas.
 
 - **Datos:**
   - Metadatos: de la lista hasta que exista el `GET` individual (D5). Crear con `POST /api/admin/simulations` `SimulationInput` (luego se reemplaza la URL por la del ID). Guardar con `PUT /api/admin/simulations/:id`.
