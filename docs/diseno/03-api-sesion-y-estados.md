@@ -113,3 +113,6 @@ Descartados (plan v2, 2026-11-27): la API está completa (contrato 0.6.0) y cada
 - `src/lib/routes.ts`: rutas de inicio por rol y `next` seguro (solo rutas internas).
 - `src/components/RequireSession.tsx`: guarda de los grupos `(estudiante)` y `(admin)`; refresca `GET /api/me` una vez por carga y muestra el 403 si el rol no coincide.
 - Pruebas (Vitest, `npm run test`, incluido en `npm run verificar`): cliente con `fetch` simulado, errores, sesión, rutas y tipos de habilidad.
+- «Salir» (`src/lib/use-sign-out.ts`): `clearSession({ signOut: true })`, limpia la caché y va a `/entrar` sin ruta de regreso. Una sesión vencida, en cambio, vuelve a `/entrar?next=`.
+- Después de entrar (`afterLogin` en `src/lib/routes.ts`): la ruta de regreso solo se usa si es del área del rol (`/admin/…` para admin, el resto para estudiante).
+- Mi cuenta (issue 1.2): `PATCH /api/me` actualiza la caché `['me', id]` y la sesión guardada (el nombre cambia en el encabezado). Eliminar cuenta cuenta lo que se pierde con `GET /api/attempts?limit=1` (`total`) y `GET /api/evidence?limit=100` (suma de `active_shares`), y tras `DELETE /api/me` cierra la sesión.

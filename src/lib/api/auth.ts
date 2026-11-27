@@ -1,5 +1,13 @@
 // Cuenta y sesión (contrato: F1 · /api/auth y /api/me).
-import { Account, LoginInput, RegisterInput, Registration, Session } from '@qatok/shared';
+import {
+  Account,
+  Deletion,
+  LoginInput,
+  RegisterInput,
+  Registration,
+  Session,
+  UpdateAccountInput,
+} from '@qatok/shared';
 import type { z } from 'zod';
 import { request } from './client';
 
@@ -25,4 +33,12 @@ export function register(input: z.output<typeof RegisterInput>, signal?: AbortSi
 
 export function getMe(signal?: AbortSignal) {
   return request('/me', { schema: Account, signal });
+}
+
+export function updateMe(input: z.output<typeof UpdateAccountInput>) {
+  return request('/me', { method: 'PATCH', body: input, schema: Account });
+}
+
+export function deleteMe() {
+  return request('/me', { method: 'DELETE', schema: Deletion });
 }
