@@ -59,12 +59,12 @@ Contenedor: ancho completo hasta 480 px, centrado en pantallas mayores, fondo bl
 
 ### 4–7 · Jugar — `/jugar/[attemptId]`
 
-Una sola ruta con cuatro vistas: **paso**, **resultado de la decisión**, **completada** y **abandonada**. Prototipos: `JugarCorreo`, `JugarConversacion`, `Decision` y `Resultado`.
+Una sola ruta con cuatro vistas: **paso**, **resultado de la decisión**, **completada** y **abandonada**. Prototipos v2: `JugarCorreoV2`, `JugarConversacionV2`, `JugarReunion`, `JugarTarea`, `JugarIncidente`, `DecisionV2`, `ResultadoV2`, `JugarPausa`, `JugarAbandonada` y sus versiones web. La ruta vive en el grupo `(juego)`: con sesión de estudiante y sin menú principal. El paso se hizo en el issue 3.1.
 
 - **Acceso:** dueño del intento (otro usuario → 404).
 - **Carga:** `GET /api/attempts/:attemptId` → `{ attempt, current_step, responses }`; el título y las habilidades de la simulación con `GET /api/simulations/:simulation_id` (si responde 404 porque fue desactivada, se usa el título «Simulación» y el tipo `STONE`). Tipo de color = regla del mayor peso.
 - **Vista paso** (`attempt.status = IN_PROGRESS` y `current_step` no nulo):
-  - `StepHeader`: «Paso {responses.length + 1} · {tipo}». No hay total de pasos: no inventarlo.
+  - `StepHeader`: «Paso {current_step.order} · {tipo}» y el título de la simulación (LEEME de v2: «Paso N» es el `order`). No hay total de pasos: no inventarlo.
   - Título del paso en Chakra Petch y `StepContext` por tipo:
     - **EMAIL:** panel con De / Asunto sobre fondo `fill` y el cuerpo.
     - **CONVERSATION:** escena de 220 px con fondo `tint`, plataforma ovalada `base`, sprite del interlocutor, sprite del estudiante de espaldas y placa con `interlocutor`. Debajo, `DialogBox` con todas las `lines` (`speaker` + `text`).
@@ -72,6 +72,7 @@ Una sola ruta con cuatro vistas: **paso**, **resultado de la decisión**, **comp
     - **TASK:** panel con «Entregables» (lista con casillas decorativas) y chip «Plazo: {deadline_hours} h».
     - **INCIDENT:** chip de severidad (LOW «Baja», MEDIUM «Media», HIGH «Alta»; alta con fondo `incorrect`) y cronología vertical `time` → `event`.
   - Pregunta: «¿Qué haces?» (o «¿Qué respondes?» en CONVERSATION) y `OptionList` con `options[].description`.
+  - Escritorio (desde 1024 px): situación a la izquierda y decisión a la derecha. El paso lleva `data-state` (`ready` hasta el issue 7.1). Los contextos MEETING e INCIDENT se ven con datos de muestra en `/dev/componentes` (el dataset no trae INCIDENT).
   - «Decidir» deshabilitado hasta elegir. Envía `POST /api/attempts/:id/responses` `{ step_id, option_id }`.
 - **Vista resultado de la decisión** (tras el 201): banner según `feedback.type` (CORRECT «¡Acierto!», PARTIAL «Parcial», INCORRECT «Error»), «Elegiste: {opción}», cada consecuencia con `ImpactBadge`, `feedback.comment` y «Consejo para el siguiente paso: {feedback.recommendation}». Botón:
   - `next_step` no nulo → «Siguiente paso» (vista paso con `next_step`, sin recargar).
