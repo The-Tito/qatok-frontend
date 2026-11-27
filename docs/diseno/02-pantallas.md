@@ -59,12 +59,12 @@ Contenedor: ancho completo hasta 480 px, centrado en pantallas mayores, fondo bl
 
 ### 4–7 · Jugar — `/jugar/[attemptId]`
 
-Una sola ruta con cuatro vistas: **paso**, **resultado de la decisión**, **completada** y **abandonada**. Prototipos: `JugarCorreo`, `JugarConversacion`, `Decision` y `Resultado`.
+Una sola ruta con cuatro vistas: **paso**, **resultado de la decisión**, **completada** y **abandonada**. Prototipos v2: `JugarCorreoV2`, `JugarConversacionV2`, `JugarReunion`, `JugarTarea`, `JugarIncidente`, `DecisionV2`, `ResultadoV2`, `JugarPausa`, `JugarAbandonada` y sus versiones web. La ruta vive en el grupo `(juego)`: con sesión de estudiante y sin menú principal. El paso se hizo en el issue 3.1.
 
 - **Acceso:** dueño del intento (otro usuario → 404).
 - **Carga:** `GET /api/attempts/:attemptId` → `{ attempt, current_step, responses }`; el título y las habilidades de la simulación con `GET /api/simulations/:simulation_id` (si responde 404 porque fue desactivada, se usa el título «Simulación» y el tipo `STONE`). Tipo de color = regla del mayor peso.
 - **Vista paso** (`attempt.status = IN_PROGRESS` y `current_step` no nulo):
-  - `StepHeader`: «Paso {responses.length + 1} · {tipo}». No hay total de pasos: no inventarlo.
+  - `StepHeader`: «Paso {current_step.order} · {tipo}» y el título de la simulación (LEEME de v2: «Paso N» es el `order`). No hay total de pasos: no inventarlo.
   - Título del paso en Chakra Petch y `StepContext` por tipo:
     - **EMAIL:** panel con De / Asunto sobre fondo `fill` y el cuerpo.
     - **CONVERSATION:** escena de 220 px con fondo `tint`, plataforma ovalada `base`, sprite del interlocutor, sprite del estudiante de espaldas y placa con `interlocutor`. Debajo, `DialogBox` con todas las `lines` (`speaker` + `text`).
@@ -72,13 +72,16 @@ Una sola ruta con cuatro vistas: **paso**, **resultado de la decisión**, **comp
     - **TASK:** panel con «Entregables» (lista con casillas decorativas) y chip «Plazo: {deadline_hours} h».
     - **INCIDENT:** chip de severidad (LOW «Baja», MEDIUM «Media», HIGH «Alta»; alta con fondo `incorrect`) y cronología vertical `time` → `event`.
   - Pregunta: «¿Qué haces?» (o «¿Qué respondes?» en CONVERSATION) y `OptionList` con `options[].description`.
+  - Escritorio (desde 1024 px): situación a la izquierda y decisión a la derecha. El paso lleva `data-state` (`ready` hasta el issue 7.1). Los contextos MEETING e INCIDENT se ven con datos de muestra en `/dev/componentes` (el dataset no trae INCIDENT).
   - «Decidir» deshabilitado hasta elegir. Envía `POST /api/attempts/:id/responses` `{ step_id, option_id }`.
 - **Vista resultado de la decisión** (tras el 201): banner según `feedback.type` (CORRECT «¡Acierto!», PARTIAL «Parcial», INCORRECT «Error»), «Elegiste: {opción}», cada consecuencia con `ImpactBadge`, `feedback.comment` y «Consejo para el siguiente paso: {feedback.recommendation}». Botón:
   - `next_step` no nulo → «Siguiente paso» (vista paso con `next_step`, sin recargar).
   - `next_step` nulo → «Ver resultado» (vista completada).
   - `synchronization.graph = PENDING` no se muestra aquí: solo «✓ Decisión guardada».
+  - Hecho en el issue 3.2. El banner lleva `data-state="shown"` y `data-result="correct|partial|incorrect"` (DEC-F06); el foco pasa al título del banner para que se anuncie. En la última decisión el consejo se titula «Para la próxima». Las decisiones de la sesión se guardan en el estado de la vista (para «Tus decisiones» en 3.3).
 - **Vista completada** (`attempt.status = COMPLETED`): trofeo, «Simulación completada», título, `attempt.score` con un decimal como máximo («92.5 / 100»). «Tus decisiones»: las decisiones de esta sesión, guardadas en el estado del cliente (opción y retroalimentación). Si se recargó la página, esa lista no está: mostrar el enlace «Ver recorrido» (F3a). `SyncBanner` si la última respuesta trajo `PENDING`. Botones: «Guardar como evidencia» (F3a, `POST /api/evidencias` provisional), «Ver recorrido» y «Mi perfil».
-- **Vista abandonada:** StateCard «Abandonaste esta partida» + «Volver al catálogo».
+- **Vista abandonada:** «Abandonaste esta partida» (JugarAbandonada) con «Volver al catálogo» y «Ver mis partidas». Completada y abandonada usan la estructura del estudiante (BottomNav o barra superior).
+- **Hecho en el issue 3.3:** pausa, abandonar, completada y guardar evidencia. «Tus decisiones» solo se lista si la sesión tiene todas las respuestas del intento; si se recargó a mitad de partida, se muestra el aviso y «Ver recorrido». Guardar evidencia: `POST /api/evidence { attempt_id, title? }` → `/evidencias/{id}`; `409 EVIDENCE_ALREADY_EXISTS` → «Ya está guardada» con el título (`GET /api/evidence/:id`) y «Ver evidencia».
 - **Pausa (II):** hoja con «Salir y continuar después» (ir al catálogo; el intento sigue en curso) y «Abandonar partida» (confirmación → `POST /api/attempts/:id/abandon`).
 - **Errores propios:** `409 STEP_NOT_CURRENT` o `ATTEMPT_NOT_IN_PROGRESS` → recargar con `GET` y continuar desde el estado real, sin mensaje de error. `400 OPTION_NOT_IN_STEP` → recargar. `503 PUBLISHED_CONTENT_UNAVAILABLE` o `DATABASE_UNAVAILABLE` → StateCard de error con «Reintentar»; la decisión no se registró.
 - **Criterios:** retomar tras cerrar la app lleva al paso correcto; una opción terminal muestra el resultado y luego la vista completada; el doble envío no registra dos respuestas; nunca se muestran valoraciones (`score` de una opción) al estudiante.

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useId, useRef, type ReactNode } from 'react';
+import type { SkillTypeKey } from '../lib/skill-types';
 
 interface SheetProps {
   open: boolean;
@@ -11,13 +12,23 @@ interface SheetProps {
   closeLabel?: string;
   /** `alertdialog` para confirmaciones destructivas. */
   role?: 'dialog' | 'alertdialog';
+  /** Tipo de habilidad para los colores del contenido (data-type). */
+  type?: SkillTypeKey;
 }
 
 /**
  * Hoja inferior en móvil que pasa a diálogo centrado de 520 px desde 1024 px (v2 · Web).
  * Usa <dialog> modal: foco atrapado, Escape cierra y el foco vuelve al control que la abrió.
  */
-export function Sheet({ open, onClose, title, children, closeLabel = 'Cerrar', role }: SheetProps) {
+export function Sheet({
+  open,
+  onClose,
+  title,
+  children,
+  closeLabel = 'Cerrar',
+  role,
+  type,
+}: SheetProps) {
   const ref = useRef<HTMLDialogElement>(null);
   const titleId = useId();
 
@@ -32,6 +43,7 @@ export function Sheet({ open, onClose, title, children, closeLabel = 'Cerrar', r
     <dialog
       ref={ref}
       className="sheet"
+      data-type={type}
       role={role === 'alertdialog' ? 'alertdialog' : undefined}
       aria-labelledby={titleId}
       onCancel={(event) => {

@@ -19,6 +19,7 @@ const STUDENT_NAV: NavItem[] = [
   {
     href: '/simulaciones',
     label: 'Jugar',
+    also: ['/jugar'],
     icon: {
       viewBox: '0 0 11 11',
       d: 'M5 0h1v3h-1z M4 3h3v1h-3z M3 4h5v1h-5z M0 5h11v1h-11z M3 6h5v1h-5z M4 7h3v1h-3z M5 8h1v3h-1z',

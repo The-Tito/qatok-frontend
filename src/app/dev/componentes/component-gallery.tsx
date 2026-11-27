@@ -13,6 +13,8 @@ import { PixelButton } from '../../../components/PixelButton';
 import { Sheet } from '../../../components/Sheet';
 import { LoadingCard, StateCard } from '../../../components/StateCard';
 import { SyncBanner } from '../../../components/SyncBanner';
+import { StepContext } from '../../../components/play/StepContext';
+import '../../(juego)/jugar/[attemptId]/play.css';
 import { SKILL_TYPES, type SkillTypeKey } from '../../../lib/skill-types';
 import './gallery.css';
 
@@ -20,6 +22,37 @@ const TYPES = Object.keys(SKILL_TYPES) as SkillTypeKey[];
 
 // Muestras de la página de diseño (no son datos de la app: las pantallas leen la API).
 const SAMPLE_SKILL = 'Gestión del tiempo';
+
+// Pasos de muestra para ver los contextos que el dataset no trae (INCIDENT) o trae poco.
+const SAMPLE_OPTIONS = [{ id: 'e0000000-0000-4000-8000-0000000009a1', description: 'Opción' }];
+const SAMPLE_MEETING = {
+  id: 'e0000000-0000-4000-8000-0000000009b1',
+  order: 3,
+  title: 'Reunión con tu jefa',
+  description: 'Tu jefa quiere saber qué pasó y qué propones.',
+  type: 'MEETING' as const,
+  options: SAMPLE_OPTIONS,
+  context: {
+    participants: ['Tú', 'Laura Méndez (jefa de área)'],
+    agenda: ['Qué pasó con el pedido', 'Qué propones para resolverlo'],
+  },
+};
+const SAMPLE_INCIDENT = {
+  id: 'e0000000-0000-4000-8000-0000000009b2',
+  order: 2,
+  title: '[Título del paso]',
+  description: '[Descripción del paso]',
+  type: 'INCIDENT' as const,
+  options: SAMPLE_OPTIONS,
+  context: {
+    severity: 'HIGH' as const,
+    timeline: [
+      { time: '09:10', event: '[Evento 1]' },
+      { time: '09:25', event: '[Evento 2]' },
+      { time: '09:40', event: '[Evento 3]' },
+    ],
+  },
+};
 
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -162,7 +195,20 @@ export function ComponentGallery() {
         </div>
       </Section>
 
-      <Section title="07 · Hoja y diálogo">
+      <Section title="07 · Contextos del paso">
+        <div className="gallery-stack">
+          <StepContext step={SAMPLE_MEETING} />
+          <StepContext step={SAMPLE_INCIDENT} />
+          <StepContext
+            step={{
+              ...SAMPLE_INCIDENT,
+              context: { ...SAMPLE_INCIDENT.context, severity: 'MEDIUM' },
+            }}
+          />
+        </div>
+      </Section>
+
+      <Section title="08 · Hoja y diálogo">
         <PixelButton variant="secondary" onClick={() => setSheetOpen(true)}>
           Abrir hoja
         </PixelButton>
