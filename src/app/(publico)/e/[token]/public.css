@@ -1,0 +1,259 @@
+/* Evidencia pública (PublicaV2): sin tipo de habilidad (SharedEvidence no trae IDs). */
+
+.public {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.public-header {
+  padding: 16px 24px;
+  border-bottom: var(--border) solid var(--color-ink);
+}
+
+.public-header-inner,
+.public-hero-inner,
+.public-main,
+.public-footer p {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.public-header-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.public-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.public-logo {
+  display: flex;
+  padding: 4px;
+  border: var(--border-thin) solid var(--color-ink);
+  background: var(--color-correct-bg);
+}
+
+.public-brand-name {
+  font-family: var(--font-chakra-petch), sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.public-tag,
+.public-owner,
+.public-heading {
+  color: var(--color-ink-muted);
+  font-family: var(--font-silkscreen), monospace;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.public-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 32px 24px;
+  border-bottom: var(--border) solid var(--color-ink);
+  background: var(--color-fill);
+}
+
+.public-hero .public-sparkle {
+  position: absolute;
+  top: 40px;
+  right: 8%;
+}
+
+.public-hero-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 28px;
+}
+
+.public-trophy {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 104px;
+  height: 104px;
+  border: var(--border) solid var(--color-ink);
+  box-shadow: var(--shadow);
+  background: var(--color-surface);
+}
+
+.public-trophy img {
+  image-rendering: pixelated;
+}
+
+.public-hero-text {
+  display: flex;
+  flex: 1 1 420px;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.public-title {
+  font-family: var(--font-chakra-petch), sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.05;
+}
+
+.public-simulation {
+  color: var(--color-ink-muted);
+  font-size: 15px;
+}
+
+.public-main {
+  display: flex;
+  flex-grow: 1;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 32px;
+  padding: 32px 24px 56px;
+  box-sizing: border-box;
+}
+
+.public-content {
+  display: flex;
+  flex: 999 1 520px;
+  flex-direction: column;
+  gap: 28px;
+  min-width: 0;
+}
+
+.public-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.public-heading {
+  color: var(--color-ink);
+  font-size: 14px;
+}
+
+.public-summary {
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.public-decisions {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.public-decision {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 20px;
+}
+
+.public-decision-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.public-decision-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-ink-muted);
+  font-family: var(--font-silkscreen), monospace;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.public-decision-num {
+  width: 24px;
+  color: var(--color-ink);
+  font-size: 12px;
+}
+
+.public-decision-option {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.public-decision-consequence {
+  color: var(--color-ink-muted);
+  font-size: 14px;
+}
+
+.public-side {
+  display: flex;
+  flex: 1 1 280px;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.public-score,
+.public-skills {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+}
+
+.public-score-value {
+  font-family: var(--font-chakra-petch), sans-serif;
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.public-skills ul {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.public-skills li {
+  padding: 8px 10px;
+  border: var(--border-thin) solid var(--color-ink);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.public-footer {
+  padding: 20px 24px;
+  border-top: var(--border) solid var(--color-ink);
+  background: var(--color-fill);
+}
+
+.public-footer p {
+  color: var(--color-ink-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+@media (min-width: 1024px) {
+  .public-hero {
+    padding: 48px 24px;
+  }
+
+  .public-title {
+    font-size: 44px;
+  }
+
+  .public-main {
+    padding-top: 40px;
+  }
+}
