@@ -88,10 +88,11 @@ Una sola ruta con cuatro vistas: **paso**, **resultado de la decisión**, **comp
 
 ### 8 · Perfil — `/perfil`
 
-- **Acceso:** usuario. **Prototipo:** `Perfil.dc.html`.
-- **Datos:** `GET /api/perfil` (F3a, **provisional**): usuario, resumen (completadas, evidencias), habilidades (nivel, objetivo, clasificación), recomendaciones, evidencias recientes, `datos_incompletos`, `sincronizacion_pendiente`.
-- **Bloques:** tarjeta de habilidades (avatar, nombre, contadores), «Habilidades» (`LevelBar` + tipo + «▲ Fortaleza» / «▼ Área de mejora»; SIN_REFERENCIA → sin etiqueta), «Siguiente misión recomendada» (primera recomendación, con «Refuerza: {habilidades}»; si hay intento en curso de esa simulación, el botón dice «Seguir»), «Evidencias recientes».
-- **Estados:** `datos_incompletos` con «grafo» → habilidades y recomendaciones en gris con el aviso de Estados «Parte de tu perfil no cargó». `sincronizacion_pendiente > 0` → `SyncBanner` y nueva consulta cada 3 s, máximo 5 veces. Sin datos → «Completa tu primera simulación».
+- **Acceso:** estudiante. **Prototipo:** `prototipo-v2/movil/PerfilV2.dc.html` y `web/PerfilV2Web.dc.html`. Hecho en el issue 4.1.
+- **Datos:** `GET /api/profile` (contrato 0.6.0): `user`, `summary` (`completed_attempts`, `evidence_count`), `skills` (`current_level`, `target` nulo o no, `classification`, `correct`, `partial`, `incorrect`), `recommendations` (hasta 5), `recent_evidence` (hasta 5, con `description`), `incomplete_data` (`graph`, `document`) y `pending_sync_count`.
+- **Bloques:** tarjeta de habilidades (avatar, nombre, contadores, «Mi cuenta ▶»), «Habilidades» (chip del tipo, nombre, «nivel/objetivo», `LevelBar`, «▲ Fortaleza» / «▼ Área de mejora» —`NO_REFERENCE` sin etiqueta y, sin `target`, sin marca—, contadores ★ ◆ ✕ y «Evolución ▶»), «Recomendaciones» («Refuerza: …», «Ver ▶» lleva a Antes de jugar), «Evidencias recientes» y «Más de tu perfil» (Mis partidas, Recomendaciones, Evolución de la primera habilidad, Mi cuenta).
+- **Escritorio:** tarjeta, sincronización y accesos en una columna lateral de 320 px; habilidades en tarjetas de 3 columnas; recomendaciones y evidencias lado a lado.
+- **Estados:** `incomplete_data` con `graph` → aviso «Parte de tu perfil no cargó» en habilidades y bloque gris en recomendaciones. Con `document` y sin `description` → «El resumen no cargó; la evidencia sigue guardada». `pending_sync_count > 0` → `SyncBanner` y nueva consulta cada 3 s, máximo 5; después, «Tu progreso se actualizará en unos minutos» (no verificado contra la API: el dataset no deja eventos pendientes).
 - **Criterios:** si falla una base secundaria, la página no se rompe completa; las barras usan el color de cada habilidad.
 
 ### 10 · Evidencias — `/evidencias`
