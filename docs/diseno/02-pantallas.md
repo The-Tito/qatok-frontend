@@ -104,7 +104,7 @@ Una sola ruta con cuatro vistas: **paso**, **resultado de la decisión**, **comp
 
 ### 10 · Evidencias — `/evidencias`
 
-> Hecho en el issue 5.1 (lista y detalle) con los prototipos v2 `EvidenciasV2` y `EvidenciaDetalleV2`: filtro por habilidad en la URL (`?habilidad=`), «Cargar más» de 12 en 12, vacío por habilidad con «Ver recomendaciones», privacidad con `PATCH /api/evidence/:id { visibility }` desde el botón de la barra, y eliminar con confirmación (`DELETE`). Los enlaces llegan en 5.2.
+> Hecho en el issue 5.1 (lista y detalle) con los prototipos v2 `EvidenciasV2` y `EvidenciaDetalleV2`: filtro por habilidad en la URL (`?habilidad=`), «Cargar más» de 12 en 12, vacío por habilidad con «Ver recomendaciones», privacidad con `PATCH /api/evidence/:id { visibility }` desde el botón de la barra, y eliminar con confirmación (`DELETE`). Los enlaces se hicieron en 5.2: lista con estado (activo con vencimiento, vencido por `is_valid`, revocado), «Copiar» con `{origen}/e/{token}` (no `public_url`), «Revocar» (`DELETE /api/shares/:id`, 204) y «Crear enlace» en hoja/diálogo (vigencia 1–90 con atajos 7, 30 y 90; «Para quién» opcional). La página pública `/e/[token]` no pide sesión, no se indexa (`robots: noindex`) y muestra «Este enlace venció» (410) o «ya no es válido» (404).
 
 - **Acceso:** usuario. **Prototipo:** `Evidencias.dc.html`. **Datos:** `GET /api/evidencias?id_habilidad` (F3a, provisional).
 - **Tarjeta:** franja de tipos, trofeo, título, «{simulación} · {fecha}», chips de habilidades y pie «● Privada / Pública» + «{n} enlaces activos».

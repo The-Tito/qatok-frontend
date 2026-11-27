@@ -12,19 +12,13 @@ import { LoadingCard, StateCard } from '../../../../components/StateCard';
 import { deleteEvidence, getEvidence, isApiError, updateEvidence } from '../../../../lib/api';
 import { formatDate } from '../../../../lib/format';
 import { skillType } from '../../../../lib/skill-types';
+import { SharesSection } from './shares-section';
 
 const formatScore = (n: number) => String(Math.round(n * 10) / 10);
 const two = (n: number) => String(n).padStart(2, '0');
 
 /** EvidenciaDetalleV2 · Evidencia: contenido de la instantánea, privacidad y eliminar. */
-export function EvidenceDetailView({
-  evidenceId,
-  children,
-}: {
-  evidenceId: string;
-  /** Sección de enlaces (issue 5.2). */
-  children?: React.ReactNode;
-}) {
+export function EvidenceDetailView({ evidenceId }: { evidenceId: string }) {
   const router = useRouter();
   const queryClient = useQueryClient();
   const [deleting, setDeleting] = useState(false);
@@ -174,7 +168,7 @@ export function EvidenceDetailView({
         </div>
 
         <aside className="evidence-detail-side">
-          {children}
+          <SharesSection evidenceId={evidenceId} type={type} />
           <div className="evidence-detail-actions">
             <button
               type="button"
