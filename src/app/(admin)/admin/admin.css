@@ -406,3 +406,37 @@
     grid-template-columns: minmax(0, 1fr) 380px;
   }
 }
+
+.publish-checks {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.publish-checks li {
+  display: flex;
+  gap: 8px;
+  color: var(--color-incorrect-fg);
+}
+
+.publish-checks li[data-ok] {
+  color: var(--color-correct-fg);
+}
+
+.admin-readonly {
+  padding: 12px 14px;
+  border: var(--border) dashed var(--color-ink);
+  background: var(--color-fill);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

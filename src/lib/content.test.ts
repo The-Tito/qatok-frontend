@@ -4,8 +4,10 @@ import {
   changeType,
   describePath,
   emptyStep,
+  hasCycle,
   moveStep,
   normalizeSteps,
+  publishChecklist,
   removeStep,
   routeMap,
   unreachableSteps,
@@ -96,5 +98,27 @@ describe('content', () => {
       '3A→Fin',
     ]);
     expect(unreachableSteps([a, b, c])).toEqual([2]);
+  });
+});
+
+describe('publishChecklist', () => {
+  it('marca lo que falta para publicar', () => {
+    const a = filledEmail(1);
+    const checks = publishChecklist([a], { hasSkills: true, saved: false });
+    const failed = checks.filter((c) => !c.ok).map((c) => c.label);
+    expect(failed).toEqual([
+      'Cada opción tiene al menos una consecuencia',
+      'Los cambios están guardados',
+    ]);
+  });
+
+  it('detecta ciclos', () => {
+    const a = filledEmail(1);
+    const b = filledEmail(2);
+    a.options[0]!.next_step_id = b.id;
+    b.options[0]!.next_step_id = a.id;
+    expect(hasCycle([a, b])).toBe(true);
+    b.options[0]!.next_step_id = null;
+    expect(hasCycle([a, b])).toBe(false);
   });
 });

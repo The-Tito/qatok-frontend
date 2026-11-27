@@ -157,6 +157,8 @@ Todas bajo `/admin`, con `AdminShell`. Acceso: rol ADMIN (comprobar `user.role`;
 
 ### A2 · Editor de escenario — `/admin/simulaciones/nueva` y `/admin/simulaciones/[simulationId]`
 
+> Issue 6.3: bloque «Antes de publicar» con las mismas reglas que la API (al menos un paso, opciones en cada paso, una consecuencia por opción, sin ciclos, todos los pasos alcanzables, una habilidad y cambios guardados; `publishChecklist` en `src/lib/content.ts`). «Publicar ▶» pide confirmación y envía `POST …/publish { version }`; los 409 se explican por `code`. Publicada o inactiva: todo en solo lectura con un aviso. Se creó y publicó en la base local «Servidor caído en hora pico» con un paso INCIDENT, y se jugó como estudiante.
+
 > Hecho en el issue 6.2: pasos plegables (uno abierto a la vez), tipo con contexto propio (listas un elemento por renglón; diálogo y cronología por filas), opciones (máx. 6) con valoración, siguiente paso, retroalimentación y hasta 3 consecuencias; subir, bajar y quitar pasos (las opciones que llevaban a un paso quitado pasan a «Termina»). Antes de guardar se valida con `SimulationContentInput` y se listan los problemas por ruta («Paso 1 · opción A · comentario»). `409 STALE_CONTENT_VERSION` muestra el aviso con «Recargar versión». Columna derecha: datos de la simulación y mapa de rutas (avisa de pasos a los que no llega ninguna opción). Lógica en `src/lib/content.ts` con pruebas.
 
 - **Datos:**

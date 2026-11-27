@@ -260,3 +260,54 @@ export function unreachableSteps(steps: SimulationStep[]): number[] {
 }
 
 export { OPTION_LETTERS };
+
+/** ¿Alguna ruta vuelve a un paso ya visitado desde el paso 1? (la API lo rechaza al publicar) */
+export function hasCycle(steps: SimulationStep[]): boolean {
+  const byId = new Map(steps.map((step) => [step.id, step]));
+  const visiting = new Set<string>();
+  const done = new Set<string>();
+  const visit = (id: string): boolean => {
+    if (visiting.has(id)) return true;
+    if (done.has(id)) return false;
+    const step = byId.get(id);
+    if (!step) return false;
+    visiting.add(id);
+    const found = step.options.some((o) => o.next_step_id !== null && visit(o.next_step_id));
+    visiting.delete(id);
+    done.add(id);
+    return found;
+  };
+  return steps[0] ? visit(steps[0].id) : false;
+}
+
+export interface CheckItem {
+  label: string;
+  ok: boolean;
+}
+
+/** «Antes de publicar»: las mismas reglas que aplica la API al publicar. */
+export function publishChecklist(
+  steps: SimulationStep[],
+  { hasSkills, saved }: { hasSkills: boolean; saved: boolean },
+): CheckItem[] {
+  return [
+    { label: 'Tiene al menos un paso (el primero es el inicio)', ok: steps.length > 0 },
+    {
+      label: 'Cada paso tiene al menos una opción',
+      ok: steps.length > 0 && steps.every((step) => step.options.length > 0),
+    },
+    {
+      label: 'Cada opción tiene al menos una consecuencia',
+      ok:
+        steps.length > 0 &&
+        steps.every((step) => step.options.every((option) => option.consequences.length > 0)),
+    },
+    { label: 'Ninguna ruta vuelve a un paso anterior', ok: !hasCycle(steps) },
+    {
+      label: 'Se llega a todos los pasos desde el inicio',
+      ok: unreachableSteps(steps).length === 0,
+    },
+    { label: 'Entrena al menos una habilidad', ok: hasSkills },
+    { label: 'Los cambios están guardados', ok: saved },
+  ];
+}
