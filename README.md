@@ -2,7 +2,7 @@
 
 Interfaz de **QATO'K**, el proyecto final de Bases de Datos en la Nube. La API, las tres bases (PostgreSQL, MongoDB y Neo4j), la documentación y el plan de trabajo están en **[The-Tito/qatok-backend](https://github.com/The-Tito/qatok-backend)**.
 
-La app Next.js muestra el estado de la API y sus tres bases en la página inicial. La vista `/login` usa la API para iniciar sesión con las cuentas del backend.
+La app Next.js consume solo la API del backend. `/` lleva a `/entrar` (o al inicio del rol si ya hay sesión); `/registro` crea una cuenta y `/estado` muestra el estado de la API y sus tres bases.
 
 ## Reglas que no se negocian (guía §7.6, convenciones §6.8)
 
@@ -41,6 +41,7 @@ import { ErrorRespuesta, Session, SimulationCatalog } from '@qatok/shared';
 |---|---|
 | `npm run sync:shared` | Copia `../qatok-backend/shared/src` a `src/shared/` y anota el commit de origen en `src/shared/ORIGEN.md` |
 | `npm run check:shared` | Falla si la copia no coincide con el backend (el CI lo corre contra `develop` del backend) |
+| `npm run test` | Pruebas de lógica con Vitest (cliente de la API, errores, sesión, rutas, tipos de habilidad); va dentro de `npm run verificar` |
 
 - **Nunca** edites `src/shared/` a mano: cambia `shared/` en el backend (con su PR) y luego corre `npm run sync:shared` aquí, en un commit propio.
 - Otra ruta del backend: `QATOK_BACKEND=/ruta/a/qatok-backend npm run sync:shared`.

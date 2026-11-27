@@ -152,7 +152,7 @@ export function ComponentGallery() {
             kind="expired"
             title="Tu sesión terminó"
             message="Entra de nuevo para seguir donde te quedaste."
-            action={{ label: 'Entrar', href: '/login' }}
+            action={{ label: 'Entrar', href: '/entrar' }}
           />
           <StateCard
             kind="not-found"

@@ -107,9 +107,12 @@ Descartados (plan v2, 2026-11-27): la API está completa (contrato 0.6.0) y cada
 
 ## Implementación (issue 0.2)
 
-- `src/lib/api/client.ts`: `request(path, { method, body, schema, auth, query, signal })` y `apiUrl()`. Un 401 **con token enviado** borra la sesión y llama al manejador que registra `src/app/providers.tsx` (limpia la caché de TanStack Query y va a `/login?next=`; desde el issue 1.1, `/entrar`). Un 401 de `/auth/login` (sin token) no cierra nada.
+- `src/lib/api/client.ts`: `request(path, { method, body, schema, auth, query, signal })` y `apiUrl()`. Un 401 **con token enviado** borra la sesión y llama al manejador que registra `src/app/providers.tsx` (limpia la caché de TanStack Query y va a `/entrar?next=`). Un 401 de `/auth/login` (sin token) no cierra nada.
 - `src/lib/api/errors.ts`: `ApiError`, `ContractError`, `errorMessage()`, `isApiError(error, ...codes)` y `fieldErrors()`. La API manda `details.fields` como **lista** `[{ field, message }]` con mensajes en inglés: la pantalla muestra su propio texto por campo.
 - `src/lib/session.ts` y `src/lib/use-session.ts`: sesión en `localStorage` con aviso a los componentes (`useSyncExternalStore`) y entre pestañas.
 - `src/lib/routes.ts`: rutas de inicio por rol y `next` seguro (solo rutas internas).
 - `src/components/RequireSession.tsx`: guarda de los grupos `(estudiante)` y `(admin)`; refresca `GET /api/me` una vez por carga y muestra el 403 si el rol no coincide.
 - Pruebas (Vitest, `npm run test`, incluido en `npm run verificar`): cliente con `fetch` simulado, errores, sesión, rutas y tipos de habilidad.
+- «Salir» (`src/lib/use-sign-out.ts`): `clearSession({ signOut: true })`, limpia la caché y va a `/entrar` sin ruta de regreso. Una sesión vencida, en cambio, vuelve a `/entrar?next=`.
+- Después de entrar (`afterLogin` en `src/lib/routes.ts`): la ruta de regreso solo se usa si es del área del rol (`/admin/…` para admin, el resto para estudiante).
+- Mi cuenta (issue 1.2): `PATCH /api/me` actualiza la caché `['me', id]` y la sesión guardada (el nombre cambia en el encabezado). Eliminar cuenta cuenta lo que se pierde con `GET /api/attempts?limit=1` (`total`) y `GET /api/evidence?limit=100` (suma de `active_shares`), y tras `DELETE /api/me` cierra la sesión.

@@ -9,3 +9,5 @@ export {
 } from './errors';
 export * from './auth';
 export * from './health';
+export * from './attempts';
+export * from './evidence';

@@ -11,6 +11,8 @@ interface NavItem {
   label: string;
   /** Ruta del icono en una rejilla pequeña (sprites de la barra de v2). */
   icon: { viewBox: string; d: string };
+  /** Otras rutas que marcan este destino como actual (Mi cuenta cuelga de Perfil). */
+  also?: string[];
 }
 
 const STUDENT_NAV: NavItem[] = [
@@ -25,6 +27,7 @@ const STUDENT_NAV: NavItem[] = [
   {
     href: '/perfil',
     label: 'Perfil',
+    also: ['/cuenta'],
     icon: { viewBox: '0 0 12 12', d: 'M3 0h6v6h-6z M1 7h10v5h-10z' },
   },
   {
@@ -37,13 +40,13 @@ const STUDENT_NAV: NavItem[] = [
   },
 ];
 
-const ADMIN_NAV = [
+const ADMIN_NAV: { href: string; label: string; also?: string[] }[] = [
   { href: '/admin/simulaciones', label: 'Simulaciones' },
   { href: '/admin/habilidades', label: 'Habilidades' },
 ];
 
-function isActive(pathname: string, href: string) {
-  return pathname === href || pathname.startsWith(`${href}/`);
+function isActive(pathname: string, href: string, also: string[] = []) {
+  return [href, ...also].some((base) => pathname === base || pathname.startsWith(`${base}/`));
 }
 
 function NavIcon({ icon }: { icon: NavItem['icon'] }) {
@@ -94,7 +97,7 @@ export function StudentShell({ children }: { children: ReactNode }) {
                 key={item.href}
                 href={item.href}
                 className="topbar-link"
-                aria-current={isActive(pathname, item.href) ? 'page' : undefined}
+                aria-current={isActive(pathname, item.href, item.also) ? 'page' : undefined}
               >
                 <NavIcon icon={item.icon} />
                 {item.label}
@@ -111,7 +114,7 @@ export function StudentShell({ children }: { children: ReactNode }) {
             key={item.href}
             href={item.href}
             className="bottom-nav-link"
-            aria-current={isActive(pathname, item.href) ? 'page' : undefined}
+            aria-current={isActive(pathname, item.href, item.also) ? 'page' : undefined}
           >
             <NavIcon icon={item.icon} />
             {item.label}
@@ -138,7 +141,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
                 key={item.href}
                 href={item.href}
                 className="topbar-link"
-                aria-current={isActive(pathname, item.href) ? 'page' : undefined}
+                aria-current={isActive(pathname, item.href, item.also) ? 'page' : undefined}
               >
                 {item.label}
               </Link>
