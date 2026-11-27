@@ -943,3 +943,61 @@
   justify-content: center;
   padding-top: 8px;
 }
+
+/* Texto solo para lectores de pantalla */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---- Movimiento (DEC-F06, issue 7.1): solo CSS por pasos; se apaga con movimiento reducido */
+
+@keyframes mov-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes mov-fill {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes mov-stripes {
+  from {
+    transform: translateX(-12px);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Barra de nivel: se llena por bloques al aparecer. */
+.level-fill {
+  animation: mov-fill var(--mov-medio) steps(8, end) both;
+}
+
+/* Barra a rayas (carga y sincronización): avanza a saltos. */
+.stripe-bar {
+  overflow: hidden;
+}
+
+.stripe-bar::after {
+  inset: 0 -12px 0 0;
+  width: calc(55% + 12px);
+  animation: mov-stripes 480ms var(--mov-pasos-4) infinite;
+}
+
+.sync-banner[data-sync='slow'] .stripe-bar::after {
+  animation: none;
+}

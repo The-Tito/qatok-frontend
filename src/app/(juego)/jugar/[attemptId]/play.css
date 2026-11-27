@@ -1101,3 +1101,149 @@
     padding: 0;
   }
 }
+
+/* ---- Movimiento del juego (DEC-F06, issue 7.1) ------------------------------------------- */
+
+@keyframes mov-enter {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes mov-cursor {
+  50% {
+    transform: translateX(3px);
+  }
+}
+
+@keyframes mov-breathe {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes mov-pop {
+  0% {
+    transform: scale(0.6);
+  }
+
+  60% {
+    transform: scale(1.08);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes mov-shake {
+  0%,
+  100% {
+    transform: none;
+  }
+
+  25% {
+    transform: translateX(-6px);
+  }
+
+  75% {
+    transform: translateX(6px);
+  }
+}
+
+@keyframes mov-twinkle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Diálogo: cursor ▌ mientras se escribe y ▼ parpadeando al terminar. */
+.dialog-box[data-state='revealing'] {
+  cursor: pointer;
+}
+
+.dialog-box[data-state='revealing'] .dialog-line[data-current] .dialog-text::after {
+  content: '▌';
+  animation: mov-blink 500ms var(--mov-pasos-2) infinite;
+}
+
+.dialog-box[data-state='ready'] .dialog-more {
+  animation: mov-blink 800ms var(--mov-pasos-2) infinite;
+}
+
+.dialog-skip {
+  align-self: flex-end;
+  min-height: 44px;
+  padding: 0 10px;
+  border: var(--border-thin) solid var(--color-ink);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-family: var(--font-silkscreen), monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+/* Interlocutor: dos cuadros de respiración. */
+.ctx-interlocutor {
+  animation: mov-breathe 1.2s var(--mov-pasos-2) infinite alternate;
+}
+
+/* Opciones: ocultas hasta que el paso está listo; luego entran una tras otra. */
+.option-reveal[data-state='hidden'] .option {
+  visibility: hidden;
+}
+
+.option-reveal[data-state='shown'] .option {
+  animation: mov-enter var(--mov-medio) var(--mov-pasos-4) both;
+}
+
+.option-reveal[data-state='shown'] .option:nth-child(2) {
+  animation-delay: 90ms;
+}
+
+.option-reveal[data-state='shown'] .option:nth-child(3) {
+  animation-delay: 180ms;
+}
+
+.option-reveal[data-state='shown'] .option:nth-child(n + 4) {
+  animation-delay: 270ms;
+}
+
+.option[aria-checked='true'] .option-cursor {
+  animation: mov-cursor 600ms var(--mov-pasos-2) infinite;
+}
+
+/* Retroalimentación: pop del banner; estrellas en acierto; sacudida en error. */
+.feedback-banner[data-state='shown'] {
+  animation: mov-pop 360ms var(--mov-pasos-4) both;
+}
+
+.feedback-banner[data-state='shown'][data-result='correct'] .pixel-icon:not(.feedback-icon) {
+  animation: mov-twinkle 900ms var(--mov-pasos-4) 400ms 2 both;
+}
+
+.feedback-banner[data-state='shown'][data-result='correct'] .feedback-sparkle-2 {
+  animation-delay: 550ms;
+}
+
+.feedback-banner[data-state='shown'][data-result='incorrect'] {
+  animation: mov-shake 360ms var(--mov-pasos-4) 120ms both;
+}

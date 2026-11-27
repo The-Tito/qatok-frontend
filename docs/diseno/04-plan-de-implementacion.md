@@ -88,6 +88,7 @@ Ejemplo que funciona: [`prototipo/ejemplo-animacion-paso.html`](prototipo/ejempl
 - `prefers-reduced-motion: reduce` apaga todo con una regla global, y la escritura letra por letra muestra el texto completo.
 - Estados del paso (issue 3.1): diálogo o contexto `revealing` → `ready` (tocar o Enter/Espacio salta a `ready`); opciones `hidden` → `shown`; «Decidir» deshabilitado hasta `ready`; retroalimentación `data-state="hidden|shown"` y `data-result="correct|partial|incorrect"`. Hasta el issue 7.1, el paso pasa directo a `ready`.
 - Qué se anima en 7.1: escritura del diálogo, cursor ▶, entrada de opciones, botón que baja 4 px, hoja de retroalimentación (pop y estrellas en acierto, sacudida en error), sprite del interlocutor con 2 cuadros, barra de nivel por bloques y barra de sincronización.
+- Hecho en el issue 7.1: escritura letra por letra en CONVERSATION (`useReveal` en `play-view.tsx`; cada `--mov-letra`), «Mostrar todo», tocar el diálogo o Enter/Espacio para saltar; opciones ocultas hasta `ready` y entrada escalonada; cursor ▶ de la opción elegida; ▼ parpadeando; interlocutor con dos cuadros; banner de retroalimentación con pop, destellos en acierto y sacudida en error; `LevelBar` que se llena por bloques; barra a rayas que avanza a saltos. Con `prefers-reduced-motion` el diálogo aparece completo y la regla global apaga todo lo demás.
 - Ninguna animación retrasa datos ni bloquea acciones, salvo la escritura, que se puede saltar. Nada de transiciones suaves, desenfoques ni degradados.
 
 ## Pendientes que no bloquean
