@@ -14,3 +14,4 @@ export * from './evidence';
 export * from './catalog';
 export * from './profile';
 export * from './shares';
+export * from './admin';
