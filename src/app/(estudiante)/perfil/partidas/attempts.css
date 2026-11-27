@@ -1,0 +1,313 @@
+/* Mis partidas (MisPartidas, MisPartidasWeb) y Recorrido (Recorrido, RecorridoWeb). */
+
+.attempt-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.attempt-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.attempt-card .type-stripe {
+  height: 10px;
+}
+
+.attempt-card-body {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+}
+
+.attempt-card-text {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.attempt-card-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.attempt-card-dates {
+  color: var(--color-ink-muted);
+  font-family: var(--font-silkscreen), monospace;
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.attempt-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.attempt-status,
+.attempt-score,
+.attempt-action {
+  font-family: var(--font-silkscreen), monospace;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.attempt-status {
+  padding: 3px 6px;
+  border: var(--border-thin) solid var(--color-ink);
+  background: var(--color-fill);
+  font-size: 9px;
+}
+
+[data-status='IN_PROGRESS'] .attempt-status {
+  background: var(--color-ink);
+  color: #ffffff;
+}
+
+[data-status='ABANDONED'] .attempt-status {
+  border-style: dashed;
+  background: var(--color-surface);
+}
+
+.attempt-score {
+  font-size: 10px;
+}
+
+.attempt-action {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 10px;
+  border: var(--border) solid var(--color-ink);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-size: 10px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.attempt-action[data-primary] {
+  background: var(--color-ink);
+  color: #ffffff;
+}
+
+/* Recorrido */
+
+.path-top {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.path-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.path-summary > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px;
+}
+
+.path-summary > div + div {
+  border-left: var(--border) solid var(--color-line-soft);
+}
+
+.path-summary-label {
+  color: var(--color-ink-muted);
+  font-family: var(--font-silkscreen), monospace;
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.path-summary-score {
+  font-family: var(--font-chakra-petch), sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.path-summary-value {
+  padding-top: 6px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.path-pending {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border: var(--border) dashed var(--color-ink);
+  color: var(--color-ink-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.path-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.path-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.path-item-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-bottom: var(--border) solid var(--color-ink);
+  background: var(--color-fill);
+}
+
+.path-item-head img {
+  image-rendering: pixelated;
+}
+
+.path-item-num {
+  font-family: var(--font-chakra-petch), sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.path-item-step {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.path-item-type {
+  color: var(--color-ink-muted);
+  font-family: var(--font-silkscreen), monospace;
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.path-item-title {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.path-item-head .badge {
+  flex-shrink: 0;
+  padding: 4px 6px;
+  font-size: 10px;
+}
+
+.path-item-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+}
+
+.decision-choice {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.decision-label {
+  color: var(--color-ink-muted);
+  font-family: var(--font-silkscreen), monospace;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.decision-option {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.path-consequence {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.path-consequence .badge {
+  flex-shrink: 0;
+  padding: 4px 6px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.path-feedback {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 10px;
+  border-top: var(--border) dashed var(--color-line-soft);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.path-advice {
+  color: var(--type-dark);
+  font-family: var(--font-silkscreen), monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+@media (min-width: 1024px) {
+  .attempt-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .path-top {
+    flex-direction: row-reverse;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .path-summary {
+    flex: 0 1 460px;
+  }
+
+  .path-pending {
+    flex: 1 1 0;
+  }
+
+  .path-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+    gap: 20px;
+  }
+
+  .path .pixel-button {
+    align-self: flex-start;
+    width: auto;
+  }
+}
+
+.path-consequence .badge[data-impact='POSITIVE'] {
+  background: var(--color-correct-bg);
+}
+
+.path-consequence .badge[data-impact='NEGATIVE'] {
+  background: var(--color-incorrect-bg);
+}

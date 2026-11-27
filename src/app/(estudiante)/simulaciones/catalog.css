@@ -132,12 +132,6 @@
   color: var(--color-stone);
 }
 
-.catalog-filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
 .catalog-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -146,12 +140,6 @@
 
 .catalog-grid > li {
   display: flex;
-}
-
-.catalog-more {
-  display: flex;
-  justify-content: center;
-  padding-top: 8px;
 }
 
 @media (min-width: 768px) {

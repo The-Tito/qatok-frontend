@@ -95,6 +95,13 @@ Una sola ruta con cuatro vistas: **paso**, **resultado de la decisión**, **comp
 - **Estados:** `incomplete_data` con `graph` → aviso «Parte de tu perfil no cargó» en habilidades y bloque gris en recomendaciones. Con `document` y sin `description` → «El resumen no cargó; la evidencia sigue guardada». `pending_sync_count > 0` → `SyncBanner` y nueva consulta cada 3 s, máximo 5; después, «Tu progreso se actualizará en unos minutos» (no verificado contra la API: el dataset no deja eventos pendientes).
 - **Criterios:** si falla una base secundaria, la página no se rompe completa; las barras usan el color de cada habilidad.
 
+### 8b · Evolución, Recomendaciones, Mis partidas y Recorrido (issues 4.2 y 4.3)
+
+- **Evolución** `/perfil/habilidades/[skillId]` (Evolucion, EvolucionWeb): `GET /api/profile/skills/:skillId/evolution` → `current_level` y `points`; el objetivo y la clasificación salen de `GET /api/profile`. Chips para cambiar de habilidad (enlaces). Gráfica de escalones en SVG (`src/lib/evolution.ts`, con pruebas): ejes 0–50–100, línea discontinua del objetivo, escalones en `base` y cuadrados en `dark`; `aria-label` con todas las puntuaciones. Lista «Partidas que cuentan» con fecha, peso y puntuación.
+- **Recomendaciones** `/perfil/recomendaciones` (Recomendaciones, RecomendacionesWeb): `GET /api/profile/recommendations?limit=20`. Tarjetas con «#N» por orden (la `priority` no se muestra), «Refuerza» y «Ver simulación ▶». Cuadrícula desde 768 px.
+- **Mis partidas** `/perfil/partidas` (MisPartidas, MisPartidasWeb): filtro por estado en la URL (`?estado=IN_PROGRESS|COMPLETED|ABANDONED`), contadores con `GET /api/attempts?status&limit=1` (`total`), lista con «Cargar más». Título y color desde `GET /api/simulations?limit=100`; si la simulación ya no está publicada: «Simulación no disponible» y tipo `STONE`. En curso → «Seguir ▶» (`/jugar/{id}`); el resto → «Ver recorrido». En escritorio, tarjetas en 2 columnas en vez de tabla (diferencia aceptada).
+- **Recorrido** `/perfil/partidas/[attemptId]` (Recorrido, RecorridoWeb): `GET /api/profile/attempts/:id/path`. Resumen (puntuación, fecha, duración o estado), aviso suave si `graph_pending`, una tarjeta por decisión (tipo del paso, título, `FeedbackBadge`, opción, consecuencias, comentario y consejo) y «Ver su evidencia ▶» si la partida ya es evidencia (`GET /api/evidence?limit=100`).
+
 ### 10 · Evidencias — `/evidencias`
 
 - **Acceso:** usuario. **Prototipo:** `Evidencias.dc.html`. **Datos:** `GET /api/evidencias?id_habilidad` (F3a, provisional).

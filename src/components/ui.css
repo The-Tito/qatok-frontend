@@ -931,3 +931,15 @@
   font-size: 12px;
   line-height: 1.5;
 }
+
+.catalog-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.catalog-more {
+  display: flex;
+  justify-content: center;
+  padding-top: 8px;
+}
