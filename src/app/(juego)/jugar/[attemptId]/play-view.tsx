@@ -6,7 +6,7 @@ import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { ImpactBadge } from '../../../../components/Badges';
 import { PixelButton } from '../../../../components/PixelButton';
 import { OptionList } from '../../../../components/play/OptionList';
-import { STEP_TYPES, StepContext } from '../../../../components/play/StepContext';
+import { STEP_TYPES, StepContext, type Reveal } from '../../../../components/play/StepContext';
 import { Sparkle } from '../../../../components/Sprites';
 import { LoadingCard, StateCard } from '../../../../components/StateCard';
 import { getAttempt, getSimulation, isApiError, respondStep } from '../../../../lib/api';
@@ -189,6 +189,7 @@ function StepScreen({
   const [selected, setSelected] = useState<string | null>(null);
   const [failed, setFailed] = useState(false);
   const meta = STEP_TYPES[step.type];
+  const reveal = useReveal(step);
 
   const decide = useMutation({
     mutationFn: (optionId: string) =>
@@ -227,13 +228,13 @@ function StepScreen({
         onPause={onPause}
       />
 
-      <main className="step" data-state="ready">
+      <main className="step" data-state={reveal.ready ? 'ready' : 'revealing'}>
         <section className="step-situation" aria-label="Situación">
           <div className="step-intro">
             <h1 className="step-title">{step.title}</h1>
             <p className="step-description">{step.description}</p>
           </div>
-          <StepContext step={step} />
+          <StepContext step={step} reveal={reveal} />
         </section>
 
         <section className="step-decision" aria-label="Decisión">
@@ -241,16 +242,18 @@ function StepScreen({
             <span>{meta.question}</span>
             <span className="step-question-rule" aria-hidden="true" />
           </div>
-          <OptionList
-            label="Opciones"
-            options={step.options}
-            selected={selected}
-            onSelect={(optionId) => {
-              setFailed(false);
-              setSelected(optionId);
-            }}
-            disabled={decide.isPending}
-          />
+          <div className="option-reveal" data-state={reveal.ready ? 'shown' : 'hidden'}>
+            <OptionList
+              label="Opciones"
+              options={step.options}
+              selected={selected}
+              onSelect={(optionId) => {
+                setFailed(false);
+                setSelected(optionId);
+              }}
+              disabled={decide.isPending || !reveal.ready}
+            />
+          </div>
           {failed ? (
             <p className="form-alert" role="alert">
               No pudimos guardar tu decisión. Intenta de nuevo.
@@ -261,7 +264,7 @@ function StepScreen({
               variant="type"
               size="lg"
               block
-              disabled={!selected || decide.isPending}
+              disabled={!selected || decide.isPending || !reveal.ready}
               onClick={() => selected && decide.mutate(selected)}
             >
               {decide.isPending ? 'Decidiendo…' : 'Decidir ▶'}
@@ -409,4 +412,49 @@ function DecisionScreen({
       </main>
     </div>
   );
+}
+
+/**
+ * Escritura letra por letra del diálogo (DEC-F06, issue 7.1). Solo en CONVERSATION; los demás
+ * pasos empiezan listos. Con movimiento reducido se muestra todo de inmediato. Enter o Espacio
+ * (fuera de un control) y tocar el diálogo saltan al final.
+ */
+function useReveal(step: PlayerStep): Reveal {
+  const total =
+    step.type === 'CONVERSATION'
+      ? step.context.lines.reduce((sum, line) => sum + line.text.length, 0)
+      : 0;
+  const [chars, setChars] = useState(() =>
+    total === 0 ||
+    (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+      ? total
+      : 0,
+  );
+  const ready = chars >= total;
+
+  useEffect(() => {
+    if (ready) return;
+    const letterMs =
+      Number.parseFloat(
+        getComputedStyle(document.documentElement).getPropertyValue('--mov-letra'),
+      ) || 28;
+    const timer = window.setInterval(() => setChars((n) => Math.min(total, n + 1)), letterMs);
+    return () => window.clearInterval(timer);
+  }, [ready, total]);
+
+  useEffect(() => {
+    if (ready) return;
+    const onKey = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (target?.closest('button, a, input, select, textarea, [role="radio"]')) return;
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        setChars(total);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [ready, total]);
+
+  return { chars, ready, skip: () => setChars(total) };
 }

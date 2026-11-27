@@ -37,7 +37,15 @@ const hours = (n: number) => `${Number.isInteger(n) ? n : n.toFixed(1)} h`;
  * Situación del paso: un renderizador por tipo (02 · Jugar). Los textos salen del contexto
  * de la API tal cual; nunca se muestran valoraciones ni retroalimentación antes de decidir.
  */
-export function StepContext({ step }: { step: PlayerStep }) {
+export interface Reveal {
+  /** Letras visibles del diálogo (escritura letra por letra, issue 7.1). */
+  chars: number;
+  ready: boolean;
+  /** Muestra todo el texto (tocar, Enter o Espacio). */
+  skip: () => void;
+}
+
+export function StepContext({ step, reveal }: { step: PlayerStep; reveal?: Reveal }) {
   switch (step.type) {
     case 'EMAIL':
       return (
@@ -125,11 +133,17 @@ export function StepContext({ step }: { step: PlayerStep }) {
       );
     }
     case 'CONVERSATION':
-      return <ConversationContext step={step} />;
+      return <ConversationContext step={step} reveal={reveal} />;
   }
 }
 
-function ConversationContext({ step }: { step: Extract<PlayerStep, { type: 'CONVERSATION' }> }) {
+function ConversationContext({
+  step,
+  reveal,
+}: {
+  step: Extract<PlayerStep, { type: 'CONVERSATION' }>;
+  reveal?: Reveal;
+}) {
   const { interlocutor, lines } = step.context;
   const speaker = lines.find((line) => line.speaker !== interlocutor)?.speaker;
   // El rol solo se muestra si el nombre no lo trae ya («Mariana Torres (Cliente)»).
@@ -148,17 +162,45 @@ function ConversationContext({ step }: { step: Extract<PlayerStep, { type: 'CONV
         <img src="/sprites/student-back.svg" alt="" className="ctx-student" />
         <Sparkle color="var(--type-base)" size={21} className="ctx-scene-sparkle" />
       </div>
-      <div className="dialog-box panel" data-state="ready">
-        {lines.map((line, index) => (
-          <p key={index} className="dialog-line">
+      <div
+        className="dialog-box panel"
+        data-state={reveal && !reveal.ready ? 'revealing' : 'ready'}
+        onClick={reveal && !reveal.ready ? reveal.skip : undefined}
+      >
+        {visibleLines(lines, reveal).map((line, index) => (
+          <p key={index} className="dialog-line" data-current={line.current || undefined}>
             <span className="dialog-speaker">{line.speaker}</span>
-            <span className="dialog-text">{line.text}</span>
+            {/* Mientras se escribe, el lector de pantalla recibe el texto completo. */}
+            <span className="dialog-text" aria-hidden={line.partial || undefined}>
+              {line.shown}
+            </span>
+            {line.partial ? <span className="sr-only">{line.text}</span> : null}
           </p>
         ))}
-        <span className="dialog-more" aria-hidden="true">
-          ▼
-        </span>
+        {reveal && !reveal.ready ? (
+          <button type="button" className="dialog-skip" onClick={reveal.skip}>
+            Mostrar todo
+          </button>
+        ) : (
+          <span className="dialog-more" aria-hidden="true">
+            ▼
+          </span>
+        )}
       </div>
     </div>
   );
+}
+
+/** Recorta las líneas a las letras visibles. Sin reveal (o listo) se muestra todo. */
+function visibleLines(lines: { speaker: string; text: string }[], reveal?: Reveal) {
+  let left = reveal && !reveal.ready ? reveal.chars : Infinity;
+  let currentMarked = false;
+  return lines.map((line) => {
+    const shown = line.text.slice(0, Math.max(0, left));
+    left -= line.text.length;
+    const partial = shown.length < line.text.length;
+    const current = partial && !currentMarked;
+    if (current) currentMarked = true;
+    return { ...line, shown, partial, current };
+  });
 }
