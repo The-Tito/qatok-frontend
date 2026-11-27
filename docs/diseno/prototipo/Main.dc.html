@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Sistema visual QATO'K</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Chakra+Petch:wght@600;700&amp;family=Silkscreen:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#2A2238}a:hover{color:#5E5470}
+.pf{font-family:'Chakra Petch',sans-serif}
+.sk{font-family:'Silkscreen',monospace;text-transform:uppercase;letter-spacing:.04em}
+.px{border:3px solid #2A2238;box-shadow:4px 4px 0 #2A2238}
+.seg{background-image:repeating-linear-gradient(90deg,transparent 0 14px,#2A2238 14px 16px)}
+svg.sp{shape-rendering:crispEdges;display:block}
+</style>
+</helmet>
+<div style="width:1440px;height:1900px;box-sizing:border-box;padding:72px 80px;background:#FFFFFF;color:#2A2238;font-family:'IBM Plex Mono',monospace;display:flex;flex-direction:column;gap:56px;position:relative;overflow:hidden">
+
+  <header style="display:flex;justify-content:space-between;align-items:flex-end;gap:40px">
+    <div style="display:flex;flex-direction:column;gap:16px;max-width:820px">
+      <span class="sk" style="font-size:13px;background:#2A2238;color:#F5F3EF;padding:6px 10px;align-self:flex-start">Sistema visual · v0</span>
+      <h1 class="pf" style="margin:0;font-size:88px;line-height:.95;font-weight:700">QATO'K</h1>
+      <p style="margin:0;font-size:18px;line-height:1.6;color:#5E5470">Estilo RPG retro en pixel, original: sin personajes, nombres ni recursos de juegos existentes. Cada habilidad es un «tipo» con su propio color; la pantalla de juego toma el color de la habilidad que se entrena.</p>
+    </div>
+    <div class="px" style="background:#FFFFFF;padding:20px 24px;display:flex;align-items:center;gap:20px">
+      <svg class="sp" width="72" height="72" viewBox="0 0 16 16" aria-hidden="true"><path fill="#2A2238" d="M5 0h6v1h-6z M3 1h10v1h-10z M2 2h12v8h-12z M4 10h8v1h-8z M2 11h12v1h-12z M1 12h14v4h-14z"/><path fill="#4A3328" d="M5 1h6v1h-6z M3 2h10v3h-10z M3 5h1v1h-1z M12 5h1v1h-1z"/><path fill="#7A5A48" d="M6 2h3v1h-3z M4 3h2v1h-2z"/><path fill="#F2C9A0" d="M5 4h6v1h-6z M4 5h8v1h-8z M3 6h10v3h-10z M4 9h8v1h-8z M6 10h4v1h-4z"/><path fill="#D9A57C" d="M6 10h4v1h-4z M4 9h1v1h-1z M11 9h1v1h-1z"/><path fill="#2A2238" d="M5 6h2v2h-2z M9 6h2v2h-2z"/><path fill="#FFFFFF" d="M5 6h1v1h-1z M9 6h1v1h-1z"/><path fill="#E89A8A" d="M4 8h1v1h-1z M11 8h1v1h-1z"/><path fill="#B0705A" d="M7 8h2v1h-2z"/><path fill="#E8A33D" d="M3 11h10v1h-10z M2 12h12v3h-12z"/><path fill="#2A2238" fill-opacity=".28" d="M2 12h2v3h-2z M12 12h2v3h-2z"/><path fill="#FFFFFF" d="M6 11h4v1h-4z M7 12h2v1h-2z"/></svg>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <span class="sk" style="font-size:12px;color:#5E5470">Logo</span>
+        <span class="pf" style="font-size:22px;font-weight:700">[LOGO PENDIENTE]</span>
+        <span style="font-size:13px;color:#5E5470">Se reemplaza sin tocar el resto</span>
+      </div>
+    </div>
+  </header>
+
+  <section style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px">
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <h2 class="sk" style="margin:0;font-size:18px">01 · Base</h2>
+      <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px">
+        <div style="display:flex;flex-direction:column;gap:8px"><div class="px" style="height:72px;background:#FFFFFF"></div><span class="sk" style="font-size:11px">Fondo</span><span style="font-size:12px;color:#5E5470">#FFFFFF</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px"><div class="px" style="height:72px;background:#F5F3EF"></div><span class="sk" style="font-size:11px">Relleno suave</span><span style="font-size:12px;color:#5E5470">#F5F3EF</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px"><div class="px" style="height:72px;background:#2A2238"></div><span class="sk" style="font-size:11px">Tinta</span><span style="font-size:12px;color:#5E5470">#2A2238</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px"><div class="px" style="height:72px;background:#5E5470"></div><span class="sk" style="font-size:11px">Tinta suave</span><span style="font-size:12px;color:#5E5470">#5E5470</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px"><div class="px" style="height:72px;background:#E4DCCB"></div><span class="sk" style="font-size:11px">Línea suave</span><span style="font-size:12px;color:#5E5470">#E4DCCB</span></div>
+      </div>
+      <p style="margin:0;font-size:14px;line-height:1.6;color:#5E5470">Bordes de 3 px en tinta y sombra dura de 4 px, sin desenfoque ni esquinas redondeadas. El fondo es blanco; los paneles se separan por el borde y el relleno suave marca campos y zonas secundarias. Los textos largos nunca van sobre el color del tipo.</p>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <h2 class="sk" style="margin:0;font-size:18px">02 · Tipografía</h2>
+      <div class="px" style="background:#FFFFFF;padding:24px;display:flex;flex-direction:column;gap:18px">
+        <div style="display:flex;align-items:baseline;gap:20px"><span class="sk" style="font-size:11px;width:120px;color:#5E5470">Títulos</span><span class="pf" style="font-size:36px;font-weight:700">Chakra Petch</span></div>
+        <div style="display:flex;align-items:baseline;gap:20px"><span class="sk" style="font-size:11px;width:120px;color:#5E5470">Etiquetas</span><span class="sk" style="font-size:18px">Silkscreen · botones y chips</span></div>
+        <div style="display:flex;align-items:baseline;gap:20px"><span class="sk" style="font-size:11px;width:120px;color:#5E5470">Texto</span><span style="font-size:16px;line-height:1.6">IBM Plex Mono para correos, diálogos y retroalimentación.</span></div>
+        <span style="font-size:12px;color:#5E5470">Escala móvil: 28 · 22 · 16 · 14 · 12. Silkscreen solo en mayúsculas y en textos de menos de 4 palabras.</span>
+      </div>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;justify-content:space-between;align-items:baseline;gap:24px">
+      <h2 class="sk" style="margin:0;font-size:18px">03 · Tipos de habilidad</h2>
+      <span style="font-size:14px;color:#5E5470">Regla: el color de una simulación es el de su habilidad con mayor peso; la segunda aparece como franja.</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px">
+      <sc-for list="{{types}}" as="t" hint-placeholder-count="8">
+        <div class="px" style="background:#FFFFFF;display:flex;flex-direction:column">
+          <div style="height:56px;background:{{t.base}};display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:3px solid #2A2238">
+            <span class="sk" style="font-size:16px;font-weight:700;color:#2A2238;background:#FFFFFF;padding:4px 8px;border:2px solid #2A2238">{{t.name}}</span>
+            <span style="display:flex;gap:6px"><span style="width:20px;height:20px;background:{{t.dark}};border:2px solid #2A2238"></span><span style="width:20px;height:20px;background:{{t.tint}};border:2px solid #2A2238"></span></span>
+          </div>
+          <div style="padding:14px 16px;display:flex;flex-direction:column;gap:6px;background:{{t.tint}};flex-grow:1">
+            <span style="font-size:15px;font-weight:600;color:{{t.dark}}">{{t.skill}}</span>
+            <span style="font-size:12px;color:{{t.dark}}">{{t.state}}</span>
+            <span style="font-size:11px;color:{{t.dark}}">{{t.hex}}</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px">
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <h2 class="sk" style="margin:0;font-size:18px">04 · Botones</h2>
+      <a href="#" class="sk px" style="display:flex;justify-content:center;align-items:center;gap:10px;height:52px;background:#2A2238;color:#FFFFFF;text-decoration:none;font-size:15px;font-weight:700">Comenzar ▶</a>
+      <a href="#" class="sk px" style="display:flex;justify-content:center;align-items:center;height:52px;background:#7A4A0B;color:#FFFFFF;text-decoration:none;font-size:15px;font-weight:700">Del tipo · voz</a>
+      <a href="#" class="sk px" style="display:flex;justify-content:center;align-items:center;height:52px;background:#FFFFFF;color:#2A2238;text-decoration:none;font-size:15px;font-weight:700">Secundario</a>
+      <span class="sk" style="display:flex;justify-content:center;align-items:center;height:52px;border:3px dashed #8C8577;color:#5E5470;font-size:15px">Deshabilitado</span>
+      <span style="font-size:12px;color:#5E5470">Al presionar: la sombra pasa a 0 y el botón baja 4 px. Altura mínima 48 px.</span>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <h2 class="sk" style="margin:0;font-size:18px">05 · Opciones y diálogo</h2>
+      <div class="px" style="background:#FFFFFF;padding:16px 18px;display:flex;flex-direction:column;gap:10px">
+        <span class="sk" style="font-size:12px;color:#5E5470">Mariana Torres</span>
+        <span style="font-size:15px;line-height:1.55">Gracias por llamar. ¿Qué van a hacer con mi pedido?</span>
+        <span style="align-self:flex-end;font-size:14px">▼</span>
+      </div>
+      <a href="#" class="px" style="display:flex;gap:12px;align-items:flex-start;padding:14px 16px;background:#FCEBC8;color:#2A2238;text-decoration:none"><span class="sk" style="font-size:15px">▶</span><span style="font-size:14px;line-height:1.5;font-weight:600">Opción seleccionada (cursor y fondo del tipo)</span></a>
+      <a href="#" style="display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border:3px solid #2A2238;background:#FFFFFF;color:#2A2238;text-decoration:none"><span class="sk" style="font-size:15px;color:#E4DCCB">▶</span><span style="font-size:14px;line-height:1.5">Opción sin seleccionar</span></a>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <h2 class="sk" style="margin:0;font-size:18px">06 · Nivel y estados</h2>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;justify-content:space-between"><span style="font-size:14px;font-weight:600">Gestión del tiempo</span><span class="sk" style="font-size:13px">40 / 60</span></div>
+        <div style="height:22px;border:3px solid #2A2238;background:#FFFFFF;position:relative"><div class="seg" style="position:absolute;inset:0;width:40%;background-color:#8A5CC7"></div><div style="position:absolute;left:60%;top:-8px;bottom:-8px;width:3px;background:#2A2238"></div></div>
+        <span style="font-size:12px;color:#5E5470">La marca vertical es el objetivo. Segmentos de 16 px.</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px">
+        <span class="sk" style="font-size:12px;padding:6px 10px;border:2px solid #2A2238;background:#D6EFD5;color:#1F5A28">★ Acierto</span>
+        <span class="sk" style="font-size:12px;padding:6px 10px;border:2px solid #2A2238;background:#FCEBC8;color:#7A4A0B">◆ Parcial</span>
+        <span class="sk" style="font-size:12px;padding:6px 10px;border:2px solid #2A2238;background:#F9D7D2;color:#8A1F16">✕ Error</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px">
+        <span class="sk" style="font-size:12px;padding:6px 10px;border:2px solid #2A2238;background:#FFFFFF">▲ Fortaleza</span>
+        <span class="sk" style="font-size:12px;padding:6px 10px;border:2px dashed #2A2238;background:#FFFFFF">▼ Área de mejora</span>
+      </div>
+      <div class="px" style="background:#2A2238;color:#FFFFFF;padding:12px 14px;display:flex;flex-direction:column;gap:8px">
+        <span class="sk" style="font-size:12px">Actualizando tu progreso…</span>
+        <div style="height:10px;border:2px solid #FFFFFF;position:relative"><div style="position:absolute;inset:0;width:55%;background-image:repeating-linear-gradient(90deg,#FFFFFF 0 8px,transparent 8px 12px)"></div></div>
+        <span style="font-size:12px;color:#E4DCCB">Sincronización PENDING: lo guardado está a salvo; el perfil se actualiza en segundos.</span>
+      </div>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:20px">
+    <h2 class="sk" style="margin:0;font-size:18px">07 · Sprites (pixel art propio, SVG 12×12)</h2>
+    <div style="display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:20px">
+      <div class="px" style="background:#FFFFFF;padding:16px;display:flex;flex-direction:column;align-items:center;gap:12px">
+        <svg class="sp" width="60" height="48" viewBox="0 0 14 10" aria-hidden="true"><path fill="#2A2238" d="M0 0h14v10h-14z"/><path fill="#FFFFFF" d="M1 1h12v8h-12z"/><path fill="#E4DCCB" d="M2 1h10v1h-10z M3 2h8v1h-8z M4 3h6v1h-6z M5 4h4v1h-4z M6 5h2v1h-2z"/><path fill="#2A2238" d="M1 1h1v1h-1z M2 2h1v1h-1z M3 3h1v1h-1z M4 4h1v1h-1z M5 5h1v1h-1z M6 6h2v1h-2z M8 5h1v1h-1z M9 4h1v1h-1z M10 3h1v1h-1z M11 2h1v1h-1z M12 1h1v1h-1z"/><path fill="#D9483B" d="M10 6h2v2h-2z"/></svg>
+        <span class="sk" style="font-size:11px">Correo</span>
+      </div>
+      <div class="px" style="background:#FFFFFF;padding:16px;display:flex;flex-direction:column;align-items:center;gap:12px">
+        <svg class="sp" width="60" height="55" viewBox="0 0 12 11" aria-hidden="true"><path fill="#FFFFFF" d="M1 1h10v6h-10z"/><path fill="#2A2238" d="M1 0h10v1h-10z M0 1h1v6h-1z M11 1h1v6h-1z M1 7h10v1h-10z M2 8h2v1h-2z M2 9h1v1h-1z M2 3h2v2h-2z M5 3h2v2h-2z M8 3h2v2h-2z"/></svg>
+        <span class="sk" style="font-size:11px">Conversación</span>
+      </div>
+      <div class="px" style="background:#FFFFFF;padding:16px;display:flex;flex-direction:column;align-items:center;gap:12px">
+        <svg class="sp" width="60" height="50" viewBox="0 0 12 10" aria-hidden="true"><path fill="#2A2238" d="M1 0h3v3h-3z M8 0h3v3h-3z M0 9h12v1h-12z"/><path fill="#8C8577" d="M0 4h5v4h-5z M7 4h5v4h-5z"/></svg>
+        <span class="sk" style="font-size:11px">Reunión</span>
+      </div>
+      <div class="px" style="background:#FFFFFF;padding:16px;display:flex;flex-direction:column;align-items:center;gap:12px">
+        <svg class="sp" width="50" height="60" viewBox="0 0 10 12" aria-hidden="true"><path fill="#2A2238" d="M0 1h10v11h-10z"/><path fill="#FFFFFF" d="M1 2h8v9h-8z"/><path fill="#8C8577" d="M3 0h4v2h-4z"/><path fill="#2A2238" d="M2 4h6v1h-6z M2 6h6v1h-6z M2 8h4v1h-4z"/></svg>
+        <span class="sk" style="font-size:11px">Tarea</span>
+      </div>
+      <div class="px" style="background:#FFFFFF;padding:16px;display:flex;flex-direction:column;align-items:center;gap:12px">
+        <svg class="sp" width="55" height="50" viewBox="0 0 11 10" aria-hidden="true"><path fill="#E2703A" d="M5 0h1v1h-1z M4 1h3v2h-3z M3 3h5v2h-5z M2 5h7v2h-7z M1 7h9v1h-9z M0 8h11v2h-11z"/><path fill="#2A2238" d="M5 3h1v3h-1z M5 7h1v1h-1z"/></svg>
+        <span class="sk" style="font-size:11px">Incidente</span>
+      </div>
+      <div class="px" style="background:#FFFFFF;padding:16px;display:flex;flex-direction:column;align-items:center;gap:12px">
+        <svg class="sp" width="60" height="60" viewBox="0 0 16 16" aria-hidden="true"><path fill="#2A2238" d="M5 0h6v1h-6z M3 1h10v1h-10z M2 2h12v8h-12z M4 10h8v1h-8z M2 11h12v1h-12z M1 12h14v4h-14z"/><path fill="#4A3328" d="M5 1h6v1h-6z M3 2h10v3h-10z M3 5h1v1h-1z M12 5h1v1h-1z"/><path fill="#7A5A48" d="M6 2h3v1h-3z M4 3h2v1h-2z"/><path fill="#F2C9A0" d="M5 4h6v1h-6z M4 5h8v1h-8z M3 6h10v3h-10z M4 9h8v1h-8z M6 10h4v1h-4z"/><path fill="#D9A57C" d="M6 10h4v1h-4z M4 9h1v1h-1z M11 9h1v1h-1z"/><path fill="#2A2238" d="M5 6h2v2h-2z M9 6h2v2h-2z"/><path fill="#FFFFFF" d="M5 6h1v1h-1z M9 6h1v1h-1z"/><path fill="#E89A8A" d="M4 8h1v1h-1z M11 8h1v1h-1z"/><path fill="#B0705A" d="M7 8h2v1h-2z"/><path fill="#8A5CC7" d="M3 11h10v1h-10z M2 12h12v3h-12z"/><path fill="#2A2238" fill-opacity=".28" d="M2 12h2v3h-2z M12 12h2v3h-2z"/><path fill="#FFFFFF" d="M6 11h4v1h-4z M7 12h2v1h-2z"/></svg>
+        <span class="sk" style="font-size:11px">Estudiante</span>
+      </div>
+      <div class="px" style="background:#FFFFFF;padding:16px;display:flex;flex-direction:column;align-items:center;gap:12px">
+        <svg class="sp" width="60" height="60" viewBox="0 0 16 16" aria-hidden="true"><path fill="#2A2238" d="M5 0h6v1h-6z M3 1h10v1h-10z M2 2h12v8h-12z M4 10h8v1h-8z M2 11h12v1h-12z M1 12h14v4h-14z"/><path fill="#6B3E2E" d="M5 1h6v1h-6z M3 2h10v3h-10z M3 5h1v4h-1z M12 5h1v4h-1z"/><path fill="#9A5E44" d="M6 2h3v1h-3z M4 3h2v1h-2z"/><path fill="#E8B48A" d="M5 4h6v1h-6z M4 5h8v4h-8z M5 9h6v1h-6z M6 10h4v1h-4z"/><path fill="#C98E64" d="M6 10h4v1h-4z"/><path fill="#2A2238" d="M5 5h1v1h-1z M6 6h1v1h-1z M10 5h1v1h-1z M9 6h1v1h-1z M5 7h2v1h-2z M9 7h2v1h-2z M7 8h2v1h-2z M6 9h1v1h-1z M9 9h1v1h-1z"/><path fill="#D9483B" d="M3 11h10v1h-10z M2 12h12v3h-12z M13 0h1v1h-1z M15 0h1v1h-1z M14 1h1v1h-1z M15 2h1v1h-1z"/><path fill="#2A2238" fill-opacity=".28" d="M2 12h2v3h-2z M12 12h2v3h-2z"/><path fill="#FFFFFF" d="M6 11h4v1h-4z M7 12h2v1h-2z"/></svg>
+        <span class="sk" style="font-size:11px">Interlocutor</span>
+      </div>
+      <div class="px" style="background:#FFFFFF;padding:16px;display:flex;flex-direction:column;align-items:center;gap:12px">
+        <svg class="sp" width="60" height="60" viewBox="0 0 16 16" aria-hidden="true"><path fill="#2A2238" d="M2 0h12v1h-12z M0 1h16v5h-16z M1 6h14v1h-14z M3 7h10v1h-10z M5 8h6v1h-6z M6 9h4v2h-4z M4 11h8v2h-8z M2 13h12v3h-12z"/><path fill="#E8A33D" d="M3 1h10v5h-10z M1 2h1v3h-1z M14 2h1v3h-1z M4 6h8v1h-8z M6 7h4v1h-4z M7 8h2v2h-2z M5 11h6v1h-6z"/><path fill="#FCEBC8" d="M4 2h1v3h-1z M5 2h1v1h-1z"/><path fill="#B07A22" d="M11 2h1v4h-1z M10 5h1v1h-1z M9 6h2v1h-2z M8 8h1v2h-1z M9 11h2v1h-2z"/><path fill="#6B3E2E" d="M3 14h10v1h-10z"/><path fill="#E8A33D" d="M6 14h4v1h-4z"/></svg>
+        <span class="sk" style="font-size:11px">Logro</span>
+      </div>
+    </div>
+  </section>
+
+  <svg class="sp" style="position:absolute;right:80px;top:300px" width="28" height="28" viewBox="0 0 11 11" aria-hidden="true"><path fill="#E8A33D" d="M5 0h1v3h-1z M4 3h3v1h-3z M3 4h5v1h-5z M0 5h11v1h-11z M3 6h5v1h-5z M4 7h3v1h-3z M5 8h1v3h-1z"/></svg>
+  <svg class="sp" style="position:absolute;right:180px;top:250px" width="21" height="21" viewBox="0 0 11 11" aria-hidden="true"><path fill="#8A5CC7" d="M5 0h1v3h-1z M4 3h3v1h-3z M3 4h5v1h-5z M0 5h11v1h-11z M3 6h5v1h-5z M4 7h3v1h-3z M5 8h1v3h-1z"/></svg>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const t = (name, base, dark, tint, skill, state) => ({ name, base, dark, tint, skill, state, hex: base + ' · ' + dark + ' · ' + tint });
+    return {
+      types: [
+        t('Voz', '#E8A33D', '#7A4A0B', '#FCEBC8', 'Comunicación efectiva', 'Asignado (dataset)'),
+        t('Fuego', '#D9483B', '#8A1F16', '#F9D7D2', 'Resolución de conflictos', 'Asignado: trato con alguien molesto'),
+        t('Reloj', '#8A5CC7', '#4B2A7A', '#E9DDF7', 'Gestión del tiempo', 'Asignado (dataset)'),
+        t('Hoja', '#4FA35A', '#1F5A28', '#D6EFD5', 'Trabajo y decisiones en equipo', 'Libre: para una habilidad nueva'),
+        t('Chispa', '#E2703A', '#7E3410', '#FBDCC9', 'Liderazgo', 'Libre: para una habilidad nueva'),
+        t('Corazón', '#D66BA0', '#7D2453', '#F8D9E8', 'Empatía', 'Libre: para una habilidad nueva'),
+        t('Mente', '#9AA33A', '#4E5414', '#EEF0CF', 'Pensamiento crítico', 'Libre: para una habilidad nueva'),
+        t('Piedra', '#8C8577', '#45403A', '#E8E4DC', 'Sin tipo asignado', 'Respaldo para habilidades sin color'),
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>
