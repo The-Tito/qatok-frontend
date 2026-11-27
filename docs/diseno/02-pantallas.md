@@ -50,10 +50,11 @@ Contenedor: ancho completo hasta 480 px, centrado en pantallas mayores, fondo bl
 
 ### 3 · Antes de jugar — `/simulaciones/[simulationId]`
 
-- **Acceso:** usuario. **Prototipo:** `Simulacion.dc.html` (prop `tipo` = tipo principal).
+- **Acceso:** usuario. **Prototipo:** `prototipo-v2/movil/SimulacionV2.dc.html`, `PartidaEnCurso.dc.html` y sus versiones web. Hecho en el issue 2.2.
+- **Partida en curso:** se comprueba al cargar con `GET /api/attempts?status=IN_PROGRESS&limit=100` (la API permite una por simulación, no una por usuario). Si hay una de esta simulación, el aviso J6 reemplaza a «Comenzar»; un 409 al comenzar recarga esa lista y muestra el mismo aviso. En escritorio el aviso va debajo de «Entrena», no arriba a la derecha como en `PartidaEnCursoWeb` (diferencia aceptada: un solo orden para los tres anchos).
 - **Datos:** `GET /api/simulations/:id` → encabezado con escena, dificultad, duración, título, descripción y la sección «Entrena»: una `LevelBar` por habilidad con la marca en `expected_level`. «Tu nivel» sale del perfil (F3a); si no está disponible, la barra se muestra vacía con «Aún sin nivel».
 - **Interacción:** «Comenzar» → `POST /api/attempts` `{ simulation_id }` → `/jugar/{attempt.id}`.
-- **Estados:** `404 NOT_FOUND` → StateCard «Esta simulación ya no está disponible» con enlace al catálogo. `409 ACTIVE_ATTEMPT_EXISTS` → StateCard «Ya tienes esta partida en curso» con «Continuar» (`details.attempt_id`) y «Abandonar y empezar de nuevo» (abandon y luego un nuevo `POST`, con confirmación). `409 SIMULATION_NOT_PUBLISHED` → igual que 404.
+- **Estados:** `404 NOT_FOUND` (o un ID mal formado, `400`) → StateCard «Esta simulación ya no está disponible» con enlace al catálogo. `409 ACTIVE_ATTEMPT_EXISTS` → StateCard «Ya tienes esta partida en curso» con «Continuar» (`details.attempt_id`) y «Abandonar y empezar de nuevo» (abandon y luego un nuevo `POST`, con confirmación). `409 SIMULATION_NOT_PUBLISHED` → igual que 404.
 - **Criterios:** nunca se crean dos intentos en curso; doble toque en «Comenzar» no envía dos peticiones.
 
 ### 4–7 · Jugar — `/jugar/[attemptId]`
