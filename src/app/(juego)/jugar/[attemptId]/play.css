@@ -41,8 +41,14 @@
   cursor: pointer;
 }
 
+/* En móvil solo se ve «II»; «Pausar» queda para lectores de pantalla. */
 .step-pause-text {
-  display: none;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 .step-header-text {
@@ -501,7 +507,11 @@
   }
 
   .step-pause-text {
-    display: inline;
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip: auto;
   }
 
   .step-header-step {

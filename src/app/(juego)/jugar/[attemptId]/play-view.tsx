@@ -143,11 +143,9 @@ function StepHeader({
     <header className="step-header">
       <div className="step-header-inner">
         {onPause ? (
-          <button type="button" className="step-pause" aria-label="Pausar" onClick={onPause}>
+          <button type="button" className="step-pause" onClick={onPause}>
             <span aria-hidden="true">II</span>
-            <span className="step-pause-text" aria-hidden="true">
-              Pausar
-            </span>
+            <span className="step-pause-text">Pausar</span>
           </button>
         ) : null}
         <div className="step-header-text">
