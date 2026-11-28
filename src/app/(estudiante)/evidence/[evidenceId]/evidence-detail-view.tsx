@@ -80,6 +80,9 @@ export function EvidenceDetailView({ evidenceId }: { evidenceId: string }) {
       <header className="evidence-detail-bar">
         <Link href="/evidence" className="page-header-back" aria-label="Volver a evidencias">
           <span aria-hidden="true">◀</span>
+          <span className="page-header-back-text" aria-hidden="true">
+            Evidencias
+          </span>
         </Link>
         <span className="evidence-detail-label">Evidencia</span>
         <button

@@ -368,6 +368,18 @@
     padding: 0 max(32px, calc((100% - 1120px) / 2));
   }
 
+  /* En escritorio el regresar es «◀ Evidencias» en un botón con borde (como «Pausar»). */
+  .evidence-detail-bar .page-header-back {
+    padding: 0 14px;
+    border: var(--border) solid var(--color-ink);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* El botón ya dice «Evidencias»: la etiqueta solo ocupa el espacio. */
+  .evidence-detail-label {
+    visibility: hidden;
+  }
+
   .evidence-detail-layout {
     flex-direction: row;
     align-items: flex-start;
