@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import type { ReactNode } from 'react';
 import { useSession } from '../lib/use-session';
 import { useSignOut } from '../lib/use-sign-out';
+import { StudentSprite } from './Sprites';
 
 interface NavItem {
   href: string;
@@ -58,24 +59,46 @@ function NavIcon({ icon }: { icon: NavItem['icon'] }) {
   );
 }
 
+/**
+ * Usuario en la barra: ficha con avatar que lleva a Mi cuenta (o solo el nombre si no hay
+ * cuenta, como en admin) y «Salir» aparte, más discreto.
+ */
 function UserMenu({ accountHref }: { accountHref?: string }) {
   const session = useSession();
   const signOut = useSignOut();
+  const pathname = usePathname();
   const name = session?.user.name ?? '';
-  return (
-    <span className="shell-user">
+  const content = (
+    <>
+      <StudentSprite shirt="var(--type-voice-base)" size={32} className="shell-user-avatar" />
+      <span className="shell-user-name">{name}</span>
       {accountHref ? (
-        <Link href={accountHref} className="shell-user-name">
-          {name}
+        <span className="shell-user-arrow" aria-hidden="true">
+          ▸
+        </span>
+      ) : null}
+    </>
+  );
+  return (
+    <div className="shell-user">
+      {accountHref ? (
+        <Link
+          href={accountHref}
+          className="shell-user-chip"
+          aria-label={`Mi cuenta: ${name}`}
+          aria-current={isActive(pathname, accountHref) ? 'page' : undefined}
+        >
+          {content}
         </Link>
       ) : (
-        <span className="shell-user-name">{name}</span>
+        <span className="shell-user-chip" data-static="">
+          {content}
+        </span>
       )}
-      <span aria-hidden="true"> · </span>
       <button type="button" className="shell-sign-out" onClick={signOut}>
         Salir
       </button>
-    </span>
+    </div>
   );
 }
 
