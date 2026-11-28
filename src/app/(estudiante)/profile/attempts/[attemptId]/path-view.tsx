@@ -1,9 +1,11 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 import { FeedbackBadge, ImpactBadge } from '../../../../../components/Badges';
 import { PageHeader } from '../../../../../components/PageHeader';
 import { PixelButton } from '../../../../../components/PixelButton';
+import { SaveEvidenceSheet } from '../../../../../components/SaveEvidenceSheet';
 import { STEP_TYPES } from '../../../../../components/play/StepContext';
 import { LoadingCard, StateCard } from '../../../../../components/StateCard';
 import { getAttemptPath, getSimulation, isApiError, listEvidence } from '../../../../../lib/api';
@@ -16,6 +18,7 @@ const two = (n: number) => String(n).padStart(2, '0');
 
 /** P2 · Recorrido de un intento (C-03). graph_pending es un aviso suave, no un error. */
 export function PathView({ attemptId }: { attemptId: string }) {
+  const [saving, setSaving] = useState(false);
   const path = useQuery({
     queryKey: ['path', attemptId],
     queryFn: ({ signal }) => getAttemptPath(attemptId, signal),
@@ -79,6 +82,9 @@ export function PathView({ attemptId }: { attemptId: string }) {
     : 'STONE';
   const minutes = durationMinutes(attempt);
   const evidenceId = evidence.data?.items.find((item) => item.attempt_id === attempt.id)?.id;
+  // Una partida terminada que aún no es evidencia se puede guardar desde aquí (si ya lo es y
+  // no salió en la lista, la API responde 409 y la hoja muestra «Ya está guardada»).
+  const canSave = attempt.status === 'COMPLETED' && Boolean(evidence.data) && !evidenceId;
 
   return (
     <div className="recos" data-type={type}>
@@ -172,8 +178,21 @@ export function PathView({ attemptId }: { attemptId: string }) {
           <PixelButton href={`/evidence/${evidenceId}`} variant="secondary" block>
             Ver su evidencia ▶
           </PixelButton>
+        ) : canSave ? (
+          <PixelButton variant="type" block onClick={() => setSaving(true)}>
+            Guardar como evidencia ▶
+          </PixelButton>
         ) : null}
       </div>
+      {canSave ? (
+        <SaveEvidenceSheet
+          open={saving}
+          onClose={() => setSaving(false)}
+          attempt={attempt}
+          simulationTitle={title}
+          type={type}
+        />
+      ) : null}
     </div>
   );
 }
