@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { PixelButton } from '../../../../../components/PixelButton';
 import { Sheet } from '../../../../../components/Sheet';
 import { isApiError, publishSimulation } from '../../../../../lib/api';
-import { publishChecklist } from '../../../../../lib/content';
+import { OPTION_LETTERS, publishChecklist } from '../../../../../lib/content';
 
 const PUBLISH_ERRORS: Record<string, string> = {
   MISSING_CONTENT: 'Guarda el contenido antes de publicar.',
@@ -18,6 +18,42 @@ const PUBLISH_ERRORS: Record<string, string> = {
   SIMULATION_NOT_EDITABLE: 'La simulación ya no es un borrador.',
   CONTENT_ID_CONFLICT: 'Un paso u opción usa un identificador de otra versión publicada.',
 };
+
+const PUBLISH_REASONS: ReadonlyMap<unknown, string> = new Map([
+  ['NO_SKILLS', 'Asigna al menos una habilidad a la simulación.'],
+  ['NO_STEPS', 'Agrega al menos un paso.'],
+  ['STEP_WITHOUT_OPTIONS', 'Agrega al menos una opción al paso.'],
+  ['OPTION_WITHOUT_CONSEQUENCES', 'Agrega al menos una consecuencia a la opción.'],
+  ['MISSING_START_STEP', 'Falta el paso inicial.'],
+  ['CYCLE', 'La opción cierra un ciclo.'],
+  ['TARGET_OUTSIDE_SIMULATION', 'La opción apunta a un paso que no pertenece a esta simulación.'],
+  ['UNREACHABLE_STEP', 'No se llega a este paso desde el inicio.'],
+]);
+
+function publishErrorMessage(failure: unknown, steps: SimulationStep[]) {
+  const fallback = 'No pudimos publicar. Intenta de nuevo.';
+  if (!isApiError(failure)) return fallback;
+
+  if (isApiError(failure, 'INCOMPLETE_CONTENT', 'INVALID_BRANCHES')) {
+    const message = PUBLISH_REASONS.get(failure.details?.reason);
+    if (message) {
+      const stepIndex = steps.findIndex((step) => step.id === failure.details?.step_id);
+      const step = steps[stepIndex];
+      if (!step) return message;
+
+      const optionIndex = step.options.findIndex(
+        (option) => option.id === failure.details?.option_id,
+      );
+      const option =
+        optionIndex < 0 ? '' : ` · opción ${OPTION_LETTERS[optionIndex] ?? optionIndex + 1}`;
+      return `Paso ${stepIndex + 1}${option}. ${message}`;
+    }
+  }
+
+  return Object.hasOwn(PUBLISH_ERRORS, failure.code)
+    ? (PUBLISH_ERRORS[failure.code] ?? fallback)
+    : fallback;
+}
 
 /** «Antes de publicar» y «Publicar ▶» (AdminEditorV2, issue 6.3). */
 export function PublishPanel({
@@ -50,8 +86,7 @@ export function PublishPanel({
     },
     onError: (failure) => {
       setConfirming(false);
-      const code = isApiError(failure) ? failure.code : '';
-      setError(PUBLISH_ERRORS[code] ?? 'No pudimos publicar. Intenta de nuevo.');
+      setError(publishErrorMessage(failure, steps));
     },
   });
 
