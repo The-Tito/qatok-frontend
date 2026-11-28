@@ -14,12 +14,42 @@ import {
 
 type Mood = 'talk' | 'mad' | 'ok';
 
-/** Las cuatro personitas de la plática, junto a la cocina (abajo a la izquierda). */
+/**
+ * Las cuatro personitas, en dos parejas a los lados del formulario: la discusión es entre
+ * las dos de adentro, de un lado al otro. `band` es la franja donde su globo debe caber
+ * (lo que queda visible a los lados del formulario incluso en pantallas 4:3).
+ */
+const LEFT_BAND = [42, 104] as const;
+const RIGHT_BAND = [216, 280] as const;
 const PEOPLE = [
-  { x: 30, look: { hair: '#4A3328', skin: '#F2C9A0', shirt: '#E8A33D' }, pitch: 420 },
-  { x: 48, look: { hair: '#2A2238', skin: '#C68A5E', shirt: '#8A5CC7' }, pitch: 300 },
-  { x: 68, look: { hair: '#B5583B', skin: '#F2C9A0', shirt: '#4FA35A' }, pitch: 520 },
-  { x: 86, look: { hair: '#7A5A48', skin: '#E0AE84', shirt: '#D9483B' }, pitch: 360 },
+  {
+    x: 48,
+    feet: 162,
+    band: LEFT_BAND,
+    look: { hair: '#4A3328', skin: '#F2C9A0', shirt: '#E8A33D' },
+    pitch: 420,
+  },
+  {
+    x: 74,
+    feet: 158,
+    band: LEFT_BAND,
+    look: { hair: '#2A2238', skin: '#C68A5E', shirt: '#8A5CC7' },
+    pitch: 300,
+  },
+  {
+    x: 228,
+    feet: 150,
+    band: RIGHT_BAND,
+    look: { hair: '#B5583B', skin: '#F2C9A0', shirt: '#4FA35A' },
+    pitch: 520,
+  },
+  {
+    x: 252,
+    feet: 146,
+    band: RIGHT_BAND,
+    look: { hair: '#7A5A48', skin: '#E0AE84', shirt: '#D9483B' },
+    pitch: 360,
+  },
 ].map((person, i) => {
   const paths: Paths = [];
   const mad: Paths = [];
@@ -28,7 +58,6 @@ const PEOPLE = [
   return { ...person, paths, mad };
 });
 
-const FEET_Y = 162;
 const HEIGHT = STANDING.length;
 
 /** Guion en bucle: [quién, texto, tono, ms]. quién = -1 es una pausa. */
@@ -89,13 +118,15 @@ export function OfficeScene() {
     const [, text, mood] = line;
     const width = Math.ceil(text.length * 3.2) + 6;
     // El globo se abre hacia la izquierda para no quedar bajo el formulario.
-    const x = Math.max(2, speaker.x + 14 - width);
-    const y = FEET_Y - HEIGHT - 13;
+    // Centrado sobre la cabeza, pero sin salir de su franja visible.
+    const [min, max] = speaker.band;
+    const x = Math.round(Math.min(Math.max(speaker.x + 8 - width / 2, min), max - width));
+    const y = speaker.feet - HEIGHT - 13;
     bubble = (
       <g className="office-bubble" key={step}>
         <rect x={x} y={y} width={width} height={9} fill="#2A2238" />
         <rect x={x + 1} y={y + 1} width={width - 2} height={7} fill={BUBBLE_FILL[mood]} />
-        <rect x={speaker.x + 9} y={y + 9} width={2} height={2} fill="#2A2238" />
+        <rect x={speaker.x + 7} y={y + 9} width={2} height={2} fill="#2A2238" />
         <text
           x={x + width / 2}
           y={y + 6.2}
@@ -121,7 +152,7 @@ export function OfficeScene() {
         const mood =
           person === speaker ? line?.[2] : heated && (i === 1 || i === 2) ? 'mad' : undefined;
         return (
-          <g key={i} transform={`translate(${person.x} ${FEET_Y - HEIGHT})`}>
+          <g key={i} transform={`translate(${person.x} ${person.feet - HEIGHT})`}>
             <g className="office-person" data-mood={mood}>
               {(mood === 'mad' ? person.mad : person.paths).map(([color, d], j) => (
                 <path key={j} fill={color} d={d} />

@@ -372,20 +372,14 @@ function furniture(p: Paths) {
   rect(p, INK, 283, 172, 3, 3);
 
   // Mesa de café con laptop.
-  rect(p, INK, 252, 136, 22, 10);
-  rect(p, C.deskTop, 253, 137, 20, 6);
-  rect(p, C.monitorBack, 258, 133, 9, 5);
+  rect(p, INK, 274, 134, 22, 10);
+  rect(p, C.deskTop, 275, 135, 20, 6);
+  rect(p, C.monitorBack, 280, 131, 9, 5);
 
   // Bote de basura y garrafón.
-  rect(p, INK, 214, 134, 9, 20);
-  rect(p, C.glass, 215, 135, 7, 8);
-  rect(p, C.white, 215, 143, 7, 10);
-
-  // Impresora.
-  rect(p, INK, 46, 130, 16, 11);
-  rect(p, '#D8CFC0', 47, 131, 14, 9);
-  rect(p, C.paper, 49, 128, 10, 3);
-  rect(p, C.green, 57, 135, 2, 1);
+  rect(p, INK, 206, 134, 9, 20);
+  rect(p, C.glass, 207, 135, 7, 8);
+  rect(p, C.white, 207, 143, 7, 10);
 
   // Plantas.
   for (const [x, y] of [
