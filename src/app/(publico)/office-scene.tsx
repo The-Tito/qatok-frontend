@@ -90,7 +90,9 @@ export function OfficeScene() {
   const [step, setStep] = useState(-1);
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    // En móvil (menos de 768 px) el fondo queda quieto: el guion no corre y no suena nada.
+    // Se vuelve a evaluar al girar el teléfono o cambiar el tamaño de la ventana.
+    const still = window.matchMedia('(max-width: 767px), (prefers-reduced-motion: reduce)');
     let current = -1;
     let timer = 0;
     const next = () => {
@@ -105,8 +107,21 @@ export function OfficeScene() {
       }
       timer = window.setTimeout(next, SCRIPT[current]?.[3] ?? 1000);
     };
-    timer = window.setTimeout(next, 1200);
-    return () => window.clearTimeout(timer);
+    const update = () => {
+      window.clearTimeout(timer);
+      if (still.matches) {
+        current = -1;
+        setStep(-1);
+      } else {
+        timer = window.setTimeout(next, 1200);
+      }
+    };
+    update();
+    still.addEventListener('change', update);
+    return () => {
+      window.clearTimeout(timer);
+      still.removeEventListener('change', update);
+    };
   }, []);
 
   const line = SCRIPT[step];
