@@ -7,9 +7,11 @@ import { ImpactBadge } from '../../../../components/Badges';
 import { PixelButton } from '../../../../components/PixelButton';
 import { OptionList } from '../../../../components/play/OptionList';
 import { STEP_TYPES, StepContext, type Reveal } from '../../../../components/play/StepContext';
+import { SoundToggle } from '../../../../components/SoundToggle';
 import { Sparkle } from '../../../../components/Sprites';
 import { LoadingCard, StateCard } from '../../../../components/StateCard';
 import { getAttempt, getSimulation, isApiError, respondStep } from '../../../../lib/api';
+import { babble } from '../../../../lib/sound';
 import { typedSkills } from '../../../../lib/simulation';
 import { AbandonedView, CompletedView, PauseSheet } from './end-views';
 import type { SkillTypeKey } from '../../../../lib/skill-types';
@@ -132,10 +134,13 @@ function StepHeader({
   simulationTitle,
   icon,
   onPause,
+  sound = false,
 }: {
   label: string;
   simulationTitle: string;
   icon?: { src: string; width: number; height: number };
+  /** Botón de sonido (solo en conversaciones, donde hay voces). */
+  sound?: boolean;
   /** Sin pausa (última decisión ya enviada) el botón no se muestra. */
   onPause?: () => void;
 }) {
@@ -152,6 +157,7 @@ function StepHeader({
           <span className="step-header-step">{label}</span>
           <span className="step-header-title">{simulationTitle}</span>
         </div>
+        {sound ? <SoundToggle className="step-sound" /> : null}
         {icon ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -224,6 +230,7 @@ function StepScreen({
         simulationTitle={simulationTitle}
         icon={{ src: `/sprites/${meta.sprite}.svg`, width: meta.width, height: meta.height }}
         onPause={onPause}
+        sound={step.type === 'CONVERSATION'}
       />
 
       <main className="step" data-state={reveal.ready ? 'ready' : 'revealing'}>
@@ -454,5 +461,19 @@ function useReveal(step: PlayerStep): Reveal {
     return () => window.removeEventListener('keydown', onKey);
   }, [ready, total]);
 
+  // Voz del interlocutor: un bip cada pocas letras mientras se escribe (si el sonido está
+  // activado). En celular no hay botón de sonido, así que tampoco suena.
+  const text =
+    step.type === 'CONVERSATION' ? step.context.lines.map((line) => line.text).join('') : '';
+  useEffect(() => {
+    if (ready || chars === 0 || chars % 3 !== 0) return;
+    if (!/\S/.test(text.charAt(chars - 1))) return;
+    if (window.matchMedia(SILENT_QUERY).matches) return;
+    babble(VOICE_PITCH, 1);
+  }, [chars, ready, text]);
+
   return { chars, ready, skip: () => setChars(total) };
 }
+
+const VOICE_PITCH = 300;
+const SILENT_QUERY = '(max-width: 767px)';

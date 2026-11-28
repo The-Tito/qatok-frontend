@@ -66,11 +66,28 @@ export function StudentSprite({
   );
 }
 
-/** Interlocutor (sprites/interlocutor.svg) en línea, para que pueda parpadear. Decorativo. */
-export function InterlocutorSprite({ className }: { className?: string }) {
+/**
+ * Interlocutor (sprites/interlocutor.svg) en línea, para que pueda parpadear. Decorativo.
+ * Con x, y y size se puede colocar dentro de otra escena SVG.
+ */
+export function InterlocutorSprite({
+  className,
+  x,
+  y,
+  size,
+}: {
+  className?: string;
+  x?: number;
+  y?: number;
+  size?: number;
+}) {
   return (
     <svg
       className={['pixel-icon', 'interlocutor', className].filter(Boolean).join(' ')}
+      x={x}
+      y={y}
+      width={size}
+      height={size}
       viewBox="0 0 16 16"
       shapeRendering="crispEdges"
       aria-hidden="true"
