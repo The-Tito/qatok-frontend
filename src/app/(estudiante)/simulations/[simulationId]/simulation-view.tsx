@@ -8,7 +8,8 @@ import { useState } from 'react';
 import { LevelBar } from '../../../../components/LevelBar';
 import { PixelButton } from '../../../../components/PixelButton';
 import { Sheet } from '../../../../components/Sheet';
-import { Sparkle } from '../../../../components/Sprites';
+import { SceneBackdrop } from '../../../../components/SceneBackdrop';
+import { InterlocutorSprite } from '../../../../components/Sprites';
 import { LoadingCard, StateCard } from '../../../../components/StateCard';
 import {
   abandonAttempt,
@@ -116,15 +117,12 @@ function SimulationDetail({ simulation }: { simulation: SimulationSummary }) {
       </Link>
       <div className="sim-detail-layout">
         <div className="sim-scene" data-active={activeAttempt ? '' : undefined}>
+          <SceneBackdrop />
           <Link href="/simulations" className="sim-scene-back" aria-label="Volver al catálogo">
             ◀
           </Link>
           <span className="sim-scene-tag">Tipo {SKILL_TYPES[type].label}</span>
-          <Sparkle color="var(--type-base)" size={21} className="sim-scene-sparkle-1" />
-          <Sparkle color="var(--type-dark)" size={28} className="sim-scene-sparkle-2" />
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/sprites/interlocutor.svg" alt="" className="sim-scene-sprite" />
-          <div className="sim-scene-floor" />
+          <InterlocutorSprite className="sim-scene-sprite" />
         </div>
 
         <section className="sim-detail-info">

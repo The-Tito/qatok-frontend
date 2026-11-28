@@ -1,5 +1,6 @@
 import type { PlayerStep } from '@qatok/shared';
-import { Sparkle } from '../Sprites';
+import { SceneBackdrop } from '../SceneBackdrop';
+import { InterlocutorSprite } from '../Sprites';
 
 export const STEP_TYPES: Record<
   PlayerStep['type'],
@@ -151,16 +152,15 @@ function ConversationContext({
   return (
     <div className="ctx-conversation">
       <div className="ctx-scene panel">
+        <SceneBackdrop />
         <div className="ctx-nameplate">
           <span className="ctx-nameplate-name">{interlocutor}</span>
           {role ? <span className="ctx-nameplate-role">{role}</span> : null}
         </div>
         <div className="ctx-platform" aria-hidden="true" />
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/sprites/interlocutor.svg" alt={interlocutor} className="ctx-interlocutor" />
+        <InterlocutorSprite className="ctx-interlocutor" />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/sprites/student-back.svg" alt="" className="ctx-student" />
-        <Sparkle color="var(--type-base)" size={21} className="ctx-scene-sparkle" />
       </div>
       <div
         className="dialog-box panel"

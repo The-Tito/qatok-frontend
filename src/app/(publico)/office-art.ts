@@ -406,3 +406,76 @@ export function drawOffice(): {
   WORKERS.forEach(([x, y, front, look], i) => workstation(paths, x, y, front, look, i));
   return { paths, workers: WORKERS.map(([x, y, front]) => ({ x, y, front })) };
 }
+
+/** Escena ancha (400×100; en cajas angostas se recortan los lados) detrás del personaje en la simulación y al jugar. */
+export const ROOM_W = 400;
+export const ROOM_H = 100;
+export const ROOM_FLOOR_Y = 68;
+
+/**
+ * Cuarto de oficina: pared del color del tipo de habilidad (var(--type-tint)), ventanas,
+ * tablero, escritorio con monitor y planta. Las capas usan colores CSS, así que pueden ir
+ * en `style.fill`.
+ */
+export function drawRoom(): Paths {
+  const p: Paths = [];
+  rect(p, 'var(--type-tint)', 0, 0, ROOM_W, ROOM_FLOOR_Y);
+  for (let x = 6; x < ROOM_W; x += 12) rect(p, 'rgb(42 34 56 / 6%)', x, 0, 1, ROOM_FLOOR_Y - 3);
+  rect(p, C.base, 0, ROOM_FLOOR_Y - 3, ROOM_W, 3);
+  rect(p, INK, 0, ROOM_FLOOR_Y, ROOM_W, 1);
+
+  // Piso de duela.
+  rect(p, C.floor, 0, ROOM_FLOOR_Y + 1, ROOM_W, ROOM_H - ROOM_FLOOR_Y - 1);
+  for (let y = ROOM_FLOOR_Y + 1, row = 0; y < ROOM_H; y += 6, row += 1) {
+    rect(p, C.plank, 0, y + 5, ROOM_W, 1);
+    for (let x = (row % 3) * 13; x < ROOM_W; x += 40) rect(p, C.plank, x, y, 1, 5);
+  }
+  for (let y = ROOM_FLOOR_Y + 1, row = 0; y < ROOM_H; y += 6, row += 1) {
+    for (let x = (row % 3) * 13 + 20; x < ROOM_W; x += 40) rect(p, C.plankLight, x, y, 6, 1);
+  }
+
+  // Ventanas con la ciudad.
+  for (const x of [128, 240]) {
+    rect(p, INK, x, 10, 32, 26);
+    rect(p, C.glass, x + 2, 12, 28, 22);
+    rect(p, C.glassLight, x + 2, 12, 28, 7);
+    rect(p, C.city, x + 3, 22, 6, 12);
+    rect(p, C.city, x + 11, 18, 5, 16);
+    rect(p, C.city, x + 19, 25, 9, 9);
+    rect(p, INK, x + 15, 12, 2, 22);
+    rect(p, C.trim, x - 1, 36, 34, 2);
+  }
+
+  // Tablero con notas y reloj.
+  rect(p, INK, 80, 12, 28, 20);
+  rect(p, '#D9B98C', 82, 14, 24, 16);
+  [C.orange, C.green, C.purple, C.red].forEach((color, i) =>
+    rect(p, color, 84 + (i % 2) * 11, 16 + Math.floor(i / 2) * 7, 9, 5),
+  );
+  rect(p, INK, 296, 12, 8, 8);
+  rect(p, C.white, 297, 13, 6, 6);
+  rect(p, INK, 300, 14, 1, 3);
+  rect(p, INK, 300, 16, 2, 1);
+
+  // Escritorios con monitor a los lados.
+  for (const x of [24, 330]) {
+    rect(p, INK, x, 48, 42, 1);
+    rect(p, C.deskTop, x, 49, 42, 7);
+    rect(p, C.deskFront, x, 56, 42, 5);
+    rect(p, INK, x, 61, 42, 1);
+    rect(p, INK, x + 2, 62, 2, 7);
+    rect(p, INK, x + 38, 62, 2, 7);
+    rect(p, INK, x + 12, 36, 16, 12);
+    rect(p, C.screen, x + 13, 37, 14, 9);
+    rect(p, C.code, x + 14, 38, 7, 1);
+    rect(p, C.code2, x + 15, 40, 9, 1);
+    rect(p, C.code3, x + 14, 42, 6, 1);
+    rect(p, INK, x + 19, 48, 2, 1);
+    rect(p, C.white, x + 32, 45, 4, 4);
+  }
+
+  // Planta a la derecha.
+  sprite(p, PLANT, plantPalette, 112, 59);
+  sprite(p, PLANT, plantPalette, 380, 59);
+  return p;
+}

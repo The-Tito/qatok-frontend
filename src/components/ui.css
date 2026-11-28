@@ -1131,3 +1131,60 @@
   grid-column: 1 / -1;
   color: var(--color-incorrect-fg);
 }
+
+/* Cuarto de oficina detrás del personaje (simulación y jugar). */
+.scene-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+}
+
+.scene-cursor {
+  animation: mov-blink 1s var(--mov-pasos-2) infinite;
+}
+
+.scene-cloud {
+  animation: scene-cloud 14s steps(20, end) infinite;
+}
+
+/* Interlocutor: respira, parpadea cada pocos segundos. */
+.interlocutor {
+  animation: scene-breathe 1.2s var(--mov-pasos-2) infinite alternate;
+}
+
+.interlocutor-blink {
+  opacity: 0;
+  animation: scene-blink 4.3s steps(1, end) infinite;
+}
+
+@keyframes scene-breathe {
+  to {
+    transform: translateY(-3%);
+  }
+}
+
+@keyframes scene-talk {
+  to {
+    transform: translateY(-5%);
+  }
+}
+
+@keyframes scene-blink {
+  0%,
+  92%,
+  100% {
+    opacity: 0;
+  }
+
+  94% {
+    opacity: 1;
+  }
+}
+
+@keyframes scene-cloud {
+  to {
+    transform: translateX(20px);
+  }
+}

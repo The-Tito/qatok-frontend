@@ -441,12 +441,6 @@
   image-rendering: pixelated;
 }
 
-.ctx-scene .ctx-scene-sparkle {
-  position: absolute;
-  top: 22px;
-  right: 28px;
-}
-
 .dialog-box {
   display: flex;
   flex-direction: column;
@@ -1256,4 +1250,13 @@
 
 .feedback-banner[data-state='shown'][data-result='incorrect'] {
   animation: mov-shake 360ms var(--mov-pasos-4) 120ms both;
+}
+
+/* Escena: el interlocutor "habla" mientras se escribe su diálogo; el estudiante respira. */
+.ctx-conversation:has(.dialog-box[data-state='revealing']) .ctx-interlocutor {
+  animation: scene-talk 260ms var(--mov-pasos-2) infinite alternate;
+}
+
+.ctx-student {
+  animation: mov-breathe 1.4s var(--mov-pasos-2) -0.7s infinite alternate;
 }
