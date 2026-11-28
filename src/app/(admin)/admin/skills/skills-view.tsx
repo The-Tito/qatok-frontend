@@ -198,6 +198,8 @@ function SkillForm({ skill, onDone }: { skill: Skill | null; onDone: (message: s
     onSuccess: (result) => {
       void queryClient.invalidateQueries({ queryKey: ['skills'] });
       formRef.current?.reset();
+      // El formulario de alta vuelve a quedar vacío: el tipo también regresa a Piedra.
+      if (!skill) setVisualType('STONE');
       onDone(skill ? `Se guardó «${result.skill.name}».` : `Se creó «${result.skill.name}».`);
     },
     onError: (error) => {
