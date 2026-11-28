@@ -296,7 +296,7 @@ export function ContentEditor({
           )}
           {unreachable.length > 0 ? (
             <p className="field-message" data-error="">
-              Ninguna opción lleva a: {unreachable.map((n) => `paso ${n}`).join(', ')}.
+              Desde el inicio no se llega a {unreachable.map((n) => `paso ${n}`).join(', ')}.
             </p>
           ) : null}
         </section>

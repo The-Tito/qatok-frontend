@@ -1,9 +1,19 @@
 // Perfil (contrato: F3a · /api/profile).
-import { AttemptPath, Profile, Recommendations, SkillEvolution } from '@qatok/shared';
+import {
+  AttemptPath,
+  Profile,
+  ProfileSkills,
+  Recommendations,
+  SkillEvolution,
+} from '@qatok/shared';
 import { request } from './client';
 
 export function getProfile(signal?: AbortSignal) {
   return request('/profile', { schema: Profile, signal });
+}
+
+export function listProfileSkills(signal?: AbortSignal) {
+  return request('/profile/skills', { schema: ProfileSkills, signal });
 }
 
 export function getSkillEvolution(skillId: string, signal?: AbortSignal) {

@@ -1,18 +1,15 @@
 'use client';
 
-import type { SimulationSummary } from '@qatok/shared';
-import { useInfiniteQuery, useQueries, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQueries } from '@tanstack/react-query';
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { PageHeader } from '../../../../components/PageHeader';
 import { PixelButton } from '../../../../components/PixelButton';
-import { TypeStripe } from '../../../../components/SimulationCard';
 import { Sparkle } from '../../../../components/Sprites';
 import { LoadingCard, StateCard } from '../../../../components/StateCard';
-import { listAttempts, listSimulations } from '../../../../lib/api';
+import { listAttempts } from '../../../../lib/api';
 import { ATTEMPT_STATUS, durationMinutes } from '../../../../lib/attempts';
 import { formatDate, plural } from '../../../../lib/format';
-import { typedSkills } from '../../../../lib/simulation';
 
 type Status = keyof typeof ATTEMPT_STATUS;
 const STATUSES = Object.keys(ATTEMPT_STATUS) as Status[];
@@ -51,16 +48,6 @@ export function AttemptsView() {
       return loaded < last.total && last.items.length > 0 ? loaded : undefined;
     },
   });
-
-  // items solo trae simulation_id: el título y el color salen del catálogo.
-  const catalog = useQuery({
-    queryKey: ['simulations', { limit: 100 }],
-    queryFn: ({ signal }) => listSimulations({ limit: 100 }, signal),
-    staleTime: 5 * 60_000,
-  });
-  const simulations = new Map<string, SimulationSummary>(
-    catalog.data?.items.map((item) => [item.id, item]),
-  );
 
   const header = (
     <PageHeader
@@ -134,29 +121,21 @@ export function AttemptsView() {
           <>
             <ul className="attempt-list">
               {items.map((attempt) => {
-                const simulation = simulations.get(attempt.simulation_id);
-                const skills = simulation ? typedSkills(simulation.skills) : [];
                 const minutes = durationMinutes(attempt);
                 const inProgress = attempt.status === 'IN_PROGRESS';
                 return (
                   <li
                     key={attempt.id}
                     className="attempt-card panel"
-                    data-type={skills[0]?.type ?? 'STONE'}
+                    data-type="STONE"
                     data-status={attempt.status}
                   >
-                    {skills.length > 0 ? (
-                      <TypeStripe skills={skills} />
-                    ) : (
-                      <div className="type-stripe" aria-hidden="true">
-                        <span style={{ flexGrow: 1 }} />
-                      </div>
-                    )}
+                    <div className="type-stripe" aria-hidden="true">
+                      <span style={{ flexGrow: 1 }} />
+                    </div>
                     <div className="attempt-card-body">
                       <span className="attempt-card-text">
-                        <span className="attempt-card-title">
-                          {simulation?.title ?? 'Simulación no disponible'}
-                        </span>
+                        <span className="attempt-card-title">{attempt.simulation.title}</span>
                         <span className="attempt-card-dates">
                           {inProgress
                             ? `Iniciada el ${formatDate(attempt.started_at)}`

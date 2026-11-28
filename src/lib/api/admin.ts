@@ -29,11 +29,9 @@ export function listAdminSimulations(
 }
 
 /**
- * D5: el backend aún no tiene GET /api/admin/simulations/:id (propuesto en
- * docs/pendientes-backend.md). Cuando exista, cambiar esta constante a true: el editor lo usará
- * en lugar de recorrer la lista.
+ * El GET individual de Admin está disponible desde el PR #51 del backend.
  */
-export const HAS_ADMIN_SIMULATION_GET = false;
+export const HAS_ADMIN_SIMULATION_GET = true;
 
 /**
  * Una simulación de admin por ID, o null si no existe. Sin la ruta individual se busca en la

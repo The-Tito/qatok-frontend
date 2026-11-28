@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { PageHeader } from '../../../../../components/PageHeader';
 import { LoadingCard, StateCard } from '../../../../../components/StateCard';
-import { getProfile, getSkillEvolution, isApiError } from '../../../../../lib/api';
+import { getSkillEvolution, isApiError, listProfileSkills } from '../../../../../lib/api';
 import { MOBILE_CHART, chartY, markPath, stepPath } from '../../../../../lib/evolution';
 import { formatDate } from '../../../../../lib/format';
 import { SKILL_TYPES, skillType } from '../../../../../lib/skill-types';
@@ -18,9 +18,9 @@ const CLASSIFICATION = {
 
 /** P3 · Evolución de una habilidad (C-05): gráfica de escalones y partidas que cuentan. */
 export function EvolutionView({ skillId }: { skillId: string }) {
-  const profile = useQuery({
-    queryKey: ['profile'],
-    queryFn: ({ signal }) => getProfile(signal),
+  const profileSkills = useQuery({
+    queryKey: ['profile-skills'],
+    queryFn: ({ signal }) => listProfileSkills(signal),
   });
   const evolution = useQuery({
     queryKey: ['evolution', skillId],
@@ -57,7 +57,7 @@ export function EvolutionView({ skillId }: { skillId: string }) {
       </div>
     );
   }
-  if (!evolution.data || profile.isPending) {
+  if (!evolution.data) {
     return (
       <div className="evolution">
         {header}
@@ -66,14 +66,12 @@ export function EvolutionView({ skillId }: { skillId: string }) {
     );
   }
 
-  const skills = profile.data?.skills ?? [];
-  const skill = skills.find((item) => item.id === skillId);
-  const type = skillType(skillId);
-  const name = skill?.name ?? evolution.data.points[0]?.simulation.title ?? 'Habilidad';
-  const target = skill?.target ?? null;
-  const points = evolution.data.points;
+  const { skill, points, current_level: level } = evolution.data;
+  const skills = profileSkills.data?.items ?? [];
+  const profileSkill = skills.find((item) => item.id === skill.id);
+  const type = skillType(profileSkill ?? skill);
+  const { name, target } = skill;
   const scores = points.map((point) => point.score);
-  const level = evolution.data.current_level;
   const box = MOBILE_CHART;
   const aria =
     points.length === 0
@@ -104,7 +102,7 @@ export function EvolutionView({ skillId }: { skillId: string }) {
           <section className="evolution-card panel" aria-labelledby="evolucion-nombre">
             <div className="profile-card-bar">
               <span>Tipo {SKILL_TYPES[type].label}</span>
-              <span>{skill ? CLASSIFICATION[skill.classification] : ''}</span>
+              {profileSkill ? <span>{CLASSIFICATION[profileSkill.classification]}</span> : null}
             </div>
             <div className="evolution-summary">
               <span className="evolution-name-block">

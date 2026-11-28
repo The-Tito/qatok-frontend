@@ -1,62 +1,27 @@
-# Pendientes para el backend (hallazgos del frontend)
+# Hallazgos del frontend resueltos en el backend
 
-Lista de lo que la interfaz necesita o encontró del lado de **The-Tito/qatok-backend** al implementar el plan v2 (contrato 0.6.0). Para cada punto: qué falta, por qué importa y qué hace el frontend mientras tanto. Ordenado por prioridad.
+Los seis hallazgos del plan v2 quedaron resueltos en `develop` de `qatok-backend`. La tabla indica qué está disponible en la API o en el entorno de desarrollo y cómo lo usa el frontend.
 
-| # | Tema | Prioridad | Bloquea algo |
+| # | Tema | Resolución en el backend | Estado en el frontend |
 |---|---|---|---|
-| 1 | `visual_type` en la habilidad (D1) | Alta (acordado) | No: hay respaldo fijo |
-| 2 | `GET /api/admin/simulations/:id` (D5) | Media | No |
-| 3 | Dataset: paso INCIDENT, evento de sincronización pendiente | Media | No |
-| 4 | Detalles en los 409 al publicar | Baja | No |
-| 5 | Referencias de simulación y objetivo en respuestas del perfil | Baja | No |
-| 6 | Saltos de línea en `shared/` | Baja | No |
+| 1 | Tipo visual de la habilidad (D1) | `visual_type` disponible según DEC-29. [PR #52](https://github.com/The-Tito/qatok-backend/pull/52) | El selector de Admin se habilita al sincronizar el esquema compartido. |
+| 2 | Simulación de Admin por ID (D5) | `GET /api/admin/simulations/:simulationId` devuelve `AdminSimulation` en cualquier estado. [PR #51](https://github.com/The-Tito/qatok-backend/pull/51) | El editor ya usa la consulta por ID. |
+| 3 | Datos de prueba | El dataset incluye un paso `INCIDENT` y hay un comando local para probar la sincronización pendiente. [PR #55](https://github.com/The-Tito/qatok-backend/pull/55) | Ambos casos se pueden verificar en el entorno de desarrollo. |
+| 4 | Errores al publicar | Los errores `409 INCOMPLETE_CONTENT` e `INVALID_BRANCHES` incluyen `details` con la causa y, cuando aplica, la ubicación. [PR #53](https://github.com/The-Tito/qatok-backend/pull/53) | El editor muestra la causa e identifica el paso y la opción cuando están disponibles. |
+| 5 | Referencias en partidas y evolución | `Attempt` incluye `simulation: { id, title }` y la evolución incluye `skill: { id, name, target }`. [PR #54](https://github.com/The-Tito/qatok-backend/pull/54) | «Mis partidas» usa el título del intento y «Evolución» obtiene el nombre y la meta de su propia respuesta. |
+| 6 | Saltos de línea en `shared/` | `.gitattributes` normaliza los archivos de texto a LF. [PR #50](https://github.com/The-Tito/qatok-backend/pull/50) | `npm run check:shared` verifica la copia contra el backend. |
 
-## 1. Tipo visual de la habilidad (D1)
+## Tipo visual de la habilidad
 
-**Qué falta.** Un campo que guarde el «tipo» visual (color) de cada habilidad. Hoy no existe en la base, en `shared/` ni en el contrato.
+Admin › Habilidades permite elegir entre `VOICE`, `FIRE`, `CLOCK`, `LEAF`, `SPARK`, `HEART`, `MIND` y `STONE`. La página pública de evidencia conserva su presentación actual. [DEC-29](https://github.com/The-Tito/qatok-backend/blob/develop/docs/decisiones-modelado.md#dec-29--tipo-visual-de-la-habilidad)
 
-**Por qué.** Toda la interfaz se colorea por el tipo de la habilidad (tarjetas del catálogo, pantalla de juego, barras del perfil, chips). Sin el campo, el frontend usa una tabla fija por ID del dataset (Comunicación = Voz, Conflictos = Fuego, Tiempo = Reloj) y cualquier habilidad nueva queda en gris (Piedra). Se acordó que la administradora elija el tipo en Admin › Habilidades.
+## Datos de prueba
 
-**Propuesta.**
+- **Paso `INCIDENT`.** Abre el borrador «Servidor caído en hora pico» en Admin, publícalo y juégalo desde el catálogo.
+- **Sincronización pendiente.** Desde el backend local, ejecuta `npm run db:sync:pendiente -- crear` y abre el perfil de Ana para ver «Actualizando tu progreso…». Al terminar, ejecuta `npm run db:sync:pendiente -- quitar`.
+- **Enlace vencido.** El token `tok-ejemplo-expirado` sigue disponible para comprobar `410 SHARE_LINK_EXPIRED`.
 
-- Nombre: `visual_type`. Valores: `VOICE`, `FIRE`, `CLOCK`, `LEAF`, `SPARK`, `HEART`, `MIND`, `STONE` (`STONE` por defecto o nulo = sin tipo). Son las claves de `docs/diseno/01-sistema-visual.md` § Tipos de habilidad.
-- En `shared/src/f1.ts`:
-  - `SkillInput`: `visual_type: z.enum([...]).nullable().optional()`.
-  - `Skill`: `visual_type: z.enum([...]).nullable()`.
-- En las respuestas que traen habilidades anidadas, agregar `visual_type` para no depender de otra consulta: `SimulationSummary.skills[]` (catálogo, antes de jugar, recomendaciones), `AdminSimulation.skills[]`, `ProfileSkill`, las `skills` de evidencias (`EvidenceSummary`, `EvidenceDetail.content`) y, si se quiere color en la página pública, `SharedEvidence.content.skills[]`.
-- `POST` y `PUT /api/admin/skills` lo aceptan; las demás rutas lo devuelven.
-- Dataset: `VOICE`, `FIRE` y `CLOCK` para las tres habilidades actuales (así no cambia nada de lo que ya se ve).
+## Consumo del contrato en el frontend
 
-**Qué hace el frontend.** Ya está listo:
-
-- El selector de 8 tipos en Admin › Habilidades se **activa solo** cuando `SkillInput` de `shared/` incluye `visual_type` (después de `npm run sync:shared`). Mientras tanto se ve deshabilitado con el tipo actual.
-- `skillType()` (`src/lib/skill-types.ts`) usa el `visual_type` que mande la API en cualquier respuesta; si no viene, la tabla fija; si no, `STONE`.
-
-## 2. Una simulación de admin por ID (D5)
-
-**Qué falta.** `GET /api/admin/simulations/:simulationId` → `200 AdminSimulation` (cualquier estado), `404 NOT_FOUND`. Hoy las rutas de `backend/src/routes/simulation-admin.routes.ts` permiten listar, crear, actualizar, eliminar, leer y guardar contenido, publicar y desactivar, pero no leer una sola; `/content` solo trae los pasos.
-
-**Por qué.** El editor (`/admin/simulations/[id]`) necesita título, estado, dificultad y habilidades. Abierto desde la lista, el frontend reutiliza los datos ya cargados; con un enlace directo o al recargar, tiene que recorrer la lista completa para encontrarla.
-
-**Qué hace el frontend.** Funciona sin la ruta. Cuando exista, basta con poner `HAS_ADMIN_SIMULATION_GET = true` en `src/lib/api/admin.ts`.
-
-## 3. Datos de prueba que faltan en el dataset
-
-- **Paso INCIDENT.** Ninguna simulación del dataset tiene un paso de tipo `INCIDENT`, así que la pantalla de juego de ese tipo no se podía probar con datos reales. Para el plan v2 se creó y publicó en la base local «Servidor caído en hora pico» desde el editor. Conviene agregar un paso INCIDENT a una simulación del dataset (o una simulación nueva) para que cualquiera pueda probarlo después de recargar.
-- **Sincronización pendiente.** Con el dataset, todas las respuestas traen `synchronization.graph = "APPLIED"` y el perfil `pending_sync_count = 0`. No hay forma de ver en la interfaz el aviso «Actualizando tu progreso…» sin apagar Neo4j. Sugerencia: un evento `PENDIENTE` en el dataset (o un script de desarrollo que deje uno) para probar ese estado.
-- El enlace vencido sí existe (`tok-ejemplo-expirado` → `410 SHARE_LINK_EXPIRED`) y la interfaz lo muestra bien.
-
-## 4. Detalle de los errores al publicar
-
-`POST /api/admin/simulations/:id/publish` responde `409 INCOMPLETE_CONTENT` o `409 INVALID_BRANCHES` sin `details`. El repositorio sí sabe la causa (`contenido.repository.ts`: falta el paso inicial, hay un ciclo, la ruta apunta fuera, hay pasos inalcanzables, una opción sin consecuencias). Sugerencia: `details: { reason, step_id?, option_id? }` para que el editor marque el paso exacto. Mientras tanto, el frontend revisa las mismas reglas antes de publicar («Antes de publicar»).
-
-Relacionado: los mensajes de `VALIDATION_ERROR` en `details.fields[].message` están en inglés. La interfaz no los muestra (usa sus propios textos por campo), así que no es un problema; solo se anota.
-
-## 5. Respuestas del perfil y de partidas
-
-- `GET /api/attempts`: cada `Attempt` trae solo `simulation_id`. Para «Mis partidas» el frontend pide el catálogo para sacar título y color, y si la simulación ya no está publicada muestra «Simulación no disponible». Sugerencia: incluir `simulation: { id, title }` en cada intento.
-- `GET /api/profile/skills/:skillId/evolution`: trae `current_level` y `points`, pero no el objetivo (`target`) ni el nombre de la habilidad; el frontend pide también `GET /api/profile`. Sugerencia: agregar `skill: { id, name, target }`.
-
-## 6. Saltos de línea de `shared/`
-
-En Windows, `shared/src/*.ts` sale con CRLF al clonar y el frontend lo guarda con LF, así que `npm run check:shared` fallaba aunque el contenido fuera igual. El frontend ya compara ignorando CRLF. Sugerencia: un `.gitattributes` con `* text=auto eol=lf` en el backend, como el del frontend.
+- Publicar devuelve `details: { reason, step_id?, option_id? }` en los errores de contenido y ramificación. El checklist del editor ya comprueba si se llega a todos los pasos desde el inicio. [Contrato de la API](https://github.com/The-Tito/qatok-backend/blob/develop/docs/api/contrato-v0.md)
+- «Mis partidas» obtiene el título de `Attempt.simulation`, incluso si la simulación está desactivada. «Evolución» obtiene el nombre y la meta de `skill` y consulta `GET /api/profile/skills` para los chips, el tipo visual y la clasificación. [Contrato de la API](https://github.com/The-Tito/qatok-backend/blob/develop/docs/api/contrato-v0.md)
