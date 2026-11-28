@@ -16,6 +16,7 @@ export const AttemptQuery = CatalogQuery.pick({ limit: true, offset: true }).ext
 export const Attempt = z.object({
   id: Uuid,
   simulation_id: Uuid,
+  simulation: z.object({ id: Uuid, title: z.string() }),
   status: AttemptStatus,
   started_at: FechaIso,
   finished_at: FechaIso.nullable(),

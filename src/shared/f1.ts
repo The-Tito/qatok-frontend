@@ -31,13 +31,30 @@ export const Synchronization = z.object({
 export const Session = z.object({ user: Account, token: z.string().min(1) });
 export const Registration = Session.extend({ synchronization: Synchronization });
 
+export const SkillVisualType = z.enum([
+  'VOICE',
+  'FIRE',
+  'CLOCK',
+  'LEAF',
+  'SPARK',
+  'HEART',
+  'MIND',
+  'STONE',
+]);
+export type SkillVisualType = z.infer<typeof SkillVisualType>;
+
 export const SkillInput = z.strictObject({
   name,
   description: z.string().trim(),
   category: z.string().trim().max(50),
   target_level: Nivel.int().nullable().optional(),
+  visual_type: SkillVisualType.nullable().optional(),
 });
-export const Skill = SkillInput.extend({ id: Uuid, target_level: Nivel.int().nullable() });
+export const Skill = SkillInput.extend({
+  id: Uuid,
+  target_level: Nivel.int().nullable(),
+  visual_type: SkillVisualType.nullable(),
+});
 export type Skill = z.infer<typeof Skill>;
 export const SkillList = z.object({ items: z.array(Skill), total: z.number().int().nonnegative() });
 export const SkillMutation = z.object({ skill: Skill, synchronization: Synchronization });
@@ -61,7 +78,13 @@ export const SimulationSummary = z.object({
   estimated_duration: z.number().int().positive().nullable(),
   status: z.literal('PUBLISHED'),
   skills: z.array(
-    z.object({ id: Uuid, name, weight: z.number().gt(0).max(1), expected_level: Nivel }),
+    z.object({
+      id: Uuid,
+      name,
+      visual_type: SkillVisualType.nullable(),
+      weight: z.number().gt(0).max(1),
+      expected_level: Nivel,
+    }),
   ),
 });
 export type SimulationSummary = z.infer<typeof SimulationSummary>;

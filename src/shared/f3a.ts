@@ -1,13 +1,13 @@
 import { z } from 'zod';
 import { FechaIso, Nivel, Uuid } from './comunes.js';
-import { CatalogQuery, SimulationSummary, Synchronization } from './f1.js';
+import { CatalogQuery, SimulationSummary, SkillVisualType, Synchronization } from './f1.js';
 import { Attempt } from './f2.js';
 import { SimulationOption, SimulationStep } from './simulation-admin.js';
 
 const uuid = Uuid.transform((value) => value.toLowerCase());
 const title = z.string().trim().min(1).max(150);
 const count = z.number().int().nonnegative();
-const skillRef = z.object({ id: Uuid, name: z.string() });
+const skillRef = z.object({ id: Uuid, name: z.string(), visual_type: SkillVisualType.nullable() });
 const simulationRef = z.object({ id: Uuid, title: z.string() });
 const stepType = z.enum([
   'EMAIL',
@@ -96,6 +96,7 @@ export const Recommendations = z.object({ items: z.array(Recommendation) });
 export const ProfileSkills = z.object({ items: z.array(ProfileSkill) });
 
 export const SkillEvolution = z.object({
+  skill: z.object({ id: Uuid, name: z.string(), target: Nivel.nullable() }),
   current_level: Nivel.nullable(),
   points: z.array(
     z.object({

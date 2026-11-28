@@ -18,12 +18,14 @@ describe('simulation', () => {
       {
         id: 'e0000000-0000-4000-8000-000000000201',
         name: 'Comunicación efectiva',
+        visual_type: null,
         weight: 0.3,
         expected_level: 50,
       },
       {
         id: 'e0000000-0000-4000-8000-000000000203',
         name: 'Gestión del tiempo',
+        visual_type: null,
         weight: 0.7,
         expected_level: 60,
       },
