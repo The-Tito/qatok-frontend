@@ -19,6 +19,12 @@ describe('routes', () => {
     expect(loginUrl('/profile')).toBe('/login?next=%2Fprofile');
     expect(loginUrl('https://malo.com')).toBe('/login');
   });
+
+  it('rechaza caracteres de control en rutas de regreso', () => {
+    expect(safeNext('/profile\t')).toBeNull();
+    expect(loginUrl('/profile\n')).toBe('/login');
+    expect(afterLogin('STUDENT', '/profile\r')).toBe('/simulations');
+  });
 });
 
 describe('afterLogin', () => {

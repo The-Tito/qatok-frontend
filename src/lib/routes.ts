@@ -16,9 +16,19 @@ export function loginUrl(next?: string) {
   return safe ? `${LOGIN_PATH}?next=${encodeURIComponent(safe)}` : LOGIN_PATH;
 }
 
-/** Evita redirecciones abiertas: solo rutas que empiezan con una sola «/». */
+// La navegación puede eliminar caracteres de control al interpretar la ruta.
+// eslint-disable-next-line no-control-regex
+const urlControlCharacters = /[\u0000-\u001f\u007f]/;
+
+/** Evita redirecciones abiertas: solo rutas internas sin caracteres de control. */
 export function safeNext(next: string | null | undefined): string | null {
-  if (!next || !next.startsWith('/') || next.startsWith('//') || next.startsWith('/\\')) {
+  if (
+    !next ||
+    !next.startsWith('/') ||
+    next.startsWith('//') ||
+    next.startsWith('/\\') ||
+    urlControlCharacters.test(next)
+  ) {
     return null;
   }
   return next;
