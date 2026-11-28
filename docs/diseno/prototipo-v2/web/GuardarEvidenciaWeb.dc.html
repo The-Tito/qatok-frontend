@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Guardar como evidencia (web)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Chakra+Petch:wght@600;700&amp;family=Silkscreen:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#2A2238}a:hover{color:#5E5470}
+.pf{font-family:'Chakra Petch',sans-serif}
+.sk{font-family:'Silkscreen',monospace;text-transform:uppercase;letter-spacing:.04em}
+.px{border:3px solid #2A2238;box-shadow:4px 4px 0 #2A2238}
+.seg{background-image:repeating-linear-gradient(90deg,transparent 0 14px,#2A2238 14px 16px)}
+svg.sp{shape-rendering:crispEdges;display:block}
+button{font:inherit;cursor:pointer}
+button:disabled{cursor:not-allowed}
+input,select,textarea{font:inherit;color:#2A2238}
+input:focus,select:focus,textarea:focus{outline:3px solid #E8A33D;outline-offset:2px}
+::placeholder{color:#8C8577}
+</style>
+</helmet>
+<div style="min-height:900px;box-sizing:border-box;background:#2A2238;color:#2A2238;font-family:'IBM Plex Mono',monospace;display:flex;align-items:center;justify-content:center;padding:48px 24px;position:relative">
+  <a href="ResultadoV2Web.dc.html" aria-label="Cerrar" style="position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.04) 0 6px,transparent 6px 12px)"></a>
+  <section role="dialog" aria-labelledby="titulo-evidencia" class="px" style="position:relative;width:100%;max-width:520px;box-sizing:border-box;background:#FFFFFF;padding:24px 28px 28px;display:flex;flex-direction:column;gap:16px;box-shadow:6px 6px 0 #000000">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+      <h2 id="titulo-evidencia" class="pf" style="margin:0;font-size:24px;font-weight:700">Guardar como evidencia</h2>
+      <a href="ResultadoV2Web.dc.html" aria-label="Cerrar" class="sk" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:3px solid #2A2238;text-decoration:none;font-size:13px;font-weight:700">✕</a>
+    </div>
+    <div style="display:flex;gap:12px;align-items:center;border:3px solid #2A2238;background:{{c.tint}};padding:10px 12px">
+      <svg class="sp" width="32" height="32" viewBox="0 0 16 16" aria-hidden="true"><path fill="#2A2238" d="M2 0h12v1h-12z M0 1h16v5h-16z M1 6h14v1h-14z M3 7h10v1h-10z M5 8h6v1h-6z M6 9h4v2h-4z M4 11h8v2h-8z M2 13h12v3h-12z"/><path fill="#E8A33D" d="M3 1h10v5h-10z M1 2h1v3h-1z M14 2h1v3h-1z M4 6h8v1h-8z M6 7h4v1h-4z M7 8h2v2h-2z M5 11h6v1h-6z"/><path fill="#FCEBC8" d="M4 2h1v3h-1z M5 2h1v1h-1z"/><path fill="#B07A22" d="M11 2h1v4h-1z M10 5h1v1h-1z M9 6h2v1h-2z M8 8h1v2h-1z M9 11h2v1h-2z"/><path fill="#6B3E2E" d="M3 14h10v1h-10z"/><path fill="#E8A33D" d="M6 14h4v1h-4z"/></svg>
+      <span style="display:flex;flex-direction:column;gap:2px">
+        <span style="font-size:14px;font-weight:600">Cliente molesto por un retraso</span>
+        <span class="sk" style="font-size:10px;color:{{c.dark}}">Puntuación 92.5 · 1 oct 2026</span>
+      </span>
+    </div>
+
+    <sc-if value="{{form}}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Título (opcional)
+          <input type="text" maxlength="150" placeholder="Cliente molesto por un retraso" style="height:46px;box-sizing:border-box;border:3px solid #2A2238;background:#F5F3EF;padding:0 12px;font-weight:400;font-size:14px">
+          <span style="display:flex;justify-content:space-between;gap:8px;font-size:12px;font-weight:400;color:#5E5470"><span>Si lo dejas vacío, usamos el título de la simulación.</span><span class="sk" style="font-size:10px;flex-shrink:0">0/150</span></span>
+        </label>
+        <p style="margin:0;font-size:13px;line-height:1.55;color:#5E5470">Guardamos una copia de tus decisiones tal como quedaron. Nace privada: tú decides si la compartes.</p>
+        <a href="EvidenciaDetalleV2Web.dc.html" class="sk px" style="height:56px;display:flex;align-items:center;justify-content:center;background:{{c.dark}};color:#FFFFFF;text-decoration:none;font-size:15px;font-weight:700">Guardar evidencia ▶</a>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{exists}}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div role="alert" style="border:3px solid #2A2238;background:#F5F3EF;padding:12px 14px;display:flex;flex-direction:column;gap:6px">
+          <span class="sk" style="font-size:10px">◆ Ya está guardada</span>
+          <span style="font-size:13px;line-height:1.55">Esta partida ya es tu evidencia «Manejo de un cliente molesto».</span>
+        </div>
+        <a href="EvidenciaDetalleV2Web.dc.html" class="sk px" style="height:56px;display:flex;align-items:center;justify-content:center;background:{{c.dark}};color:#FFFFFF;text-decoration:none;font-size:15px;font-weight:700">Ver evidencia ▶</a>
+        <a href="ResultadoV2Web.dc.html" class="sk" style="height:48px;display:flex;align-items:center;justify-content:center;border:3px solid #2A2238;text-decoration:none;font-size:12px;font-weight:700">Cerrar</a>
+      </div>
+    </sc-if>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"tipo": {"editor": "enum", "options": ["Voz", "Fuego", "Reloj", "Hoja", "Chispa", "Corazón", "Mente", "Piedra"], "default": "Voz"}, "estado": {"editor": "enum", "options": ["Formulario", "409 Ya existe"], "default": "Formulario"}, "$preview": {"width": 1280, "height": 900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const types = {
+      'Voz': ['#E8A33D', '#7A4A0B', '#FCEBC8'], 'Fuego': ['#D9483B', '#8A1F16', '#F9D7D2'],
+      'Reloj': ['#8A5CC7', '#4B2A7A', '#E9DDF7'], 'Hoja': ['#4FA35A', '#1F5A28', '#D6EFD5'],
+      'Chispa': ['#E2703A', '#7E3410', '#FBDCC9'], 'Corazón': ['#D66BA0', '#7D2453', '#F8D9E8'],
+      'Mente': ['#9AA33A', '#4E5414', '#EEF0CF'], 'Piedra': ['#8C8577', '#45403A', '#E8E4DC'],
+    };
+    const name = this.props.tipo ?? 'Voz';
+    const [base, dark, tint] = types[name] ?? types['Voz'];
+    const exists = this.props.estado === '409 Ya existe';
+    return { c: { name, base, dark, tint }, exists, form: !exists };
+  }
+}
+</script>
+</body>
+</html>

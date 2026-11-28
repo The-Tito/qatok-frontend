@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Paso de conversación (web)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Chakra+Petch:wght@600;700&amp;family=Silkscreen:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#2A2238}a:hover{color:#5E5470}
+.pf{font-family:'Chakra Petch',sans-serif}
+.sk{font-family:'Silkscreen',monospace;text-transform:uppercase;letter-spacing:.04em}
+.px{border:3px solid #2A2238;box-shadow:4px 4px 0 #2A2238}
+.seg{background-image:repeating-linear-gradient(90deg,transparent 0 14px,#2A2238 14px 16px)}
+svg.sp{shape-rendering:crispEdges;display:block}
+button{font:inherit;cursor:pointer}
+button:disabled{cursor:not-allowed}
+input,select,textarea{font:inherit;color:#2A2238}
+input:focus,select:focus,textarea:focus{outline:3px solid #E8A33D;outline-offset:2px}
+::placeholder{color:#8C8577}
+</style>
+</helmet>
+<div style="min-height:960px;background:#FFFFFF;color:#2A2238;font-family:'IBM Plex Mono',monospace;display:flex;flex-direction:column">
+  <header style="background:{{c.tint}};border-bottom:3px solid #2A2238;padding:0 32px">
+    <div style="max-width:1120px;margin:0 auto;width:100%;box-sizing:border-box;min-height:80px;display:flex;align-items:center;gap:16px">
+      <a href="JugarPausaWeb.dc.html" class="sk" style="min-height:44px;display:flex;align-items:center;gap:8px;padding:0 14px;border:3px solid #2A2238;background:#FFFFFF;text-decoration:none;font-size:12px;font-weight:700;flex-shrink:0">II Pausar</a>
+      <div style="display:flex;flex-direction:column;gap:4px;flex-grow:1;min-width:0">
+        <span class="sk" style="font-size:11px;color:{{c.dark}}">Paso 2 · Conversación</span>
+        <span style="font-size:16px;font-weight:600">Cliente molesto por un retraso</span>
+      </div>
+      <svg class="sp" width="32" height="29" viewBox="0 0 12 11" aria-hidden="true"><path fill="#FFFFFF" d="M1 1h10v6h-10z"/><path fill="#2A2238" d="M1 0h10v1h-10z M0 1h1v6h-1z M11 1h1v6h-1z M1 7h10v1h-10z M2 8h2v1h-2z M2 9h1v1h-1z M2 3h2v2h-2z M5 3h2v2h-2z M8 3h2v2h-2z"/></svg>
+    </div>
+  </header>
+  <main style="padding:36px 32px 56px;flex-grow:1">
+    <div style="max-width:1120px;margin:0 auto;width:100%;box-sizing:border-box;display:flex;gap:40px;flex-wrap:wrap;align-items:flex-start">
+      <section aria-label="Situación" style="flex:1 1 520px;min-width:0;display:flex;flex-direction:column;gap:20px">
+        <h1 class="pf" style="margin:0;font-size:34px;font-weight:700">Llamada con el cliente</h1>
+        <div class="px" style="height:240px;position:relative;background:{{c.tint}};overflow:hidden">
+          <div class="px" style="position:absolute;left:16px;top:16px;background:#FFFFFF;padding:8px 10px;display:flex;flex-direction:column;gap:2px;box-shadow:3px 3px 0 #2A2238">
+            <span class="sk" style="font-size:11px;font-weight:700">Mariana Torres</span>
+            <span style="font-size:11px;color:#5E5470">Cliente</span>
+          </div>
+          <div style="position:absolute;right:60px;bottom:36px;width:170px;height:28px;background:{{c.base}};border:3px solid #2A2238;border-radius:50%"></div>
+          <svg class="sp" style="position:absolute;right:90px;bottom:52px" width="110" height="110" viewBox="0 0 16 16" role="img" aria-label="Mariana Torres, molesta"><path fill="#2A2238" d="M5 0h6v1h-6z M3 1h10v1h-10z M2 2h12v8h-12z M4 10h8v1h-8z M2 11h12v1h-12z M1 12h14v4h-14z"/><path fill="#6B3E2E" d="M5 1h6v1h-6z M3 2h10v3h-10z M3 5h1v4h-1z M12 5h1v4h-1z"/><path fill="#9A5E44" d="M6 2h3v1h-3z M4 3h2v1h-2z"/><path fill="#E8B48A" d="M5 4h6v1h-6z M4 5h8v4h-8z M5 9h6v1h-6z M6 10h4v1h-4z"/><path fill="#C98E64" d="M6 10h4v1h-4z"/><path fill="#2A2238" d="M5 5h1v1h-1z M6 6h1v1h-1z M10 5h1v1h-1z M9 6h1v1h-1z M5 7h2v1h-2z M9 7h2v1h-2z M7 8h2v1h-2z M6 9h1v1h-1z M9 9h1v1h-1z"/><path fill="#D9483B" d="M3 11h10v1h-10z M2 12h12v3h-12z M13 0h1v1h-1z M15 0h1v1h-1z M14 1h1v1h-1z M15 2h1v1h-1z"/><path fill="#2A2238" fill-opacity=".28" d="M2 12h2v3h-2z M12 12h2v3h-2z"/><path fill="#FFFFFF" d="M6 11h4v1h-4z M7 12h2v1h-2z"/></svg>
+          <svg class="sp" style="position:absolute;left:40px;bottom:-6px" width="104" height="104" viewBox="0 0 16 16" aria-hidden="true"><path fill="#2A2238" d="M5 0h6v1h-6z M3 1h10v1h-10z M2 2h12v8h-12z M4 10h8v1h-8z M2 11h12v1h-12z M1 12h14v4h-14z"/><path fill="#4A3328" d="M5 1h6v1h-6z M3 2h10v8h-10z"/><path fill="#7A5A48" d="M6 2h3v1h-3z M4 3h2v2h-2z M9 4h2v1h-2z"/><path fill="#D9A57C" d="M6 10h4v1h-4z"/><path fill="#8A5CC7" d="M3 11h10v1h-10z M2 12h12v3h-12z"/><path fill="#2A2238" fill-opacity=".28" d="M2 12h2v3h-2z M12 12h2v3h-2z M7 12h2v3h-2z"/></svg>
+        </div>
+        <div class="px" style="background:#FFFFFF;padding:14px 16px;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;flex-direction:column;gap:3px"><span class="sk" style="font-size:10px;color:#5E5470">Cliente</span><span style="font-size:15px;line-height:1.5">Gracias por llamar. ¿Qué van a hacer con mi pedido?</span></div>
+          <div style="display:flex;flex-direction:column;gap:3px"><span class="sk" style="font-size:10px;color:#5E5470">Cliente</span><span style="font-size:15px;line-height:1.5">Tengo a mi propio cliente esperando esa mercancía.</span></div>
+        </div>
+      </section>
+      <section aria-label="Decisión" style="flex:1 1 380px;min-width:0;display:flex;flex-direction:column;gap:14px">
+        <div style="display:flex;align-items:center;gap:8px">
+      <span class="sk" style="font-size:13px;font-weight:700">¿Qué respondes?</span>
+      <span style="flex-grow:1;height:3px;background:#2A2238"></span>
+    </div>
+
+    <div role="radiogroup" aria-label="Opciones" style="display:flex;flex-direction:column;gap:10px">
+      <sc-for list="{{options}}" as="o" hint-placeholder-count="2">
+        <sc-if value="{{o.on}}" hint-placeholder-val="{{ false }}">
+          <button type="button" role="radio" aria-checked="true" onClick="{{o.pick}}" style="display:flex;gap:12px;align-items:flex-start;min-height:48px;padding:12px 14px;border:3px solid #2A2238;color:#2A2238;background:{{c.tint}};box-shadow:4px 4px 0 #2A2238">
+            <span class="sk" style="font-size:14px;width:14px;flex-shrink:0">▶</span>
+            <span style="font-size:14px;line-height:1.45;text-align:left;font-weight:600">{{o.text}}</span>
+          </button>
+        </sc-if>
+        <sc-if value="{{o.off}}" hint-placeholder-val="{{ true }}">
+          <button type="button" role="radio" aria-checked="false" onClick="{{o.pick}}" style="display:flex;gap:12px;align-items:flex-start;min-height:48px;padding:12px 14px;border:3px solid #2A2238;color:#2A2238;background:#FFFFFF">
+            <span class="sk" style="font-size:14px;width:14px;flex-shrink:0;color:#E4DCCB">▶</span>
+            <span style="font-size:14px;line-height:1.45;text-align:left">{{o.text}}</span>
+          </button>
+        </sc-if>
+      </sc-for>
+    </div>
+        <a href="ResultadoV2Web.dc.html" class="sk px" style="margin-top:8px;display:flex;justify-content:center;align-items:center;gap:10px;height:56px;background:{{c.dark}};color:#FFFFFF;text-decoration:none;font-size:16px;font-weight:700">Decidir ▶</a>
+      </section>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"tipo": {"editor": "enum", "options": ["Voz", "Fuego", "Reloj", "Hoja", "Chispa", "Corazón", "Mente", "Piedra"], "default": "Voz"}, "$preview": {"width": 1280, "height": 960}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { picked: 0 }; }
+  renderVals() {
+    const types = {
+      'Voz': ['#E8A33D', '#7A4A0B', '#FCEBC8'], 'Fuego': ['#D9483B', '#8A1F16', '#F9D7D2'],
+      'Reloj': ['#8A5CC7', '#4B2A7A', '#E9DDF7'], 'Hoja': ['#4FA35A', '#1F5A28', '#D6EFD5'],
+      'Chispa': ['#E2703A', '#7E3410', '#FBDCC9'], 'Corazón': ['#D66BA0', '#7D2453', '#F8D9E8'],
+      'Mente': ['#9AA33A', '#4E5414', '#EEF0CF'], 'Piedra': ['#8C8577', '#45403A', '#E8E4DC'],
+    };
+    const name = this.props.tipo ?? 'Voz';
+    const [base, dark, tint] = types[name] ?? types['Voz'];
+    const picked = this.state.picked ?? 0;
+    const texts = [
+      "Proponer una nueva fecha y comprometerte a avisar",
+      "Culpar al proveedor del retraso",
+    ];
+    const options = texts.map((text, i) => {
+      const on = i === picked;
+      return { text, on, off: !on, pick: () => this.setState({ picked: i }) };
+    });
+    return { c: { name, base, dark, tint }, options };
+  }
+}
+</script>
+</body>
+</html>

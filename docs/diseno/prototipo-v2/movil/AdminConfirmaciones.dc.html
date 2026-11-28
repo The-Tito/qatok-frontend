@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Confirmaciones de administración</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Chakra+Petch:wght@600;700&amp;family=Silkscreen:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#2A2238}a:hover{color:#5E5470}
+.pf{font-family:'Chakra Petch',sans-serif}
+.sk{font-family:'Silkscreen',monospace;text-transform:uppercase;letter-spacing:.04em}
+.px{border:3px solid #2A2238;box-shadow:4px 4px 0 #2A2238}
+.seg{background-image:repeating-linear-gradient(90deg,transparent 0 14px,#2A2238 14px 16px)}
+svg.sp{shape-rendering:crispEdges;display:block}
+button{font:inherit;cursor:pointer}
+button:disabled{cursor:not-allowed}
+input,select,textarea{font:inherit;color:#2A2238}
+input:focus,select:focus,textarea:focus{outline:3px solid #E8A33D;outline-offset:2px}
+::placeholder{color:#8C8577}
+</style>
+</helmet>
+<div style="width:1440px;height:1120px;box-sizing:border-box;padding:64px 80px;background:#FFFFFF;color:#2A2238;font-family:'IBM Plex Mono',monospace;display:flex;flex-direction:column;gap:36px">
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <h1 class="pf" style="margin:0;font-size:48px;font-weight:700;line-height:1">Confirmaciones de administración</h1>
+    <p style="margin:0;font-size:15px;color:#5E5470;max-width:860px;line-height:1.6">Toda acción que borra o saca algo del catálogo pide confirmación con el nombre exacto. El botón de la acción va a la derecha y en color de error; Cancelar recibe el foco al abrir.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px">
+    <article style="display:flex;flex-direction:column;gap:10px">
+      <span class="sk" style="font-size:11px;color:#5E5470">A1 · Eliminar borrador</span>
+      <div style="height:380px;box-sizing:border-box;border:3px solid #2A2238;background:#2A2238;background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.04) 0 6px,transparent 6px 12px);display:flex;align-items:center;justify-content:center;padding:24px">
+        <section role="alertdialog" aria-label="¿Eliminar «Presentación ante dirección»?" class="px" style="width:100%;max-width:440px;box-sizing:border-box;background:#FFFFFF;padding:22px;display:flex;flex-direction:column;gap:14px;box-shadow:4px 4px 0 #000000">
+          
+          <h2 class="pf" style="margin:0;font-size:22px;font-weight:700;line-height:1.15">¿Eliminar «Presentación ante dirección»?</h2>
+          <p style="margin:0;font-size:14px;line-height:1.6;color:#5E5470">Se borran sus datos y su contenido. Solo se pueden eliminar borradores y no se puede deshacer.</p>
+          <div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:6px">
+            <button type="button" class="sk" style="height:46px;padding:0 16px;border:3px solid #2A2238;background:#FFFFFF;color:#2A2238;font-size:12px;font-weight:700">Cancelar</button>
+            <button type="button" class="sk px" style="height:46px;padding:0 16px;background:#8A1F16;color:#FFFFFF;font-size:12px;font-weight:700">Eliminar borrador</button>
+          </div>
+        </section>
+      </div>
+      <span style="font-size:12px;color:#5E5470">DELETE /api/admin/simulations/:simulationId · 204 · 409 SIMULATION_NOT_EDITABLE si ya no es borrador</span>
+    </article>
+    <article style="display:flex;flex-direction:column;gap:10px">
+      <span class="sk" style="font-size:11px;color:#5E5470">A1 · Desactivar</span>
+      <div style="height:380px;box-sizing:border-box;border:3px solid #2A2238;background:#2A2238;background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.04) 0 6px,transparent 6px 12px);display:flex;align-items:center;justify-content:center;padding:24px">
+        <section role="alertdialog" aria-label="¿Desactivar «Cliente molesto por un retraso»?" class="px" style="width:100%;max-width:440px;box-sizing:border-box;background:#FFFFFF;padding:22px;display:flex;flex-direction:column;gap:14px;box-shadow:4px 4px 0 #000000">
+          
+          <h2 class="pf" style="margin:0;font-size:22px;font-weight:700;line-height:1.15">¿Desactivar «Cliente molesto por un retraso»?</h2>
+          <p style="margin:0;font-size:14px;line-height:1.6;color:#5E5470">Deja de aparecer en el catálogo y nadie más podrá empezarla. Quien ya la esté jugando puede terminar su partida.</p>
+          <div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:6px">
+            <button type="button" class="sk" style="height:46px;padding:0 16px;border:3px solid #2A2238;background:#FFFFFF;color:#2A2238;font-size:12px;font-weight:700">Cancelar</button>
+            <button type="button" class="sk px" style="height:46px;padding:0 16px;background:#8A1F16;color:#FFFFFF;font-size:12px;font-weight:700">Desactivar</button>
+          </div>
+        </section>
+      </div>
+      <span style="font-size:12px;color:#5E5470">POST /api/admin/simulations/:simulationId/deactivate · DEC-26</span>
+    </article>
+    <article style="display:flex;flex-direction:column;gap:10px">
+      <span class="sk" style="font-size:11px;color:#5E5470">A3 · Eliminar habilidad</span>
+      <div style="height:380px;box-sizing:border-box;border:3px solid #2A2238;background:#2A2238;background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.04) 0 6px,transparent 6px 12px);display:flex;align-items:center;justify-content:center;padding:24px">
+        <section role="alertdialog" aria-label="¿Eliminar «Gestión del tiempo»?" class="px" style="width:100%;max-width:440px;box-sizing:border-box;background:#FFFFFF;padding:22px;display:flex;flex-direction:column;gap:14px;box-shadow:4px 4px 0 #000000">
+          
+          <h2 class="pf" style="margin:0;font-size:22px;font-weight:700;line-height:1.15">¿Eliminar «Gestión del tiempo»?</h2>
+          <p style="margin:0;font-size:14px;line-height:1.6;color:#5E5470">Solo se puede eliminar una habilidad que ninguna simulación usa. No se puede deshacer.</p>
+          <div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:6px">
+            <button type="button" class="sk" style="height:46px;padding:0 16px;border:3px solid #2A2238;background:#FFFFFF;color:#2A2238;font-size:12px;font-weight:700">Cancelar</button>
+            <button type="button" class="sk px" style="height:46px;padding:0 16px;background:#8A1F16;color:#FFFFFF;font-size:12px;font-weight:700">Eliminar habilidad</button>
+          </div>
+        </section>
+      </div>
+      <span style="font-size:12px;color:#5E5470">DELETE /api/admin/skills/:skillId</span>
+    </article>
+    <article style="display:flex;flex-direction:column;gap:10px">
+      <span class="sk" style="font-size:11px;color:#5E5470">A3 · 409 SKILL_IN_USE</span>
+      <div style="height:380px;box-sizing:border-box;border:3px solid #2A2238;background:#2A2238;background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.04) 0 6px,transparent 6px 12px);display:flex;align-items:center;justify-content:center;padding:24px">
+        <section role="alertdialog" aria-label="Esta habilidad está asignada a una simulación" class="px" style="width:100%;max-width:440px;box-sizing:border-box;background:#FFFFFF;padding:22px;display:flex;flex-direction:column;gap:14px;box-shadow:4px 4px 0 #000000">
+          <span class="sk" style="font-size:11px;align-self:flex-start;padding:4px 8px;border:2px solid #2A2238;background:#FFFFFF;color:#8A1F16">✕ No se pudo eliminar</span>
+          <h2 class="pf" style="margin:0;font-size:22px;font-weight:700;line-height:1.15">Esta habilidad está asignada a una simulación</h2>
+          <p style="margin:0;font-size:14px;line-height:1.6;color:#5E5470">Quítala de las simulaciones que la usan y vuelve a intentarlo. «Gestión del tiempo» sigue igual.</p>
+          <div style="display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:6px">
+            <button type="button" class="sk" style="height:46px;padding:0 16px;border:3px solid #2A2238;background:#FFFFFF;color:#2A2238;font-size:12px;font-weight:700">Cerrar</button>
+            <button type="button" class="sk px" style="height:46px;padding:0 16px;background:#2A2238;color:#FFFFFF;font-size:12px;font-weight:700">Ver simulaciones</button>
+          </div>
+        </section>
+      </div>
+      <span style="font-size:12px;color:#5E5470">Respuesta del DELETE anterior · no se borró nada</span>
+    </article>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview": {"width": 1440, "height": 1120}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Admin: habilidades</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Chakra+Petch:wght@600;700&amp;family=Silkscreen:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#2A2238}a:hover{color:#5E5470}
+.pf{font-family:'Chakra Petch',sans-serif}
+.sk{font-family:'Silkscreen',monospace;text-transform:uppercase;letter-spacing:.04em}
+.px{border:3px solid #2A2238;box-shadow:4px 4px 0 #2A2238}
+button{font:inherit;cursor:pointer}
+input,select,textarea{font:inherit;color:#2A2238}
+input:focus,select:focus,textarea:focus{outline:3px solid #E8A33D;outline-offset:2px}
+th,td{text-align:left;vertical-align:middle}
+</style>
+</helmet>
+<div style="min-height:900px;background:#FFFFFF;color:#2A2238;font-family:'IBM Plex Mono',monospace;display:flex;flex-direction:column">
+  <header style="background:#2A2238;color:#FFFFFF;padding:0 32px">
+    <div style="max-width:1280px;margin:0 auto;min-height:64px;display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+      <span style="display:flex;align-items:baseline;gap:10px"><span class="pf" style="font-size:22px;font-weight:700">QATO'K</span><span class="sk" style="font-size:10px;padding:3px 6px;border:2px solid #FFFFFF">Admin</span></span>
+      <nav aria-label="Administración" style="display:flex;gap:4px;flex-grow:1;flex-wrap:wrap">
+        <a href="AdminSimulacionesV2.dc.html" class="sk" style="padding:10px 14px;color:#FFFFFF;text-decoration:none;font-size:12px">Simulaciones</a>
+        <a href="AdminHabilidadesV2.dc.html" aria-current="page" class="sk" style="padding:10px 14px;background:#FFFFFF;color:#2A2238;text-decoration:none;font-size:12px;font-weight:700">Habilidades</a>
+      </nav>
+      <span style="font-size:13px">Carla Ruiz · <a href="AdminEntrar.dc.html" style="color:#FFFFFF">Salir</a></span>
+    </div>
+  </header>
+
+  <main style="padding:36px 32px 56px">
+    <div style="max-width:1280px;margin:0 auto;display:flex;flex-direction:column;gap:24px">
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <h1 class="pf" style="margin:0;font-size:38px;font-weight:700;line-height:1">Habilidades</h1>
+        <span style="font-size:14px;color:#5E5470">Una habilidad asignada a una simulación no se puede eliminar.</span>
+      </div>
+
+      <div style="display:flex;gap:28px;flex-wrap:wrap;align-items:flex-start">
+        <div class="px" style="flex:999 1 640px;min-width:0;overflow-x:auto">
+          <table style="width:100%;min-width:720px;border-collapse:collapse;font-size:14px">
+            <thead>
+              <tr style="background:#F5F3EF;border-bottom:3px solid #2A2238">
+                <th class="sk" style="padding:14px 16px;font-size:11px">Tipo</th>
+                <th class="sk" style="padding:14px 16px;font-size:11px">Nombre</th>
+                <th class="sk" style="padding:14px 16px;font-size:11px">Categoría</th>
+                <th class="sk" style="padding:14px 16px;font-size:11px">Objetivo</th>
+                <th class="sk" style="padding:14px 16px;font-size:11px">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:3px solid #E4DCCB">
+                <td style="padding:16px"><span class="sk" style="font-size:10px;padding:4px 6px;border:2px solid #2A2238;background:#FCEBC8;color:#7A4A0B">Voz</span></td>
+                <td style="padding:16px;font-weight:600">Comunicación efectiva</td>
+                <td style="padding:16px">Interpersonal</td>
+                <td style="padding:16px">75</td>
+                <td style="padding:16px"><span style="display:flex;gap:12px;align-items:center"><a href="#" class="sk" style="font-size:11px;font-weight:700">Editar</a><span class="sk" style="font-size:10px;color:#5E5470">En uso</span></span></td>
+              </tr>
+              <tr style="border-bottom:3px solid #E4DCCB">
+                <td style="padding:16px"><span class="sk" style="font-size:10px;padding:4px 6px;border:2px solid #2A2238;background:#F9D7D2;color:#8A1F16">Fuego</span></td>
+                <td style="padding:16px;font-weight:600">Resolución de conflictos</td>
+                <td style="padding:16px">Interpersonal</td>
+                <td style="padding:16px">70</td>
+                <td style="padding:16px"><span style="display:flex;gap:12px;align-items:center"><a href="#" class="sk" style="font-size:11px;font-weight:700">Editar</a><span class="sk" style="font-size:10px;color:#5E5470">En uso</span></span></td>
+              </tr>
+              <tr>
+                <td style="padding:16px"><span class="sk" style="font-size:10px;padding:4px 6px;border:2px solid #2A2238;background:#E9DDF7;color:#4B2A7A">Reloj</span></td>
+                <td style="padding:16px;font-weight:600">Gestión del tiempo</td>
+                <td style="padding:16px">Organizacional</td>
+                <td style="padding:16px;color:#5E5470">—</td>
+                <td style="padding:16px"><span style="display:flex;gap:12px;align-items:center"><a href="#" class="sk" style="font-size:11px;font-weight:700">Editar</a><span class="sk" style="font-size:10px;color:#5E5470">En uso</span></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <form class="px" style="flex:1 1 340px;padding:18px;display:flex;flex-direction:column;gap:14px">
+          <h2 class="sk" style="margin:0;font-size:13px">Nueva habilidad</h2>
+          <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Nombre<input type="text" placeholder="Ej.: Trabajo en equipo" style="height:42px;box-sizing:border-box;border:3px solid #2A2238;background:#F5F3EF;padding:0 10px;font-size:14px"></label>
+          <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Descripción<textarea rows="2" placeholder="Qué significa dominarla" style="border:3px solid #2A2238;background:#F5F3EF;padding:10px;font-size:14px;resize:vertical"></textarea></label>
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Categoría<input type="text" placeholder="Interpersonal" style="height:42px;box-sizing:border-box;border:3px solid #2A2238;background:#F5F3EF;padding:0 10px;font-size:14px"></label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Objetivo (0–100)<input type="number" min="0" max="100" placeholder="Opcional" style="height:42px;box-sizing:border-box;border:3px solid #2A2238;background:#F5F3EF;padding:0 10px;font-size:14px"></label>
+          </div>
+          <fieldset style="border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:8px">
+            <legend style="font-size:13px;font-weight:600;padding:0;margin-bottom:8px">Tipo visual</legend>
+            <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px">
+              <span class="sk" style="font-size:9px;padding:8px 4px;text-align:center;border:2px solid #2A2238;background:#FCEBC8;color:#7A4A0B">Voz</span>
+              <span class="sk" style="font-size:9px;padding:8px 4px;text-align:center;border:2px solid #2A2238;background:#F9D7D2;color:#8A1F16">Fuego</span>
+              <span class="sk" style="font-size:9px;padding:8px 4px;text-align:center;border:2px solid #2A2238;background:#E9DDF7;color:#4B2A7A">Reloj</span>
+              <span class="sk" style="font-size:9px;padding:8px 4px;text-align:center;border:3px solid #2A2238;background:#D6EFD5;color:#1F5A28;font-weight:700;box-shadow:3px 3px 0 #2A2238">Hoja</span>
+              <span class="sk" style="font-size:9px;padding:8px 4px;text-align:center;border:2px solid #2A2238;background:#FBDCC9;color:#7E3410">Chispa</span>
+              <span class="sk" style="font-size:9px;padding:8px 4px;text-align:center;border:2px solid #2A2238;background:#F8D9E8;color:#7D2453">Corazón</span>
+              <span class="sk" style="font-size:9px;padding:8px 4px;text-align:center;border:2px solid #2A2238;background:#EEF0CF;color:#4E5414">Mente</span>
+              <span class="sk" style="font-size:9px;padding:8px 4px;text-align:center;border:2px solid #2A2238;background:#E8E4DC;color:#45403A">Piedra</span>
+            </div>
+            <span style="font-size:12px;color:#5E5470;line-height:1.5">Define el color en el juego y en el perfil.</span>
+          </fieldset>
+          <button type="button" class="sk px" style="height:50px;background:#2A2238;color:#FFFFFF;font-size:13px;font-weight:700">Guardar habilidad</button>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

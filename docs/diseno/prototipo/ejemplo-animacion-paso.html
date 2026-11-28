@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QATO'K · Ejemplo de animación: paso de conversación</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Chakra+Petch:wght@600;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ===== 1. Variables de movimiento: un solo lugar para todo ===== */
+:root{
+  --ink:#2A2238; --soft:#5E5470; --line:#E4DCCB; --fill:#F5F3EF;
+  --voz:#E8A33D; --voz-dark:#7A4A0B; --voz-tint:#FCEBC8;
+  --ok-bg:#D6EFD5; --ok-fg:#1F5A28; --bad-bg:#F9D7D2; --bad-fg:#8A1F16;
+
+  --mov-letra: 28ms;          /* velocidad de la máquina de escribir */
+  --mov-rapido: 120ms;
+  --mov-medio: 320ms;
+  --mov-pasos-4: steps(4, end);   /* pixel art: saltos por cuadros, no transiciones suaves */
+  --mov-pasos-2: steps(2, jump-none);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fill);color:var(--ink);font-family:'IBM Plex Mono',monospace;display:flex;gap:32px;justify-content:center;align-items:flex-start;padding:32px 16px;flex-wrap:wrap}
+.pf{font-family:'Chakra Petch',sans-serif}
+.sk{font-family:'Silkscreen',monospace;text-transform:uppercase;letter-spacing:.04em}
+.px{border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink)}
+svg.sp{shape-rendering:crispEdges;display:block}
+button{font:inherit;cursor:pointer;color:var(--ink)}
+button:focus-visible{outline:3px solid var(--voz);outline-offset:2px}
+
+/* ===== Teléfono ===== */
+.phone{width:390px;height:844px;background:#fff;border:3px solid var(--ink);box-shadow:8px 8px 0 var(--ink);display:flex;flex-direction:column;overflow:hidden;position:relative}
+.bar{height:64px;flex-shrink:0;display:flex;align-items:center;gap:10px;padding:0 16px;background:var(--voz-tint);border-bottom:3px solid var(--ink)}
+.scene{height:200px;flex-shrink:0;position:relative;background:var(--voz-tint);border-bottom:3px solid var(--ink);overflow:hidden}
+
+/* ===== 2. Animación decorativa: el interlocutor "respira" con 2 cuadros ===== */
+.npc{position:absolute;right:70px;bottom:44px;animation:respira 1.2s var(--mov-pasos-2) infinite alternate}
+@keyframes respira{from{transform:translateY(0)}to{transform:translateY(-4px)}}
+.shadow-oval{position:absolute;right:46px;bottom:30px;width:150px;height:24px;background:var(--voz);border:3px solid var(--ink);border-radius:50%}
+
+/* ===== 3. Caja de diálogo con máquina de escribir =====
+   El estado vive en el HTML: data-state="revealing" | "ready". El CSS solo reacciona. */
+.dialog{padding:12px 14px;display:flex;flex-direction:column;gap:10px;min-height:118px;cursor:pointer}
+.line{font-size:14px;line-height:1.5;min-height:21px}
+.more{align-self:flex-end;font-size:12px;opacity:0}
+.dialog[data-state="ready"] .more{opacity:1;animation:parpadeo .8s var(--mov-pasos-2) infinite}
+.dialog[data-state="revealing"] .line.current::after{content:"▌";animation:parpadeo .5s var(--mov-pasos-2) infinite}
+@keyframes parpadeo{50%{opacity:0}}
+
+/* ===== 4. Opciones: aparecen por cuadros cuando el diálogo termina ===== */
+.options{display:flex;flex-direction:column;gap:10px}
+.options[data-state="hidden"] .opt{visibility:hidden}
+.options[data-state="shown"] .opt{animation:entra var(--mov-medio) var(--mov-pasos-4) both}
+.options[data-state="shown"] .opt:nth-child(2){animation-delay:90ms}
+@keyframes entra{from{transform:translateX(-24px);opacity:0}to{transform:none;opacity:1}}
+.opt{display:flex;gap:12px;align-items:flex-start;min-height:48px;padding:12px 14px;border:3px solid var(--ink);background:#fff;text-align:left;font-size:14px;line-height:1.45}
+.opt .cur{width:14px;flex-shrink:0;color:var(--line)}
+.opt[aria-checked="true"]{background:var(--voz-tint);box-shadow:4px 4px 0 var(--ink);font-weight:600}
+.opt[aria-checked="true"] .cur{color:var(--ink);animation:cursor .6s var(--mov-pasos-2) infinite}
+@keyframes cursor{50%{transform:translateX(3px)}}
+
+/* ===== 5. Botón: baja 4 px al presionar (ya estaba en el sistema visual) ===== */
+.cta{height:56px;width:100%;display:flex;align-items:center;justify-content:center;gap:10px;background:var(--voz-dark);color:#fff;font-size:16px;font-weight:700;border:3px solid var(--ink);box-shadow:4px 4px 0 var(--ink);transition:transform var(--mov-rapido) var(--mov-pasos-2),box-shadow var(--mov-rapido) var(--mov-pasos-2)}
+.cta:active:not(:disabled){transform:translate(4px,4px);box-shadow:0 0 0 var(--ink)}
+.cta:disabled{background:#fff;color:var(--soft);border-style:dashed;border-color:#8C8577;box-shadow:none;cursor:not-allowed}
+
+/* ===== 6. Retroalimentación: "pop" por cuadros y estrellas ===== */
+.feedback{position:absolute;inset:0;background:rgba(42,34,56,.86);display:flex;align-items:flex-end;visibility:hidden}
+.feedback[data-state="shown"]{visibility:visible}
+.sheet{background:#fff;border-top:3px solid var(--ink);width:100%;padding:20px 16px 24px;display:flex;flex-direction:column;gap:14px}
+.feedback[data-state="shown"] .sheet{animation:sube var(--mov-medio) var(--mov-pasos-4) both}
+@keyframes sube{from{transform:translateY(100%)}to{transform:none}}
+.badge{padding:16px;display:flex;align-items:center;gap:14px;position:relative}
+.feedback[data-state="shown"] .badge{animation:pop 360ms var(--mov-pasos-4) 200ms both}
+@keyframes pop{0%{transform:scale(.6)}60%{transform:scale(1.08)}100%{transform:scale(1)}}
+.star{position:absolute;opacity:0}
+.feedback[data-result="correct"][data-state="shown"] .star{animation:destello 900ms var(--mov-pasos-4) 400ms 2 both}
+.feedback[data-result="correct"] .star:nth-of-type(2){animation-delay:550ms}
+@keyframes destello{0%,100%{opacity:0;transform:scale(.5)}50%{opacity:1;transform:scale(1)}}
+.feedback[data-result="incorrect"][data-state="shown"] .badge{animation:sacude 360ms var(--mov-pasos-4) 200ms both}
+@keyframes sacude{0%,100%{transform:none}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.chip{font-size:11px;font-weight:700;padding:4px 6px;border:2px solid var(--ink);flex-shrink:0}
+
+/* ===== 7. Reducir movimiento: una sola regla apaga todo ===== */
+@media (prefers-reduced-motion: reduce){ *,*::before,*::after{animation:none!important;transition:none!important} }
+html[data-motion="reduce"] *, html[data-motion="reduce"] *::before, html[data-motion="reduce"] *::after{animation:none!important;transition:none!important}
+
+/* ===== Panel explicativo ===== */
+.panel{width:360px;display:flex;flex-direction:column;gap:14px}
+.panel .px{background:#fff;padding:14px 16px}
+.state{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:13px}
+.state code{background:var(--fill);padding:2px 6px;border:2px solid var(--line)}
+.state .on{background:var(--ok-bg);border-color:var(--ok-fg)}
+.ctl{min-height:44px;padding:0 14px;border:3px solid var(--ink);background:#fff;font-size:12px;font-weight:700}
+</style>
+</head>
+<body>
+
+<div class="phone">
+  <header class="bar">
+    <button type="button" aria-label="Pausar" class="sk" style="width:44px;height:44px;border:3px solid var(--ink);background:#fff;font-weight:700">II</button>
+    <div style="display:flex;flex-direction:column;gap:2px;flex-grow:1;min-width:0">
+      <span class="sk" style="font-size:10px;color:var(--voz-dark)">Paso 2 · Conversación</span>
+      <span style="font-size:13px;font-weight:600">Llamada con el cliente</span>
+    </div>
+  </header>
+
+  <div class="scene" aria-hidden="true">
+    <div class="px" style="position:absolute;left:16px;top:16px;background:#fff;padding:8px 10px;box-shadow:3px 3px 0 var(--ink)">
+      <div class="sk" style="font-size:11px;font-weight:700">Mariana Torres</div>
+      <div style="font-size:11px;color:var(--soft)">Cliente</div>
+    </div>
+    <div class="shadow-oval"></div>
+    <svg class="sp npc" width="96" height="96" viewBox="0 0 16 16"><path fill="#2A2238" d="M5 0h6v1h-6z M3 1h10v1h-10z M2 2h12v8h-12z M4 10h8v1h-8z M2 11h12v1h-12z M1 12h14v4h-14z"/><path fill="#6B3E2E" d="M5 1h6v1h-6z M3 2h10v3h-10z M3 5h1v4h-1z M12 5h1v4h-1z"/><path fill="#9A5E44" d="M6 2h3v1h-3z M4 3h2v1h-2z"/><path fill="#E8B48A" d="M5 4h6v1h-6z M4 5h8v4h-8z M5 9h6v1h-6z M6 10h4v1h-4z"/><path fill="#C98E64" d="M6 10h4v1h-4z"/><path fill="#2A2238" d="M5 5h1v1h-1z M6 6h1v1h-1z M10 5h1v1h-1z M9 6h1v1h-1z M5 7h2v1h-2z M9 7h2v1h-2z M7 8h2v1h-2z M6 9h1v1h-1z M9 9h1v1h-1z"/><path fill="#D9483B" d="M3 11h10v1h-10z M2 12h12v3h-12z"/><path fill="#2A2238" fill-opacity=".28" d="M2 12h2v3h-2z M12 12h2v3h-2z"/><path fill="#FFFFFF" d="M6 11h4v1h-4z M7 12h2v1h-2z"/></svg>
+  </div>
+
+  <div style="padding:14px 16px 0;display:flex;flex-direction:column;gap:12px;flex-grow:1">
+    <div id="dialog" class="dialog px" data-state="revealing" role="button" tabindex="0" aria-label="Diálogo. Toca para mostrar todo." aria-live="polite">
+      <div class="sk" style="font-size:10px;color:var(--soft)">Cliente</div>
+      <div class="line" data-text="Gracias por llamar. ¿Qué van a hacer con mi pedido?"></div>
+      <div class="sk" style="font-size:10px;color:var(--soft)">Cliente</div>
+      <div class="line" data-text="Tengo a mi propio cliente esperando esa mercancía."></div>
+      <span class="more sk" aria-hidden="true">▼</span>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:8px">
+      <span class="sk" style="font-size:13px;font-weight:700">¿Qué respondes?</span>
+      <span style="flex-grow:1;height:3px;background:var(--ink)"></span>
+    </div>
+
+    <div id="options" class="options" data-state="hidden" role="radiogroup" aria-label="Opciones">
+      <button type="button" role="radio" aria-checked="true" class="opt" data-result="correct"><span class="sk cur">▶</span><span>Proponer una nueva fecha y comprometerte a avisar</span></button>
+      <button type="button" role="radio" aria-checked="false" class="opt" data-result="incorrect"><span class="sk cur">▶</span><span>Culpar al proveedor del retraso</span></button>
+    </div>
+  </div>
+
+  <div style="padding:14px 16px 24px">
+    <button id="decide" type="button" class="cta sk" disabled>Decidir ▶</button>
+  </div>
+
+  <div id="feedback" class="feedback" data-state="hidden" data-result="correct" role="dialog" aria-label="Resultado de la decisión">
+    <div class="sheet">
+      <div id="badge" class="badge px">
+        <svg class="sp star" style="right:14px;top:8px" width="16" height="16" viewBox="0 0 11 11" aria-hidden="true"><path fill="#4FA35A" d="M5 0h1v3h-1z M4 3h3v1h-3z M3 4h5v1h-5z M0 5h11v1h-11z M3 6h5v1h-5z M4 7h3v1h-3z M5 8h1v3h-1z"/></svg>
+        <svg class="sp star" style="right:44px;bottom:8px" width="22" height="22" viewBox="0 0 11 11" aria-hidden="true"><path fill="#4FA35A" d="M5 0h1v3h-1z M4 3h3v1h-3z M3 4h5v1h-5z M0 5h11v1h-11z M3 6h5v1h-5z M4 7h3v1h-3z M5 8h1v3h-1z"/></svg>
+        <div style="display:flex;flex-direction:column;gap:4px">
+          <span class="sk" style="font-size:11px" id="fbKicker">Retroalimentación</span>
+          <span class="pf" style="font-size:34px;font-weight:700;line-height:1" id="fbTitle">¡Acierto!</span>
+        </div>
+      </div>
+      <div style="border:3px solid var(--ink);padding:12px 14px;display:flex;gap:12px;align-items:flex-start">
+        <span class="chip sk" id="fbImpact">▲ Positiva</span>
+        <span style="font-size:14px;line-height:1.5" id="fbCons">El cliente acepta la nueva fecha</span>
+      </div>
+      <p style="margin:0;font-size:14px;line-height:1.55" id="fbComment">Una fecha concreta con compromiso de aviso recupera la confianza.</p>
+      <button id="again" type="button" class="cta sk">Repetir ejemplo</button>
+    </div>
+  </div>
+</div>
+
+<aside class="panel">
+  <div class="px">
+    <h1 class="pf" style="margin:0 0 8px;font-size:24px">Cómo funciona</h1>
+    <p style="margin:0;font-size:13px;line-height:1.6;color:var(--soft)">Ejemplo con el paso «Llamada con el cliente» del dataset. El JavaScript solo cambia atributos <code>data-state</code>; todas las animaciones son CSS con <code>steps()</code> para que se vean por cuadros, como en un juego pixel.</p>
+  </div>
+  <div class="px">
+    <h2 class="sk" style="margin:0 0 10px;font-size:12px">Estados en vivo</h2>
+    <div class="state">
+      <span>Diálogo</span><span><code id="sDialog">revealing</code></span>
+      <span>Opciones</span><span><code id="sOptions">hidden</code></span>
+      <span>Decidir</span><span><code id="sDecide">disabled</code></span>
+      <span>Retro</span><span><code id="sFeedback">hidden</code></span>
+    </div>
+  </div>
+  <div class="px" style="display:flex;flex-direction:column;gap:10px">
+    <h2 class="sk" style="margin:0;font-size:12px">Prueba</h2>
+    <span style="font-size:13px;line-height:1.5;color:var(--soft)">Toca el diálogo para saltar la escritura. Elige la segunda opción para ver la animación de error.</span>
+    <label style="display:flex;gap:10px;align-items:center;font-size:13px;min-height:44px"><input type="checkbox" id="reduce" style="width:20px;height:20px"> Simular «reducir movimiento»</label>
+  </div>
+</aside>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const dialog = $('dialog'), options = $('options'), decide = $('decide'), feedback = $('feedback');
+const lines = [...dialog.querySelectorAll('.line')];
+const speed = () => parseInt(getComputedStyle(document.documentElement).getPropertyValue('--mov-letra')) || 28;
+const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.dataset.motion === 'reduce';
+let timer = null;
+
+function show(){ // refleja los estados en el panel
+  $('sDialog').textContent = dialog.dataset.state;
+  $('sOptions').textContent = options.dataset.state;
+  $('sDecide').textContent = decide.disabled ? 'disabled' : 'enabled';
+  $('sFeedback').textContent = feedback.dataset.state + (feedback.dataset.state === 'shown' ? ' · ' + feedback.dataset.result : '');
+}
+
+function finishReveal(){
+  clearTimeout(timer);
+  lines.forEach((l) => { l.textContent = l.dataset.text; l.classList.remove('current'); });
+  dialog.dataset.state = 'ready';
+  dialog.setAttribute('aria-label', 'Diálogo');
+  options.dataset.state = 'shown';
+  decide.disabled = false;
+  show();
+}
+
+function reveal(){
+  lines.forEach((l) => { l.textContent = ''; l.classList.remove('current'); });
+  dialog.dataset.state = 'revealing'; options.dataset.state = 'hidden'; decide.disabled = true;
+  feedback.dataset.state = 'hidden'; show();
+  if (reduced()) return finishReveal();          // sin movimiento: todo aparece de una vez
+  let li = 0, ci = 0;
+  const tick = () => {
+    if (li >= lines.length) return finishReveal();
+    const l = lines[li]; l.classList.add('current');
+    l.textContent = l.dataset.text.slice(0, ++ci);
+    if (ci >= l.dataset.text.length){ l.classList.remove('current'); li++; ci = 0; timer = setTimeout(tick, 220); }
+    else timer = setTimeout(tick, speed());
+  };
+  tick();
+}
+
+dialog.addEventListener('click', () => dialog.dataset.state === 'revealing' && finishReveal());
+dialog.addEventListener('keydown', (e) => { if ((e.key === 'Enter' || e.key === ' ') && dialog.dataset.state === 'revealing'){ e.preventDefault(); finishReveal(); } });
+
+options.addEventListener('click', (e) => {
+  const b = e.target.closest('.opt'); if (!b) return;
+  options.querySelectorAll('.opt').forEach((o) => o.setAttribute('aria-checked', String(o === b)));
+});
+
+const DATA = {
+  correct: { kicker:'Retroalimentación', title:'¡Acierto!', bg:'#D6EFD5', fg:'#1F5A28', impact:'▲ Positiva', ibg:'#D6EFD5',
+    cons:'El cliente acepta la nueva fecha', comment:'Una fecha concreta con compromiso de aviso recupera la confianza.' },
+  incorrect: { kicker:'Retroalimentación', title:'Error', bg:'#F9D7D2', fg:'#8A1F16', impact:'▼ Negativa', ibg:'#F9D7D2',
+    cons:'El cliente pierde confianza en la empresa', comment:'Culpar a un tercero no resuelve nada y daña la imagen de la empresa.' },
+};
+decide.addEventListener('click', () => {
+  const pick = options.querySelector('[aria-checked="true"]').dataset.result, d = DATA[pick];
+  feedback.dataset.result = pick;
+  $('badge').style.background = d.bg; $('fbKicker').style.color = d.fg; $('fbTitle').style.color = d.fg;
+  $('fbTitle').textContent = d.title; $('fbImpact').textContent = d.impact; $('fbImpact').style.background = d.ibg; $('fbImpact').style.color = d.fg;
+  $('fbCons').textContent = d.cons; $('fbComment').textContent = d.comment;
+  feedback.dataset.state = 'shown'; show();
+  $('again').focus();
+});
+$('again').addEventListener('click', reveal);
+$('reduce').addEventListener('change', (e) => { document.documentElement.dataset.motion = e.target.checked ? 'reduce' : ''; reveal(); });
+
+reveal();
+</script>
+</body>
+</html>

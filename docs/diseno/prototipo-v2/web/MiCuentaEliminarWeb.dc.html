@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Eliminar cuenta (web)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Chakra+Petch:wght@600;700&amp;family=Silkscreen:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#2A2238}a:hover{color:#5E5470}
+.pf{font-family:'Chakra Petch',sans-serif}
+.sk{font-family:'Silkscreen',monospace;text-transform:uppercase;letter-spacing:.04em}
+.px{border:3px solid #2A2238;box-shadow:4px 4px 0 #2A2238}
+.seg{background-image:repeating-linear-gradient(90deg,transparent 0 14px,#2A2238 14px 16px)}
+svg.sp{shape-rendering:crispEdges;display:block}
+button{font:inherit;cursor:pointer}
+button:disabled{cursor:not-allowed}
+input,select,textarea{font:inherit;color:#2A2238}
+input:focus,select:focus,textarea:focus{outline:3px solid #E8A33D;outline-offset:2px}
+::placeholder{color:#8C8577}
+</style>
+</helmet>
+<div style="min-height:900px;box-sizing:border-box;background:#2A2238;color:#2A2238;font-family:'IBM Plex Mono',monospace;display:flex;align-items:center;justify-content:center;padding:48px 24px;position:relative">
+  <a href="MiCuentaWeb.dc.html" aria-label="Cerrar" style="position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.04) 0 6px,transparent 6px 12px)"></a>
+  <section role="alertdialog" aria-labelledby="titulo-eliminar" class="px" style="position:relative;width:100%;max-width:520px;box-sizing:border-box;background:#FFFFFF;padding:24px 28px 28px;display:flex;flex-direction:column;gap:16px;box-shadow:6px 6px 0 #000000">
+        <h2 id="titulo-eliminar" class="pf" style="margin:0;font-size:24px;font-weight:700">Eliminar tu cuenta</h2>
+    <div style="border:3px solid #2A2238;background:#F9D7D2;padding:12px 14px;display:flex;flex-direction:column;gap:8px">
+      <span class="sk" style="font-size:10px;color:#8A1F16">✕ No se puede deshacer</span>
+      <ul style="margin:0;padding:0 0 0 18px;font-size:13px;line-height:1.6;color:#8A1F16">
+        <li>Se borran tu perfil, tus 4 partidas y tu evidencia.</li>
+        <li>Los 3 enlaces de tu evidencia dejan de funcionar.</li>
+      </ul>
+    </div>
+    <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Escribe tu correo para confirmar
+      <input type="email" placeholder="ana.lopez@ejemplo.com" autocomplete="off" style="height:46px;box-sizing:border-box;border:3px solid #2A2238;background:#F5F3EF;padding:0 12px;font-weight:400;font-size:15px">
+    </label>
+    <button type="button" disabled aria-describedby="ayuda-eliminar" class="sk" style="height:56px;border:3px dashed #8C8577;background:#FFFFFF;color:#5E5470;font-size:14px;font-weight:700">Eliminar mi cuenta</button>
+    <span id="ayuda-eliminar" style="font-size:12px;color:#5E5470;margin-top:-8px">Se activa cuando el correo coincide.</span>
+    <a href="MiCuentaWeb.dc.html" class="sk" style="height:48px;display:flex;align-items:center;justify-content:center;border:3px solid #2A2238;text-decoration:none;font-size:12px;font-weight:700">Cancelar</a>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview": {"width": 1280, "height": 900}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

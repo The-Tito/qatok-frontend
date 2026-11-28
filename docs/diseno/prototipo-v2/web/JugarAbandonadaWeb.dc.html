@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Partida abandonada (web)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Chakra+Petch:wght@600;700&amp;family=Silkscreen:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#2A2238}a:hover{color:#5E5470}
+.pf{font-family:'Chakra Petch',sans-serif}
+.sk{font-family:'Silkscreen',monospace;text-transform:uppercase;letter-spacing:.04em}
+.px{border:3px solid #2A2238;box-shadow:4px 4px 0 #2A2238}
+.seg{background-image:repeating-linear-gradient(90deg,transparent 0 14px,#2A2238 14px 16px)}
+svg.sp{shape-rendering:crispEdges;display:block}
+button{font:inherit;cursor:pointer}
+button:disabled{cursor:not-allowed}
+input,select,textarea{font:inherit;color:#2A2238}
+input:focus,select:focus,textarea:focus{outline:3px solid #E8A33D;outline-offset:2px}
+::placeholder{color:#8C8577}
+</style>
+</helmet>
+<div style="min-height:760px;background:#FFFFFF;color:#2A2238;font-family:'IBM Plex Mono',monospace;display:flex;flex-direction:column">
+  <header style="background:#2A2238;color:#FFFFFF;padding:0 32px">
+    <div style="max-width:1120px;margin:0 auto;min-height:64px;display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+      <span class="pf" style="font-size:22px;font-weight:700">QATO'K</span>
+      <nav aria-label="Principal" style="display:flex;gap:4px;flex-grow:1;flex-wrap:wrap">
+        <a href="CatalogoWeb.dc.html" aria-current="page" class="sk" style="min-height:44px;box-sizing:border-box;display:flex;align-items:center;gap:8px;padding:0 14px;background:#FFFFFF;color:#2A2238;text-decoration:none;font-size:12px;font-weight:700"><svg class="sp" width="20" height="20" viewBox="0 0 11 11" aria-hidden="true"><path fill="#2A2238" d="M5 0h1v3h-1z M4 3h3v1h-3z M3 4h5v1h-5z M0 5h11v1h-11z M3 6h5v1h-5z M4 7h3v1h-3z M5 8h1v3h-1z"/></svg>Jugar</a><a href="PerfilV2Web.dc.html" class="sk" style="min-height:44px;box-sizing:border-box;display:flex;align-items:center;gap:8px;padding:0 14px;color:#FFFFFF;text-decoration:none;font-size:12px"><svg class="sp" width="20" height="20" viewBox="0 0 12 12" aria-hidden="true"><path fill="#FFFFFF" d="M3 0h6v6h-6z M1 7h10v5h-10z"/></svg>Perfil</a><a href="EvidenciasV2Web.dc.html" class="sk" style="min-height:44px;box-sizing:border-box;display:flex;align-items:center;gap:8px;padding:0 14px;color:#FFFFFF;text-decoration:none;font-size:12px"><svg class="sp" width="20" height="20" viewBox="0 0 12 12" aria-hidden="true"><path fill="#FFFFFF" d="M1 0h10v1h-10z M2 1h8v4h-8z M3 5h6v1h-6z M4 6h4v1h-4z M5 7h2v2h-2z M3 9h6v1h-6z M2 10h8v2h-8z"/></svg>Evidencias</a>
+      </nav>
+      <span style="font-size:13px"><a href="MiCuentaWeb.dc.html" style="color:#FFFFFF">Ana López</a> · <a href="LoginWeb.dc.html" style="color:#FFFFFF">Salir</a></span>
+    </div>
+  </header>
+  <main style="padding:56px 32px;flex-grow:1;display:flex;align-items:center">
+    <div style="max-width:1120px;margin:0 auto;width:100%;box-sizing:border-box;max-width:620px;display:flex;flex-direction:column;gap:20px">
+      <span class="sk" style="font-size:11px;color:#5E5470">Partida terminada · Tres entregas para mañana</span>
+      <section class="px" style="background:#F5F3EF;padding:40px 32px;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center">
+        <svg class="sp" width="56" height="56" viewBox="0 0 11 11" aria-hidden="true"><path fill="#8C8577" d="M5 0h1v3h-1z M4 3h3v1h-3z M3 4h5v1h-5z M0 5h11v1h-11z M3 6h5v1h-5z M4 7h3v1h-3z M5 8h1v3h-1z"/></svg>
+        <h1 class="pf" style="margin:0;font-size:34px;font-weight:700;line-height:1.1">Abandonaste esta partida</h1>
+        <p style="margin:0;font-size:15px;line-height:1.6;color:#5E5470">No cuenta para tu progreso. Tus otras partidas y evidencias siguen igual.</p>
+        <span class="sk" style="font-size:11px;padding:4px 8px;border:2px solid #2A2238;background:#FFFFFF">✕ Abandonada</span>
+      </section>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a href="CatalogoWeb.dc.html" class="sk px" style="flex:1 1 240px;height:56px;display:flex;align-items:center;justify-content:center;background:#2A2238;color:#FFFFFF;text-decoration:none;font-size:15px;font-weight:700">Volver al catálogo ▶</a>
+        <a href="MisPartidasWeb.dc.html" class="sk" style="flex:1 1 200px;height:56px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;border:3px solid #2A2238;background:#FFFFFF;text-decoration:none;font-size:12px;font-weight:700">Ver mis partidas</a>
+      </div>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview": {"width": 1280, "height": 760}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

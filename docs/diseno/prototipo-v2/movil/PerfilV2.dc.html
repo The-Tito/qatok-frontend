@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Perfil de habilidades</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Chakra+Petch:wght@600;700&amp;family=Silkscreen:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#2A2238}a:hover{color:#5E5470}
+.pf{font-family:'Chakra Petch',sans-serif}
+.sk{font-family:'Silkscreen',monospace;text-transform:uppercase;letter-spacing:.04em}
+.px{border:3px solid #2A2238;box-shadow:4px 4px 0 #2A2238}
+.seg{background-image:repeating-linear-gradient(90deg,transparent 0 14px,#2A2238 14px 16px)}
+svg.sp{shape-rendering:crispEdges;display:block}
+button{font:inherit;cursor:pointer}
+button:disabled{cursor:not-allowed}
+input,select,textarea{font:inherit;color:#2A2238}
+input:focus,select:focus,textarea:focus{outline:3px solid #E8A33D;outline-offset:2px}
+::placeholder{color:#8C8577}
+</style>
+</helmet>
+<div style="width:390px;height:1400px;box-sizing:border-box;background:#FFFFFF;color:#2A2238;font-family:'IBM Plex Mono',monospace;display:flex;flex-direction:column;overflow:hidden;position:relative">
+  <div style="padding:18px 16px 16px;display:flex;flex-direction:column;gap:16px;flex-grow:1">
+    <section class="px" style="background:#FFFFFF;display:flex;flex-direction:column">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 12px;background:#2A2238;color:#FFFFFF">
+        <span class="sk" style="font-size:10px">Tarjeta de habilidades</span>
+        <a href="MiCuenta.dc.html" class="sk" style="font-size:10px;color:#FFFFFF">Mi cuenta ▶</a>
+      </div>
+      <div style="display:flex;gap:14px;padding:14px 12px;align-items:center">
+        <div style="width:72px;height:72px;border:3px solid #2A2238;background:#E9DDF7;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg class="sp" width="56" height="56" viewBox="0 0 16 16" aria-hidden="true"><path fill="#2A2238" d="M5 0h6v1h-6z M3 1h10v1h-10z M2 2h12v8h-12z M4 10h8v1h-8z M2 11h12v1h-12z M1 12h14v4h-14z"/><path fill="#4A3328" d="M5 1h6v1h-6z M3 2h10v3h-10z M3 5h1v1h-1z M12 5h1v1h-1z"/><path fill="#7A5A48" d="M6 2h3v1h-3z M4 3h2v1h-2z"/><path fill="#F2C9A0" d="M5 4h6v1h-6z M4 5h8v1h-8z M3 6h10v3h-10z M4 9h8v1h-8z M6 10h4v1h-4z"/><path fill="#D9A57C" d="M6 10h4v1h-4z M4 9h1v1h-1z M11 9h1v1h-1z"/><path fill="#2A2238" d="M5 6h2v2h-2z M9 6h2v2h-2z"/><path fill="#FFFFFF" d="M5 6h1v1h-1z M9 6h1v1h-1z"/><path fill="#E89A8A" d="M4 8h1v1h-1z M11 8h1v1h-1z"/><path fill="#B0705A" d="M7 8h2v1h-2z"/><path fill="#8A5CC7" d="M3 11h10v1h-10z M2 12h12v3h-12z"/><path fill="#2A2238" fill-opacity=".28" d="M2 12h2v3h-2z M12 12h2v3h-2z"/><path fill="#FFFFFF" d="M6 11h4v1h-4z M7 12h2v1h-2z"/></svg></div>
+        <div style="display:flex;flex-direction:column;gap:8px;flex-grow:1">
+          <h1 class="pf" style="margin:0;font-size:26px;font-weight:700;line-height:1">Ana López</h1>
+          <div style="display:flex;gap:16px">
+            <div style="display:flex;flex-direction:column"><span class="pf" style="font-size:22px;font-weight:700">3</span><span class="sk" style="font-size:9px;color:#5E5470">Completadas</span></div>
+            <div style="display:flex;flex-direction:column"><span class="pf" style="font-size:22px;font-weight:700">1</span><span class="sk" style="font-size:9px;color:#5E5470">Evidencias</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <sc-if value="{{pending}}" hint-placeholder-val="{{ false }}">
+      <div class="px" style="background:#2A2238;color:#FFFFFF;padding:12px 14px;display:flex;flex-direction:column;gap:8px">
+        <span class="sk" style="font-size:12px">Actualizando tu progreso…</span>
+        <div style="height:10px;border:2px solid #FFFFFF;position:relative"><div style="position:absolute;inset:0;width:55%;background-image:repeating-linear-gradient(90deg,#FFFFFF 0 8px,transparent 8px 12px)"></div></div>
+        <span style="font-size:12px;color:#E4DCCB;line-height:1.5">{{pendingText}}</span>
+      </div>
+    </sc-if>
+
+    <section style="display:flex;flex-direction:column;gap:14px">
+      <h2 class="sk" style="margin:0;font-size:12px">Habilidades</h2>
+      <sc-if value="{{graphOk}}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;gap:16px">
+      <a href="Evolucion.dc.html" style="display:flex;flex-direction:column;gap:6px;color:#2A2238;text-decoration:none;padding:2px 0">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+          <span style="display:flex;gap:8px;align-items:center"><span class="sk" style="font-size:9px;padding:3px 5px;border:2px solid #2A2238;background:#FCEBC8;color:#7A4A0B">Voz</span><span style="font-size:13px;font-weight:600">Comunicación efectiva</span></span>
+          <span class="sk" style="font-size:11px">75/75</span>
+        </div>
+        <div style="height:18px;border:3px solid #2A2238;background:#FFFFFF;position:relative"><div class="seg" style="position:absolute;inset:0;width:75%;background-color:#E8A33D"></div><div style="position:absolute;left:75%;top:-7px;bottom:-7px;width:3px;background:#2A2238"></div></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap"><span class="sk" style="font-size:10px;padding:3px 6px;border:2px solid #2A2238;background:#FFFFFF">▲ Fortaleza</span><span class="sk" style="font-size:10px;color:#5E5470">Evolución ▶</span></div>
+        <span style="display:flex;gap:6px;flex-wrap:wrap">
+          <span class="sk" style="font-size:9px;padding:3px 5px;border:2px solid #2A2238;background:#D6EFD5;color:#1F5A28">★ 2 aciertos</span>
+          <span class="sk" style="font-size:9px;padding:3px 5px;border:2px solid #2A2238;background:#FCEBC8;color:#7A4A0B">◆ 1 parcial</span>
+          <span class="sk" style="font-size:9px;padding:3px 5px;border:2px solid #2A2238;background:#F9D7D2;color:#8A1F16">✕ 2 errores</span>
+        </span>
+      </a>
+      <a href="Evolucion.dc.html" style="display:flex;flex-direction:column;gap:6px;color:#2A2238;text-decoration:none;padding:2px 0">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+          <span style="display:flex;gap:8px;align-items:center"><span class="sk" style="font-size:9px;padding:3px 5px;border:2px solid #2A2238;background:#F9D7D2;color:#8A1F16">Fuego</span><span style="font-size:13px;font-weight:600">Resolución de conflictos</span></span>
+          <span class="sk" style="font-size:11px">92.5/70</span>
+        </div>
+        <div style="height:18px;border:3px solid #2A2238;background:#FFFFFF;position:relative"><div class="seg" style="position:absolute;inset:0;width:92.5%;background-color:#D9483B"></div><div style="position:absolute;left:70%;top:-7px;bottom:-7px;width:3px;background:#2A2238"></div></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap"><span class="sk" style="font-size:10px;padding:3px 6px;border:2px solid #2A2238;background:#FFFFFF">▲ Fortaleza</span><span class="sk" style="font-size:10px;color:#5E5470">Evolución ▶</span></div>
+        <span style="display:flex;gap:6px;flex-wrap:wrap">
+          <span class="sk" style="font-size:9px;padding:3px 5px;border:2px solid #2A2238;background:#D6EFD5;color:#1F5A28">★ 2 aciertos</span>
+          <span class="sk" style="font-size:9px;padding:3px 5px;border:2px solid #2A2238;background:#FCEBC8;color:#7A4A0B">◆ 1 parcial</span>
+          <span class="sk" style="font-size:9px;padding:3px 5px;border:2px solid #2A2238;background:#F9D7D2;color:#8A1F16">✕ 1 error</span>
+        </span>
+      </a>
+      <a href="Evolucion.dc.html" style="display:flex;flex-direction:column;gap:6px;color:#2A2238;text-decoration:none;padding:2px 0">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+          <span style="display:flex;gap:8px;align-items:center"><span class="sk" style="font-size:9px;padding:3px 5px;border:2px solid #2A2238;background:#E9DDF7;color:#4B2A7A">Reloj</span><span style="font-size:13px;font-weight:600">Gestión del tiempo</span></span>
+          <span class="sk" style="font-size:11px">40/60</span>
+        </div>
+        <div style="height:18px;border:3px solid #2A2238;background:#FFFFFF;position:relative"><div class="seg" style="position:absolute;inset:0;width:40%;background-color:#8A5CC7"></div><div style="position:absolute;left:60%;top:-7px;bottom:-7px;width:3px;background:#2A2238"></div></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap"><span class="sk" style="font-size:10px;padding:3px 6px;border:2px dashed #2A2238;background:#FFFFFF">▼ Área de mejora</span><span class="sk" style="font-size:10px;color:#5E5470">Evolución ▶</span></div>
+        <span style="display:flex;gap:6px;flex-wrap:wrap">
+          <span class="sk" style="font-size:9px;padding:3px 5px;border:2px solid #2A2238;background:#D6EFD5;color:#1F5A28">★ 0 aciertos</span>
+          <span class="sk" style="font-size:9px;padding:3px 5px;border:2px solid #2A2238;background:#FCEBC8;color:#7A4A0B">◆ 0 parciales</span>
+          <span class="sk" style="font-size:9px;padding:3px 5px;border:2px solid #2A2238;background:#F9D7D2;color:#8A1F16">✕ 1 error</span>
+        </span>
+      </a>
+        </div>
+      </sc-if>
+      <sc-if value="{{graphGap}}" hint-placeholder-val="{{ false }}">
+        <div style="border:3px dashed #2A2238;padding:10px 12px;display:flex;flex-direction:column;gap:4px">
+          <span class="sk" style="font-size:10px">◆ Parte de tu perfil no cargó</span>
+          <span style="font-size:12px;line-height:1.5;color:#5E5470">Tus habilidades y recomendaciones aparecerán en cuanto vuelvan a estar disponibles.</span>
+        </div>
+      </sc-if>
+    </section>
+
+    <section style="display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline"><h2 class="sk" style="margin:0;font-size:12px">Recomendaciones</h2><a href="Recomendaciones.dc.html" class="sk" style="font-size:10px">Ver todas ▶</a></div>
+      <sc-if value="{{graphOk}}" hint-placeholder-val="{{ true }}">
+        <a href="PartidaEnCurso.dc.html" class="px" style="display:flex;flex-direction:column;background:#FFFFFF;color:#2A2238;text-decoration:none">
+          <div style="height:10px;display:flex;border-bottom:3px solid #2A2238"><span style="flex:7;background:#8A5CC7"></span><span style="flex:3;background:#E8A33D"></span></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:12px">
+            <span style="display:flex;flex-direction:column;gap:4px;flex-grow:1">
+              <span style="font-size:14px;font-weight:600">Tres entregas para mañana</span>
+              <span style="font-size:12px;color:#4B2A7A">Refuerza: Gestión del tiempo</span>
+            </span>
+            <span class="sk" style="font-size:11px;font-weight:700;background:#4B2A7A;color:#FFFFFF;padding:8px 10px;border:2px solid #2A2238">Ver ▶</span>
+          </div>
+        </a>
+      </sc-if>
+      <sc-if value="{{graphGap}}" hint-placeholder-val="{{ false }}">
+        <div style="height:64px;border:3px solid #E4DCCB;background:#F5F3EF"></div>
+      </sc-if>
+    </section>
+
+    <section style="display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline"><h2 class="sk" style="margin:0;font-size:12px">Evidencias recientes</h2><a href="EvidenciasV2.dc.html" class="sk" style="font-size:10px">Ver todas ▶</a></div>
+      <a href="EvidenciaDetalleV2.dc.html" style="display:flex;gap:12px;border:3px solid #2A2238;background:#FFFFFF;padding:10px 12px;color:#2A2238;text-decoration:none">
+        <svg class="sp" width="24" height="24" viewBox="0 0 16 16" aria-hidden="true"><path fill="#2A2238" d="M2 0h12v1h-12z M0 1h16v5h-16z M1 6h14v1h-14z M3 7h10v1h-10z M5 8h6v1h-6z M6 9h4v2h-4z M4 11h8v2h-8z M2 13h12v3h-12z"/><path fill="#E8A33D" d="M3 1h10v5h-10z M1 2h1v3h-1z M14 2h1v3h-1z M4 6h8v1h-8z M6 7h4v1h-4z M7 8h2v2h-2z M5 11h6v1h-6z"/><path fill="#FCEBC8" d="M4 2h1v3h-1z M5 2h1v1h-1z"/><path fill="#B07A22" d="M11 2h1v4h-1z M10 5h1v1h-1z M9 6h2v1h-2z M8 8h1v2h-1z M9 11h2v1h-2z"/><path fill="#6B3E2E" d="M3 14h10v1h-10z"/><path fill="#E8A33D" d="M6 14h4v1h-4z"/></svg>
+        <span style="display:flex;flex-direction:column;gap:4px;flex-grow:1;min-width:0">
+          <span style="font-size:13px;font-weight:600">Manejo de un cliente molesto</span>
+          <sc-if value="{{docOk}}" hint-placeholder-val="{{ true }}"><span style="font-size:12px;line-height:1.5;color:#5E5470">Atendió una queja por retraso: respondió rápido, propuso una nueva fecha y recuperó la confianza del cliente.</span></sc-if>
+          <sc-if value="{{docGap}}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;line-height:1.5;color:#5E5470">◆ El resumen no cargó; la evidencia sigue guardada.</span></sc-if>
+          <span class="sk" style="font-size:9px;color:#5E5470">1 oct 2026 · ● Privada</span>
+        </span>
+        <span class="sk" style="font-size:12px;align-self:center">▶</span>
+      </a>
+    </section>
+
+    <section style="display:flex;flex-direction:column;gap:8px">
+      <h2 class="sk" style="margin:0;font-size:12px">Más de tu perfil</h2>
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
+        <a href="MisPartidas.dc.html" class="sk" style="min-height:52px;display:flex;align-items:center;justify-content:center;text-align:center;border:3px solid #2A2238;background:#FFFFFF;text-decoration:none;font-size:11px;font-weight:700">Mis partidas</a>
+        <a href="Recomendaciones.dc.html" class="sk" style="min-height:52px;display:flex;align-items:center;justify-content:center;text-align:center;border:3px solid #2A2238;background:#FFFFFF;text-decoration:none;font-size:11px;font-weight:700">Recomendaciones</a>
+        <a href="Evolucion.dc.html" class="sk" style="min-height:52px;display:flex;align-items:center;justify-content:center;text-align:center;border:3px solid #2A2238;background:#FFFFFF;text-decoration:none;font-size:11px;font-weight:700">Evolución</a>
+        <a href="MiCuenta.dc.html" class="sk" style="min-height:52px;display:flex;align-items:center;justify-content:center;text-align:center;border:3px solid #2A2238;background:#FFFFFF;text-decoration:none;font-size:11px;font-weight:700">Mi cuenta</a>
+      </div>
+    </section>
+  </div>
+
+  <nav aria-label="Principal" style="height:72px;flex-shrink:0;border-top:3px solid #2A2238;background:#FFFFFF;display:grid;grid-template-columns:repeat(3,minmax(0,1fr))">
+    <a href="CatalogoV2.dc.html" class="sk" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-size:11px;text-decoration:none;color:#2A2238">
+      <svg class="sp" width="20" height="20" viewBox="0 0 11 11" aria-hidden="true"><path fill="#2A2238" d="M5 0h1v3h-1z M4 3h3v1h-3z M3 4h5v1h-5z M0 5h11v1h-11z M3 6h5v1h-5z M4 7h3v1h-3z M5 8h1v3h-1z"/></svg>Jugar</a>
+    <a href="PerfilV2.dc.html" aria-current="page" class="sk" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-size:11px;font-weight:700;text-decoration:none;background:#2A2238;color:#FFFFFF">
+      <svg class="sp" width="20" height="20" viewBox="0 0 12 12" aria-hidden="true"><path fill="#FFFFFF" d="M3 0h6v6h-6z M1 7h10v5h-10z"/></svg>Perfil</a>
+    <a href="EvidenciasV2.dc.html" class="sk" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;font-size:11px;text-decoration:none;color:#2A2238">
+      <svg class="sp" width="20" height="20" viewBox="0 0 12 12" aria-hidden="true"><path fill="#2A2238" d="M1 0h10v1h-10z M2 1h8v4h-8z M3 5h6v1h-6z M4 6h4v1h-4z M5 7h2v2h-2z M3 9h6v1h-6z M2 10h8v2h-8z"/></svg>Evidencias</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"datos": {"editor": "enum", "options": ["Completos", "Falta grafo", "Falta documento"], "default": "Completos"}, "pendientes": {"editor": "number", "default": 0, "min": 0, "max": 9}, "$preview": {"width": 390, "height": 1400}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const datos = this.props.datos ?? 'Completos';
+    const n = Number(this.props.pendientes ?? 0);
+    const graphGap = datos === 'Falta grafo';
+    const docGap = datos === 'Falta documento';
+    return {
+      graphGap, graphOk: !graphGap, docGap, docOk: !docGap,
+      pending: n > 0,
+      pendingText: n === 1 ? '1 cambio guardado aún no llega a tu perfil.' : n + ' cambios guardados aún no llegan a tu perfil.',
+    };
+  }
+}
+</script>
+</body>
+</html>

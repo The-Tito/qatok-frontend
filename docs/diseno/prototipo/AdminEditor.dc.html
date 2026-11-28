@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Admin: editor de escenario</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=Chakra+Petch:wght@600;700&amp;family=Silkscreen:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#2A2238}a:hover{color:#5E5470}
+.pf{font-family:'Chakra Petch',sans-serif}
+.sk{font-family:'Silkscreen',monospace;text-transform:uppercase;letter-spacing:.04em}
+.px{border:3px solid #2A2238;box-shadow:4px 4px 0 #2A2238}
+svg.sp{shape-rendering:crispEdges;display:block}
+button{font:inherit;cursor:pointer}
+input,select,textarea{font:inherit;color:#2A2238}
+input:focus,select:focus,textarea:focus{outline:3px solid #E8A33D;outline-offset:2px}
+::placeholder{color:#8C8577}
+</style>
+</helmet>
+<div style="min-height:1560px;background:#FFFFFF;color:#2A2238;font-family:'IBM Plex Mono',monospace;display:flex;flex-direction:column">
+  <header style="background:#2A2238;color:#FFFFFF;padding:0 32px">
+    <div style="max-width:1280px;margin:0 auto;min-height:64px;display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+      <span style="display:flex;align-items:baseline;gap:10px"><span class="pf" style="font-size:22px;font-weight:700">QATO'K</span><span class="sk" style="font-size:10px;padding:3px 6px;border:2px solid #FFFFFF">Admin</span></span>
+      <nav aria-label="Administración" style="display:flex;gap:4px;flex-grow:1;flex-wrap:wrap">
+        <a href="AdminSimulaciones.dc.html" aria-current="page" class="sk" style="padding:10px 14px;background:#FFFFFF;color:#2A2238;text-decoration:none;font-size:12px;font-weight:700">Simulaciones</a>
+        <a href="AdminHabilidades.dc.html" class="sk" style="padding:10px 14px;color:#FFFFFF;text-decoration:none;font-size:12px">Habilidades</a>
+      </nav>
+      <span style="font-size:13px">Carla Ruiz · <a href="#" style="color:#FFFFFF">Salir</a></span>
+    </div>
+  </header>
+
+  <div style="border-bottom:3px solid #2A2238;background:#F5F3EF;padding:18px 32px">
+    <div style="max-width:1280px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <a href="AdminSimulaciones.dc.html" class="sk" style="font-size:11px">◀ Simulaciones</a>
+        <h1 class="pf" style="margin:0;font-size:32px;font-weight:700;line-height:1">Presentación ante dirección</h1>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+        <span class="sk" style="font-size:10px;padding:4px 8px;border:2px dashed #2A2238;background:#FFFFFF">○ Borrador</span>
+        <span style="font-size:13px;color:#5E5470">Versión 3 guardada</span>
+        <button type="button" class="sk" style="height:46px;padding:0 16px;border:3px solid #2A2238;background:#FFFFFF;color:#2A2238;font-size:12px;font-weight:700">Guardar borrador</button>
+        <button type="button" disabled aria-describedby="bloqueo" class="sk" style="height:46px;padding:0 16px;border:3px dashed #8C8577;background:#FFFFFF;color:#5E5470;font-size:12px;font-weight:700;cursor:not-allowed">Publicar ▶</button>
+      </div>
+    </div>
+  </div>
+
+  <main style="padding:28px 32px 56px">
+    <div style="max-width:1280px;margin:0 auto;display:flex;gap:28px;flex-wrap:wrap;align-items:flex-start">
+
+      <section aria-label="Contenido" style="flex:999 1 640px;min-width:0;display:flex;flex-direction:column;gap:20px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap">
+          <h2 class="sk" style="margin:0;font-size:15px">Pasos del escenario</h2>
+          <span style="font-size:13px;color:#5E5470">El paso con orden 1 es el inicio. Una opción sin siguiente paso termina la simulación.</span>
+        </div>
+
+        <article class="px" style="display:flex;flex-direction:column">
+          <div style="display:flex;align-items:center;gap:12px;padding:12px 16px;background:#E9DDF7;border-bottom:3px solid #2A2238;flex-wrap:wrap">
+            <span class="pf" style="font-size:22px;font-weight:700">01</span>
+            <svg class="sp" width="28" height="20" viewBox="0 0 14 10" aria-hidden="true"><path fill="#2A2238" d="M0 0h14v10h-14z"/><path fill="#FFFFFF" d="M1 1h12v8h-12z"/><path fill="#E4DCCB" d="M2 1h10v1h-10z M3 2h8v1h-8z M4 3h6v1h-6z M5 4h4v1h-4z M6 5h2v1h-2z"/><path fill="#2A2238" d="M1 1h1v1h-1z M2 2h1v1h-1z M3 3h1v1h-1z M4 4h1v1h-1z M5 5h1v1h-1z M6 6h2v1h-2z M8 5h1v1h-1z M9 4h1v1h-1z M10 3h1v1h-1z M11 2h1v1h-1z M12 1h1v1h-1z"/><path fill="#D9483B" d="M10 6h2v2h-2z"/></svg>
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600">Tipo
+              <select style="height:38px;border:3px solid #2A2238;background:#FFFFFF;padding:0 8px;font-size:13px"><option>Correo</option><option>Reunión</option><option>Conversación</option><option>Tarea</option><option>Incidente</option></select>
+            </label>
+            <span style="flex-grow:1"></span>
+            <button type="button" aria-label="Subir paso" class="sk" style="width:36px;height:36px;border:2px solid #2A2238;background:#FFFFFF;font-size:12px">▲</button>
+            <button type="button" aria-label="Bajar paso" class="sk" style="width:36px;height:36px;border:2px solid #2A2238;background:#FFFFFF;font-size:12px">▼</button>
+            <button type="button" aria-label="Eliminar paso" class="sk" style="width:36px;height:36px;border:2px solid #2A2238;background:#FFFFFF;color:#8A1F16;font-size:12px">✕</button>
+          </div>
+          <div style="padding:18px 16px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px">
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Título del paso
+              <input type="text" placeholder="Ej.: Correo de la directora" style="height:44px;box-sizing:border-box;border:3px solid #2A2238;background:#F5F3EF;padding:0 10px;font-size:14px">
+            </label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Descripción
+              <input type="text" placeholder="Qué está pasando, en una línea" style="height:44px;box-sizing:border-box;border:3px solid #2A2238;background:#F5F3EF;padding:0 10px;font-size:14px">
+            </label>
+            <fieldset style="grid-column:1 / -1;border:3px dashed #E4DCCB;margin:0;padding:14px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+              <legend class="sk" style="font-size:11px;padding:0 6px">Contexto del correo</legend>
+              <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Remitente<input type="text" placeholder="Nombre &lt;correo&gt;" style="height:42px;box-sizing:border-box;border:3px solid #2A2238;background:#F5F3EF;padding:0 10px;font-size:14px"></label>
+              <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Asunto<input type="text" placeholder="Asunto del correo" style="height:42px;box-sizing:border-box;border:3px solid #2A2238;background:#F5F3EF;padding:0 10px;font-size:14px"></label>
+              <label style="grid-column:1 / -1;display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Cuerpo<textarea rows="3" placeholder="Texto que lee el estudiante" style="border:3px solid #2A2238;background:#F5F3EF;padding:10px;font-size:14px;resize:vertical"></textarea></label>
+            </fieldset>
+
+            <div style="grid-column:1 / -1;display:flex;flex-direction:column;gap:12px">
+              <span class="sk" style="font-size:12px">Opciones · 2</span>
+              <div style="border:3px solid #2A2238;display:flex;flex-direction:column">
+                <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:#F5F3EF;border-bottom:3px solid #2A2238">
+                  <span class="sk" style="font-size:12px;font-weight:700">A</span>
+                  <span style="font-size:13px;color:#5E5470;flex-grow:1">Opción en edición</span>
+                  <button type="button" aria-label="Eliminar opción A" class="sk" style="width:32px;height:32px;border:2px solid #2A2238;background:#FFFFFF;color:#8A1F16;font-size:11px">✕</button>
+                </div>
+                <div style="padding:14px 12px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px">
+                  <label style="grid-column:1 / -1;display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Lo que elige el estudiante<input type="text" placeholder="Ej.: Presentar los resultados con un plan de acción" style="height:42px;box-sizing:border-box;border:3px solid #2A2238;background:#F5F3EF;padding:0 10px;font-size:14px"></label>
+                  <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Valoración (0–100)<input type="number" min="0" max="100" placeholder="0–100" style="height:42px;box-sizing:border-box;border:3px solid #2A2238;background:#F5F3EF;padding:0 10px;font-size:14px"></label>
+                  <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Siguiente paso<select style="height:42px;border:3px solid #2A2238;background:#FFFFFF;padding:0 8px;font-size:13px"><option>02 · Reunión</option><option>Termina la simulación</option></select></label>
+                  <fieldset style="border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:6px">
+                    <legend style="font-size:13px;font-weight:600;padding:0;margin-bottom:6px">Retroalimentación</legend>
+                    <span style="display:flex;gap:6px"><span class="sk" style="font-size:10px;padding:7px 6px;border:2px solid #2A2238;background:#D6EFD5;color:#1F5A28;font-weight:700">★ Acierto</span><span class="sk" style="font-size:10px;padding:7px 6px;border:2px solid #2A2238">◆</span><span class="sk" style="font-size:10px;padding:7px 6px;border:2px solid #2A2238">✕</span></span>
+                  </fieldset>
+                  <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;grid-column:span 2">Comentario<input type="text" placeholder="Por qué funciona o no esta decisión" style="height:42px;box-sizing:border-box;border:3px solid #2A2238;background:#F5F3EF;padding:0 10px;font-size:14px"></label>
+                  <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Recomendación<input type="text" placeholder="Qué practicar después" style="height:42px;box-sizing:border-box;border:3px solid #2A2238;background:#F5F3EF;padding:0 10px;font-size:14px"></label>
+                  <div style="grid-column:1 / -1;display:flex;flex-direction:column;gap:8px">
+                    <span style="font-size:13px;font-weight:600">Consecuencias (1 a 3)</span>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+                      <input type="text" aria-label="Consecuencia 1" placeholder="Qué pasa después" style="flex:1 1 260px;height:42px;box-sizing:border-box;border:3px solid #2A2238;background:#F5F3EF;padding:0 10px;font-size:14px">
+                      <select aria-label="Impacto" style="height:42px;border:3px solid #2A2238;background:#FFFFFF;padding:0 8px;font-size:13px"><option>▲ Positivo</option><option>■ Neutro</option><option>▼ Negativo</option></select>
+                      <select aria-label="Tipo de consecuencia" style="height:42px;border:3px solid #2A2238;background:#FFFFFF;padding:0 8px;font-size:13px"><option>Relacional</option><option>Tiempo</option><option>Calidad</option><option>Reputación</option></select>
+                    </div>
+                    <button type="button" class="sk" style="align-self:flex-start;border:0;background:none;padding:0;font-size:11px;font-weight:700;text-decoration:underline;color:#2A2238">+ Consecuencia</button>
+                  </div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;padding:12px;border:3px solid #2A2238">
+                <span class="sk" style="font-size:12px;font-weight:700">B</span>
+                <span style="font-size:13px;color:#5E5470;flex-grow:1">Sin texto todavía · termina la simulación</span>
+                <button type="button" class="sk" style="height:32px;padding:0 10px;border:2px solid #2A2238;background:#FFFFFF;font-size:10px;font-weight:700">Editar</button>
+              </div>
+              <button type="button" class="sk" style="height:44px;border:3px dashed #2A2238;background:#FFFFFF;color:#2A2238;font-size:11px;font-weight:700">+ Agregar opción</button>
+            </div>
+          </div>
+        </article>
+
+        <article style="border:3px solid #8A1F16;box-shadow:4px 4px 0 #8A1F16;display:flex;align-items:center;gap:12px;padding:14px 16px;flex-wrap:wrap">
+          <span class="pf" style="font-size:22px;font-weight:700">02</span>
+          <span class="sk" style="font-size:11px;padding:3px 6px;border:2px solid #2A2238">Reunión</span>
+          <span style="font-size:14px;color:#5E5470;flex-grow:1">Sin título</span>
+          <span class="sk" style="font-size:10px;padding:4px 8px;border:2px solid #2A2238;background:#F9D7D2;color:#8A1F16">✕ Sin opciones</span>
+          <button type="button" class="sk" style="height:36px;padding:0 12px;border:2px solid #2A2238;background:#FFFFFF;font-size:10px;font-weight:700">Abrir</button>
+        </article>
+
+        <div style="border:3px dashed #2A2238;padding:16px;display:flex;flex-direction:column;gap:12px">
+          <span class="sk" style="font-size:12px">+ Agregar paso</span>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button type="button" class="sk" style="height:44px;padding:0 12px;border:3px solid #2A2238;background:#FFFFFF;font-size:11px">Correo</button>
+            <button type="button" class="sk" style="height:44px;padding:0 12px;border:3px solid #2A2238;background:#FFFFFF;font-size:11px">Reunión</button>
+            <button type="button" class="sk" style="height:44px;padding:0 12px;border:3px solid #2A2238;background:#FFFFFF;font-size:11px">Conversación</button>
+            <button type="button" class="sk" style="height:44px;padding:0 12px;border:3px solid #2A2238;background:#FFFFFF;font-size:11px">Tarea</button>
+            <button type="button" class="sk" style="height:44px;padding:0 12px;border:3px solid #2A2238;background:#FFFFFF;font-size:11px">Incidente</button>
+          </div>
+        </div>
+      </section>
+
+      <aside style="flex:1 1 340px;display:flex;flex-direction:column;gap:20px">
+        <section class="px" style="padding:16px;display:flex;flex-direction:column;gap:12px">
+          <h2 class="sk" style="margin:0;font-size:13px">Datos de la simulación</h2>
+          <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Título<input type="text" value="Presentación ante dirección" style="height:42px;box-sizing:border-box;border:3px solid #2A2238;background:#F5F3EF;padding:0 10px;font-size:14px"></label>
+          <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Descripción<textarea rows="2" style="border:3px solid #2A2238;background:#F5F3EF;padding:10px;font-size:14px;resize:vertical">Debes presentar resultados negativos a la dirección.</textarea></label>
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Dificultad<select style="height:42px;border:3px solid #2A2238;background:#FFFFFF;padding:0 8px;font-size:13px"><option>Avanzada</option><option>Intermedia</option><option>Básica</option></select></label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Minutos<input type="number" placeholder="Opcional" style="height:42px;box-sizing:border-box;border:3px solid #2A2238;background:#F5F3EF;padding:0 10px;font-size:14px"></label>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <span style="font-size:13px;font-weight:600">Habilidades que entrena</span>
+            <div style="display:flex;align-items:center;gap:8px;border:3px solid #2A2238;padding:8px 10px">
+              <span class="sk" style="font-size:9px;padding:3px 5px;border:2px solid #2A2238;background:#E9DDF7;color:#4B2A7A">Reloj</span>
+              <span style="font-size:13px;flex-grow:1">Gestión del tiempo</span>
+              <span style="font-size:12px;color:#5E5470">peso 0.5 · nivel 70</span>
+            </div>
+            <button type="button" class="sk" style="align-self:flex-start;border:0;background:none;padding:0;font-size:11px;font-weight:700;text-decoration:underline;color:#2A2238">+ Habilidad</button>
+          </div>
+        </section>
+
+        <section class="px" style="padding:16px;display:flex;flex-direction:column;gap:12px">
+          <h2 class="sk" style="margin:0;font-size:13px">Mapa de rutas</h2>
+          <div style="display:flex;flex-direction:column;align-items:flex-start;gap:6px">
+            <span style="border:3px solid #2A2238;background:#E9DDF7;padding:6px 10px;font-size:12px;font-weight:600">01 · Correo</span>
+            <span style="display:flex;gap:24px;padding-left:14px">
+              <span style="display:flex;flex-direction:column;align-items:flex-start;gap:4px"><span class="sk" style="font-size:10px;color:#5E5470">A ↓</span><span style="border:3px solid #8A1F16;padding:6px 10px;font-size:12px;font-weight:600">02 · Reunión</span></span>
+              <span style="display:flex;flex-direction:column;align-items:flex-start;gap:4px"><span class="sk" style="font-size:10px;color:#5E5470">B ↓</span><span class="sk" style="background:#2A2238;color:#FFFFFF;padding:8px 10px;font-size:10px">Fin</span></span>
+            </span>
+          </div>
+        </section>
+
+        <section id="bloqueo" class="px" style="padding:16px;display:flex;flex-direction:column;gap:10px">
+          <h2 class="sk" style="margin:0;font-size:13px">Antes de publicar</h2>
+          <span style="font-size:13px;display:flex;gap:8px"><span class="sk" style="color:#1F5A28">✓</span>Hay un paso inicial (orden 1)</span>
+          <span style="font-size:13px;display:flex;gap:8px"><span class="sk" style="color:#1F5A28">✓</span>Al menos una habilidad</span>
+          <span style="font-size:13px;display:flex;gap:8px"><span class="sk" style="color:#1F5A28">✓</span>Sin ciclos entre pasos</span>
+          <span style="font-size:13px;display:flex;gap:8px;color:#8A1F16;font-weight:600"><span class="sk">✕</span>Paso 02: necesita al menos una opción</span>
+          <span style="font-size:13px;display:flex;gap:8px;color:#8A1F16;font-weight:600"><span class="sk">✕</span>Opción 01-A: faltan textos y consecuencias</span>
+          <span style="font-size:12px;color:#5E5470;line-height:1.5;border-top:3px dashed #E4DCCB;padding-top:10px">Al publicar, el contenido queda fijo: para cambiarlo después hay que crear otra simulación.</span>
+        </section>
+      </aside>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1560}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
