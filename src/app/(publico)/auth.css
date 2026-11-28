@@ -1,6 +1,10 @@
 /* Entrar y Crear cuenta (LoginV2, RegistroV2, LoginWeb, RegistroWeb). */
 
 .auth-screen {
+  /* Alto del suelo (pasto + baldosas) y de las personitas de la oficina. */
+  --floor: 50px;
+  --person-h: 48px;
+
   position: relative;
   display: flex;
   flex-direction: column;
@@ -46,7 +50,8 @@
 .auth-ground {
   position: relative;
   flex-shrink: 0;
-  height: 110px;
+  /* En móvil las personitas están en esta franja, debajo del formulario. */
+  height: calc(var(--floor) + var(--person-h) + 8px);
   margin-top: auto;
 }
 
@@ -60,26 +65,16 @@
 }
 
 .auth-ground::before {
-  bottom: 44px;
+  bottom: calc(var(--floor) - 6px);
   height: 6px;
   background: var(--type-leaf-base);
 }
 
 .auth-ground::after {
   bottom: 0;
-  height: 44px;
+  height: calc(var(--floor) - 6px);
   background-color: var(--color-ink);
   background-image: repeating-linear-gradient(90deg, var(--color-ink) 0 12px, #3b3150 12px 24px);
-}
-
-.auth-student {
-  position: absolute;
-  bottom: 50px;
-  left: calc(50% - 30px);
-}
-
-.auth-screen[data-compact] .auth-student {
-  left: 52px;
 }
 
 .auth-hero {
@@ -204,6 +199,11 @@
 }
 
 @media (min-width: 1024px) {
+  /* En escritorio las personitas están a los lados: el suelo solo ocupa su alto. */
+  .auth-ground {
+    height: var(--floor);
+  }
+
   .auth-content {
     justify-content: center;
     flex-grow: 1;
@@ -227,10 +227,6 @@
     top: 90px;
     right: 28%;
   }
-
-  .auth-screen[data-compact] .auth-student {
-    left: calc(50% - 30px);
-  }
 }
 
 .auth-notice {
@@ -243,23 +239,9 @@
 
 /* Pantallas bajas (laptops con zoom, móviles): suelo y personaje más bajos. */
 @media (max-height: 800px) {
-  .auth-ground {
-    height: 72px;
-  }
-
-  .auth-ground::before {
-    bottom: 28px;
-  }
-
-  .auth-ground::after {
-    height: 28px;
-  }
-
-  .auth-student {
-    bottom: 34px;
-    left: calc(50% - 20px);
-    width: 40px;
-    height: 40px;
+  .auth-screen {
+    --floor: 34px;
+    --person-h: 42px;
   }
 
   .auth-description {
@@ -268,8 +250,366 @@
   }
 }
 
+/* ---- Estrellas fugaces: cruzan de vez en cuando (dos ciclos de distinta duración). */
+
+.auth-shooting {
+  position: absolute;
+  top: 8%;
+  left: -40px;
+  opacity: 0;
+  animation: auth-shoot 7.3s steps(24, end) 2s infinite;
+}
+
+.auth-shooting-2 {
+  top: 22%;
+  animation-duration: 11.1s;
+  animation-delay: 6s;
+}
+
+.auth-shooting::before {
+  content: '';
+  position: absolute;
+  top: calc(50% - 2px);
+  right: 60%;
+  width: 56px;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #e8a33d);
+}
+
+.auth-shooting-2::before {
+  background: linear-gradient(90deg, transparent, #8a5cc7);
+}
+
+.auth-sparkles .auth-shooting .sparkle {
+  position: relative;
+  animation: none;
+}
+
+@keyframes auth-shoot {
+  0% {
+    opacity: 0;
+    transform: rotate(18deg) translateX(0);
+  }
+
+  2% {
+    opacity: 1;
+  }
+
+  16% {
+    opacity: 1;
+  }
+
+  20%,
+  100% {
+    opacity: 0;
+    transform: rotate(18deg) translateX(min(70vw, 900px));
+  }
+}
+
+/* ---- Botón de sonido. */
+
+.auth-sound {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 3;
+}
+
+/* ---- Oficina de fondo (decorativa, detrás del contenido). */
+
+.office {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.office-window,
+.office-board,
+.office-desk {
+  display: none;
+  position: absolute;
+}
+
+.office-person {
+  position: absolute;
+  bottom: var(--floor);
+  z-index: 2;
+}
+
+.office-sprite {
+  display: block;
+  width: auto;
+  height: var(--person-h);
+  animation: office-breathe 1.4s var(--mov-pasos-2) infinite alternate;
+}
+
+.office-person:nth-of-type(odd) .office-sprite {
+  animation-delay: -0.7s;
+}
+
+.office-person[data-mood='talk'] .office-sprite,
+.office-person[data-mood='ok'] .office-sprite {
+  animation: office-hop 280ms var(--mov-pasos-2) infinite alternate;
+}
+
+.office-person[data-mood='mad'] .office-sprite {
+  animation: office-shake 180ms var(--mov-pasos-2) infinite;
+}
+
+/* En móvil: las cuatro personitas en la franja del suelo. */
+.office-person-1 {
+  left: 5%;
+}
+
+.office-person-2 {
+  left: 25%;
+}
+
+.office-person-3 {
+  right: 25%;
+}
+
+.office-person-4 {
+  right: 5%;
+}
+
+.office-bubble {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: -4px;
+  padding: 3px 7px;
+  border: var(--border) solid var(--color-ink);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-family: var(--font-silkscreen), monospace;
+  font-size: 11px;
+  white-space: nowrap;
+  box-shadow: 3px 3px 0 rgb(42 34 56 / 25%);
+  transform: scale(0);
+  transform-origin: 12px 100%;
+  transition: transform var(--mov-rapido) var(--mov-pasos-4);
+}
+
+.office-person-3 .office-bubble,
+.office-person-4 .office-bubble {
+  right: -4px;
+  left: auto;
+  transform-origin: calc(100% - 12px) 100%;
+}
+
+.office-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -9px;
+  left: 10px;
+  width: 9px;
+  height: 9px;
+  border-right: var(--border) solid var(--color-ink);
+  border-bottom: var(--border) solid var(--color-ink);
+  background: inherit;
+  transform: rotate(45deg);
+}
+
+.office-person-3 .office-bubble::after,
+.office-person-4 .office-bubble::after {
+  right: 10px;
+  left: auto;
+}
+
+.office-bubble[data-shown] {
+  transform: scale(1);
+}
+
+.office-bubble[data-mood='mad'] {
+  background: var(--type-fire-tint);
+  color: var(--type-fire-dark);
+}
+
+.office-bubble[data-mood='ok'] {
+  background: var(--color-correct-bg);
+}
+
+@keyframes office-breathe {
+  to {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes office-hop {
+  to {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes office-shake {
+  from {
+    transform: translateX(-3px);
+  }
+
+  to {
+    transform: translateX(3px);
+  }
+}
+
+/* Escritorio: oficina completa a los lados del formulario, sin pasar por detrás de él. */
+@media (min-width: 1024px) {
+  .office-window,
+  .office-board,
+  .office-desk {
+    display: block;
+  }
+
+  .office-window {
+    top: 9%;
+    left: calc(50% - 220px - 190px);
+    width: 120px;
+    height: 88px;
+    border: var(--border) solid var(--color-ink);
+    background:
+      linear-gradient(90deg, transparent 48%, var(--color-ink) 48% 52%, transparent 52%),
+      linear-gradient(#bfe3f2, #e8f6fb);
+    box-shadow: var(--shadow);
+  }
+
+  .office-window-2 {
+    left: calc(50% - 220px - 330px);
+  }
+
+  .office-board {
+    top: 12%;
+    left: calc(50% + 220px + 50px);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    width: 160px;
+    padding: 8px;
+    border: var(--border) solid var(--color-ink);
+    background: var(--color-surface);
+    box-shadow: var(--shadow);
+  }
+
+  .office-board i {
+    height: 14px;
+  }
+
+  .office-desk {
+    bottom: var(--floor);
+    width: 190px;
+    height: 46px;
+    border-top: 12px solid #8b5e3c;
+    box-shadow: inset 0 3px 0 var(--color-ink);
+  }
+
+  .office-desk::before,
+  .office-desk::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    width: 6px;
+    height: 34px;
+    background: var(--color-ink);
+  }
+
+  .office-desk::before {
+    left: 12px;
+  }
+
+  .office-desk::after {
+    right: 12px;
+  }
+
+  .office-desk-1 {
+    left: calc(50% - 220px - 270px);
+  }
+
+  .office-desk-2 {
+    left: calc(50% + 220px + 70px);
+  }
+
+  .office-monitor {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    left: 64px;
+    width: 58px;
+    height: 40px;
+    border: var(--border) solid var(--color-ink);
+    background: repeating-linear-gradient(#163b2a 0 5px, #5fd27a 5px 8px);
+    background-size: 100% 16px;
+    animation: office-code 2.4s var(--mov-pasos-4) infinite;
+  }
+
+  .office-person-1 {
+    left: calc(50% - 220px - 230px);
+  }
+
+  .office-person-2 {
+    left: calc(50% - 220px - 110px);
+  }
+
+  .office-person-3 {
+    right: auto;
+    left: calc(50% + 220px + 62px);
+  }
+
+  .office-person-4 {
+    right: auto;
+    left: calc(50% + 220px + 182px);
+  }
+
+  /* Los globos se abren hacia afuera para no quedar detrás del formulario. */
+  .office-person-1 .office-bubble,
+  .office-person-2 .office-bubble {
+    right: -4px;
+    left: auto;
+    transform-origin: calc(100% - 12px) 100%;
+  }
+
+  .office-person-1 .office-bubble::after,
+  .office-person-2 .office-bubble::after {
+    right: 10px;
+    left: auto;
+  }
+
+  .office-person-3 .office-bubble,
+  .office-person-4 .office-bubble {
+    right: auto;
+    left: -4px;
+    transform-origin: 12px 100%;
+  }
+
+  .office-person-3 .office-bubble::after,
+  .office-person-4 .office-bubble::after {
+    right: auto;
+    left: 10px;
+  }
+
+  .office-bubble {
+    font-size: 13px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .auth-screen {
+    --person-h: 72px;
+  }
+}
+
 @media (min-width: 1024px) and (max-height: 800px) {
-  .auth-screen[data-compact] .auth-student {
-    left: calc(50% - 20px);
+  .auth-screen {
+    --person-h: 60px;
+  }
+}
+
+@keyframes office-code {
+  to {
+    background-position: 0 -16px;
+  }
+}
+
+/* Entre 1024 y 1279 px solo cabe una ventana a la izquierda. */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .office-window-2 {
+    display: none;
   }
 }
