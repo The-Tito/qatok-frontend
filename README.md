@@ -29,14 +29,14 @@ Necesitas Node.js 22 o superior (recomendado 24, ver `.nvmrc`) y Git. Clona los 
 git clone git@github.com:The-Tito/qatok-backend.git
 git clone git@github.com:The-Tito/qatok-frontend.git
 cd qatok-frontend
-git checkout develop
+git switch --detach v2.0.0
 npm ci
 cp .env.example .env.local
 npm run verificar
 npm run dev
 ```
 
-Sigue el [inicio rápido del backend](https://github.com/The-Tito/qatok-backend#inicio-rápido) para inicializar las bases y arrancar la API en `http://localhost:4000/api`. Abre `http://localhost:3000` para entrar, o `http://localhost:3000/status` para ver el estado y la latencia de cada motor. La API permite ese origen mediante CORS.
+Sigue el [inicio rápido del backend](https://github.com/The-Tito/qatok-backend/blob/v2.0.0/README.md#inicio-rápido) para usar la misma versión, inicializar las bases y arrancar la API en `http://localhost:4000/api`. Abre `http://localhost:3000` para entrar, o `http://localhost:3000/status` para ver el estado y la latencia de cada motor. La API permite ese origen mediante CORS.
 
 ## Tipos compartidos: `src/shared/`
 
