@@ -4,6 +4,7 @@ import { LoginInput } from '@qatok/shared';
 import Link from 'next/link';
 import { useRef, useState, type FormEvent } from 'react';
 import { Field } from '../../../components/Field';
+import { PasswordField } from '../../../components/PasswordField';
 import { PixelButton } from '../../../components/PixelButton';
 import { errorMessage, fieldErrors, isApiError, login } from '../../../lib/api';
 import { REGISTER_PATH } from '../../../lib/routes';
@@ -100,11 +101,10 @@ export function LoginForm() {
         error={errors.email}
         required
       />
-      <Field
+      <PasswordField
         ref={passwordRef}
         label="Contraseña"
         name="password"
-        type="password"
         autoComplete="current-password"
         error={errors.password}
         required

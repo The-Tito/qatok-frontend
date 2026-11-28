@@ -1055,3 +1055,79 @@
   box-shadow: none;
   transform: translate(3px, 3px);
 }
+
+/* Contraseña: ver u ocultar y lista de requisitos en vivo. */
+.password-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.password-toggle {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 8px;
+  min-height: 28px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-ink);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.password-toggle-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: var(--border-thin) solid var(--color-ink);
+  background: var(--color-surface);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.password-toggle[aria-pressed='true'] .password-toggle-box {
+  background: var(--color-correct-bg);
+}
+
+.password-toggle:focus-visible {
+  outline: 3px solid var(--color-ink);
+  outline-offset: 2px;
+}
+
+.password-rules {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2px 12px;
+  margin: 0;
+  padding: 6px 10px;
+  border: var(--border-thin) dashed var(--color-ink);
+  background: var(--color-fill);
+  list-style: none;
+  font-size: 12px;
+}
+
+.password-rules li {
+  display: flex;
+  gap: 6px;
+  color: var(--color-ink-muted);
+}
+
+.password-rules li > span:first-child {
+  width: 10px;
+  font-weight: 700;
+}
+
+.password-rules li[data-ok] {
+  color: var(--color-correct-fg, #2c7a3a);
+  font-weight: 600;
+}
+
+.password-rules li[data-error] {
+  grid-column: 1 / -1;
+  color: var(--color-incorrect-fg);
+}

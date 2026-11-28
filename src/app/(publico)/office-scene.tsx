@@ -1,17 +1,24 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { PersonSprite } from '../../components/Sprites';
 import { babble } from '../../lib/sound';
+import { personPalette, SCENE_H, SCENE_W, sprite, STANDING, type Paths } from './office-art';
 
 type Mood = 'talk' | 'mad' | 'ok';
 
+/** Las cuatro personitas de la plática, junto a la cocina (abajo a la izquierda). */
 const PEOPLE = [
-  { shirt: '#E8A33D', hair: '#4A3328', skin: '#F2C9A0', pants: '#3B3150', pitch: 420 },
-  { shirt: '#8A5CC7', hair: '#2A2238', skin: '#C68A5E', pants: '#4A3328', pitch: 300 },
-  { shirt: '#4FA35A', hair: '#B5583B', skin: '#F2C9A0', pants: '#3B3150', pitch: 520 },
-  { shirt: '#D9483B', hair: '#7A5A48', skin: '#E0AE84', pants: '#2A2238', pitch: 360 },
-] as const;
+  { x: 44, look: { hair: '#4A3328', skin: '#F2C9A0', shirt: '#E8A33D' }, pitch: 420 },
+  { x: 58, look: { hair: '#2A2238', skin: '#C68A5E', shirt: '#8A5CC7' }, pitch: 300 },
+  { x: 74, look: { hair: '#B5583B', skin: '#F2C9A0', shirt: '#4FA35A' }, pitch: 520 },
+  { x: 88, look: { hair: '#7A5A48', skin: '#E0AE84', shirt: '#D9483B' }, pitch: 360 },
+].map((person, i) => {
+  const paths: Paths = [];
+  sprite(paths, STANDING, personPalette(person.look), 0, 0, i >= 2);
+  return { ...person, paths };
+});
+
+const FEET_Y = 150;
 
 /** Guion en bucle: [quién, texto, tono, ms]. quién = -1 es una pausa. */
 const SCRIPT: ReadonlyArray<readonly [number, string, Mood, number]> = [
@@ -35,7 +42,10 @@ const SCRIPT: ReadonlyArray<readonly [number, string, Mood, number]> = [
   [-1, '', 'talk', 6000],
 ];
 
-/** Fondo de Entrar y Crear cuenta: oficina de IT con personitas que platican y discuten. */
+const BUBBLE_FILL: Record<Mood, string> = { talk: '#FFFFFF', mad: '#F9D7D2', ok: '#D6EFD5' };
+const BUBBLE_TEXT: Record<Mood, string> = { talk: '#2A2238', mad: '#8A1F16', ok: '#1F5A28' };
+
+/** Capa animada sobre la oficina: personitas que platican, discuten y se ponen de acuerdo. */
 export function OfficeScene() {
   const [step, setStep] = useState(-1);
 
@@ -60,48 +70,56 @@ export function OfficeScene() {
   }, []);
 
   const line = SCRIPT[step];
-  const speaker = line && line[0] >= 0 ? line[0] : -1;
+  const speaker = line && line[0] >= 0 ? PEOPLE[line[0]] : undefined;
   const heated = line?.[2] === 'mad';
 
+  let bubble = null;
+  if (line && speaker) {
+    const [, text, mood] = line;
+    const width = Math.ceil(text.length * 3.2) + 6;
+    // El globo se abre hacia la izquierda para no quedar bajo el formulario.
+    const x = Math.max(2, speaker.x + 8 - width);
+    const y = FEET_Y - 14 - 13;
+    bubble = (
+      <g className="office-bubble" key={step}>
+        <rect x={x} y={y} width={width} height={9} fill="#2A2238" />
+        <rect x={x + 1} y={y + 1} width={width - 2} height={7} fill={BUBBLE_FILL[mood]} />
+        <rect x={speaker.x + 4} y={y + 9} width={2} height={2} fill="#2A2238" />
+        <text
+          x={x + width / 2}
+          y={y + 6.2}
+          textAnchor="middle"
+          fontSize={4}
+          fill={BUBBLE_TEXT[mood]}
+          className="office-bubble-text"
+        >
+          {text}
+        </text>
+      </g>
+    );
+  }
+
   return (
-    <div className="office" aria-hidden="true">
-      <div className="office-window office-window-1" />
-      <div className="office-window office-window-2" />
-      <div className="office-board">
-        {['#8A5CC7', '#4FA35A', '#E8A33D', '#D9483B', '#4FA35A', '', '#8A5CC7', '', '#4FA35A'].map(
-          (color, i) => (
-            <i key={i} style={color ? { background: color } : undefined} />
-          ),
-        )}
-      </div>
-      <div className="office-desk office-desk-1">
-        <span className="office-monitor" />
-      </div>
-      <div className="office-desk office-desk-2">
-        <span className="office-monitor" />
-      </div>
+    <svg
+      className="office-svg"
+      viewBox={`0 0 ${SCENE_W} ${SCENE_H}`}
+      shapeRendering="crispEdges"
+      aria-hidden="true"
+    >
       {PEOPLE.map((person, i) => {
-        // En la discusión, quien escucha también se altera.
-        const mood = i === speaker ? line?.[2] : heated && (i === 1 || i === 2) ? 'mad' : undefined;
+        const mood =
+          person === speaker ? line?.[2] : heated && (i === 1 || i === 2) ? 'mad' : undefined;
         return (
-          <div key={i} className={`office-person office-person-${i + 1}`} data-mood={mood}>
-            <span
-              className="office-bubble"
-              data-mood={line?.[2]}
-              data-shown={i === speaker || undefined}
-            >
-              {i === speaker ? line?.[1] : ''}
-            </span>
-            <PersonSprite
-              shirt={person.shirt}
-              hair={person.hair}
-              skin={person.skin}
-              pants={person.pants}
-              className="office-sprite"
-            />
-          </div>
+          <g key={i} transform={`translate(${person.x} ${FEET_Y - 14})`}>
+            <g className="office-person" data-mood={mood}>
+              {person.paths.map(([color, d], j) => (
+                <path key={j} fill={color} d={d} />
+              ))}
+            </g>
+          </g>
         );
       })}
-    </div>
+      {bubble}
+    </svg>
   );
 }
