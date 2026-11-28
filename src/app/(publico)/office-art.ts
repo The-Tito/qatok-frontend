@@ -51,48 +51,85 @@ export function sprite(
   for (const [color, d] of byColor) paths.push([color, d]);
 }
 
-/** Persona de pie, 8×14 (h pelo, s piel, e ojos, t camisa, p pantalón, k zapatos). */
-export const STANDING = [
-  '..hhhh..',
-  '.hhhhhh.',
-  '.hssssh.',
-  '.sesses.',
-  '..ssss..',
-  '.tttttt.',
-  'tttttttt',
-  's.tttt.s',
-  '..tttt..',
-  '..pppp..',
-  '..p..p..',
-  '..p..p..',
-  '..p..p..',
-  '.kk..kk.',
+// Personitas: la misma cabeza y hombros que sprites/student.svg, student-back.svg e
+// interlocutor.svg (16 px de ancho), con el cuerpo extendido hacia abajo.
+// o tinta · h pelo · H brillo del pelo · s piel · d sombra de piel · w blanco · c mejillas
+// n nariz · t camisa · T sombra de camisa · p pantalón · k zapatos.
+const HEAD_FRONT = [
+  '.....oooooo.....',
+  '...oohhhhhhoo...',
+  '..ohhhHHHhhhho..',
+  '..ohHHhhhhhhho..',
+  '..ohhsssssshho..',
+  '..ohssssssssho..',
+  '..osswosswosso..',
+  '..ossoossoosso..',
+  '..oscssnnsscso..',
+  '..oodssssssdoo..',
+  '....ooddddoo....',
+  '..otttwwwwttto..',
+  '.oTTtttwwtttTTo.',
+  '.oTTttttttttTTo.',
+  '.oTTttttttttTTo.',
 ] as const;
 
-/** Persona sentada de frente (detrás del escritorio), 8×8. */
-const SEATED_FRONT = [
-  '..hhhh..',
-  '.hhhhhh.',
-  '.hssssh.',
-  '.sesses.',
-  '..ssss..',
-  '.tttttt.',
-  'tttttttt',
-  'tttttttt',
+/** Cara enojada (cejas y boca de interlocutor.svg) para la discusión. */
+const FACE_MAD = [
+  '..ohhsssssshho..',
+  '..ohsossssosho..',
+  '..ohssossossho..',
+  '..ohsoossoosho..',
+  '..ohsssoosssho..',
+  '..ooosossosooo..',
 ] as const;
 
-/** Persona sentada de espaldas, 8×9. */
-const SEATED_BACK = [
-  '..hhhh..',
-  '.hhhhhh.',
-  '.hhhhhh.',
-  '.hhhhhh.',
-  '..ssss..',
-  '.tttttt.',
-  'tttttttt',
-  'tttttttt',
-  'tttttttt',
+const HEAD_BACK = [
+  '.....oooooo.....',
+  '...oohhhhhhoo...',
+  '..ohhhHHHhhhho..',
+  '..ohHHhhhhhhho..',
+  '..ohHHhhhHHhho..',
+  '..ohhhhhhhhhho..',
+  '..ohhhhhhhhhho..',
+  '..ohhhhhhhhhho..',
+  '..ohhhhhhhhhho..',
+  '..ohhhhhhhhhho..',
+  '....ooddddoo....',
+  '..otttttttttto..',
+  '.oTTtttTTtttTTo.',
+  '.oTTtttTTtttTTo.',
+  '.oTTtttTTtttTTo.',
 ] as const;
+
+const LEGS = [
+  '.oTTttttttttTTo.',
+  '.ossttttttttsso.',
+  '..ooppppppppoo..',
+  '...oppppppppo...',
+  '...opppoopppo...',
+  '...oppo..oppo...',
+  '...oppo..oppo...',
+  '...oppo..oppo...',
+  '..okkko..okkko..',
+  '..ooooo..ooooo..',
+] as const;
+
+/** Persona de pie, 16×25. */
+export const STANDING: readonly string[] = [...HEAD_FRONT, ...LEGS];
+
+/** La misma persona con la cara de discusión. */
+export const STANDING_MAD: readonly string[] = [
+  ...HEAD_FRONT.slice(0, 4),
+  ...FACE_MAD,
+  ...HEAD_FRONT.slice(10),
+  ...LEGS,
+];
+
+/** Persona sentada de frente (detrás del escritorio solo se ven cabeza y hombros). */
+const SEATED_FRONT = HEAD_FRONT;
+
+/** Persona sentada de espaldas. */
+const SEATED_BACK = HEAD_BACK;
 
 const PLANT = [
   '..g.g...',
@@ -113,14 +150,29 @@ export interface Look {
   pants?: string;
 }
 
+/** Mezcla dos colores #RRGGBB: t = 0 da a, t = 1 da b. */
+function mix(a: string, b: string, t: number): string {
+  const channel = (hex: string, i: number) => parseInt(hex.slice(1 + i * 2, 3 + i * 2), 16);
+  return `#${[0, 1, 2]
+    .map((i) => Math.round(channel(a, i) * (1 - t) + channel(b, i) * t))
+    .map((v) => v.toString(16).padStart(2, '0'))
+    .join('')}`;
+}
+
 export function personPalette(look: Look): Record<string, string> {
   return {
+    o: INK,
     h: look.hair,
+    H: mix(look.hair, '#FFFFFF', 0.25),
     s: look.skin,
-    e: INK,
+    d: mix(look.skin, INK, 0.15),
+    w: '#FFFFFF',
+    c: '#E89A8A',
+    n: '#B0705A',
     t: look.shirt,
+    T: mix(look.shirt, INK, 0.28),
     p: look.pants ?? '#3B3150',
-    k: INK,
+    k: '#6B5A7E',
   };
 }
 
@@ -251,17 +303,17 @@ function floor(p: Paths) {
 function workstation(p: Paths, x: number, y: number, front: boolean, look: Look, i: number) {
   const palette = personPalette(look);
   if (front) {
-    // Silla y persona detrás del escritorio, monitor de espaldas a un lado.
-    rect(p, C.chairDark, x + 13, y - 12, 10, 12);
-    rect(p, C.chair, x + 14, y - 11, 8, 10);
-    sprite(p, SEATED_FRONT, palette, x + 14, y - 8);
+    // Silla y persona detrás del escritorio; monitor de espaldas a un lado.
+    rect(p, C.chairDark, x + 10, y - 15, 18, 15);
+    rect(p, C.chair, x + 11, y - 14, 16, 13);
+    sprite(p, SEATED_FRONT, palette, x + 11, y - 14);
     rect(p, C.deskShade, x, y, 38, 1);
     rect(p, C.deskTop, x, y + 1, 38, 8);
-    rect(p, C.monitorBack, x + 26, y - 7, 10, 8);
-    rect(p, INK, x + 30, y + 1, 2, 2);
-    rect(p, C.key, x + 13, y + 3, 10, 2);
-    rect(p, C.paper, x + 3, y + 3, 7, 4);
-    rect(p, i % 2 ? C.red : C.white, x + 4, y + 2, 2, 2);
+    rect(p, C.monitorBack, x + 28, y - 8, 9, 9);
+    rect(p, INK, x + 31, y + 1, 2, 2);
+    rect(p, C.key, x + 13, y + 3, 12, 2);
+    rect(p, C.paper, x + 2, y + 3, 7, 4);
+    rect(p, i % 2 ? C.red : C.white, x + 3, y + 2, 2, 2);
   } else {
     // Persona de espaldas: se ve su pantalla con código.
     rect(p, C.deskShade, x, y, 38, 1);
@@ -273,7 +325,6 @@ function workstation(p: Paths, x: number, y: number, front: boolean, look: Look,
     rect(p, C.code, x + 15, y - 5, 5, 1);
     rect(p, C.code3, x + 14, y - 3, 7, 1);
     rect(p, INK, x + 18, y, 2, 2);
-    rect(p, C.key, x + 13, y + 3, 10, 2);
     rect(p, i % 2 ? C.orange : C.purple, x + 31, y + 2, 3, 3);
   }
   rect(p, C.deskFront, x, y + 9, 38, 5);
@@ -281,9 +332,9 @@ function workstation(p: Paths, x: number, y: number, front: boolean, look: Look,
   rect(p, INK, x + 1, y + 15, 2, 7);
   rect(p, INK, x + 35, y + 15, 2, 7);
   if (!front) {
-    sprite(p, SEATED_BACK, palette, x + 14, y + 8);
-    rect(p, C.chairDark, x + 13, y + 17, 10, 3);
-    rect(p, C.chair, x + 14, y + 17, 8, 2);
+    sprite(p, SEATED_BACK, palette, x + 11, y + 6);
+    rect(p, C.chairDark, x + 10, y + 19, 18, 4);
+    rect(p, C.chair, x + 11, y + 19, 16, 2);
   }
 }
 

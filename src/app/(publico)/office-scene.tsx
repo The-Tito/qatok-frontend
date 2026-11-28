@@ -2,23 +2,34 @@
 
 import { useEffect, useState } from 'react';
 import { babble } from '../../lib/sound';
-import { personPalette, SCENE_H, SCENE_W, sprite, STANDING, type Paths } from './office-art';
+import {
+  personPalette,
+  SCENE_H,
+  SCENE_W,
+  sprite,
+  STANDING,
+  STANDING_MAD,
+  type Paths,
+} from './office-art';
 
 type Mood = 'talk' | 'mad' | 'ok';
 
 /** Las cuatro personitas de la plática, junto a la cocina (abajo a la izquierda). */
 const PEOPLE = [
-  { x: 44, look: { hair: '#4A3328', skin: '#F2C9A0', shirt: '#E8A33D' }, pitch: 420 },
-  { x: 58, look: { hair: '#2A2238', skin: '#C68A5E', shirt: '#8A5CC7' }, pitch: 300 },
-  { x: 74, look: { hair: '#B5583B', skin: '#F2C9A0', shirt: '#4FA35A' }, pitch: 520 },
-  { x: 88, look: { hair: '#7A5A48', skin: '#E0AE84', shirt: '#D9483B' }, pitch: 360 },
+  { x: 30, look: { hair: '#4A3328', skin: '#F2C9A0', shirt: '#E8A33D' }, pitch: 420 },
+  { x: 48, look: { hair: '#2A2238', skin: '#C68A5E', shirt: '#8A5CC7' }, pitch: 300 },
+  { x: 68, look: { hair: '#B5583B', skin: '#F2C9A0', shirt: '#4FA35A' }, pitch: 520 },
+  { x: 86, look: { hair: '#7A5A48', skin: '#E0AE84', shirt: '#D9483B' }, pitch: 360 },
 ].map((person, i) => {
   const paths: Paths = [];
+  const mad: Paths = [];
   sprite(paths, STANDING, personPalette(person.look), 0, 0, i >= 2);
-  return { ...person, paths };
+  sprite(mad, STANDING_MAD, personPalette(person.look), 0, 0, i >= 2);
+  return { ...person, paths, mad };
 });
 
-const FEET_Y = 150;
+const FEET_Y = 162;
+const HEIGHT = STANDING.length;
 
 /** Guion en bucle: [quién, texto, tono, ms]. quién = -1 es una pausa. */
 const SCRIPT: ReadonlyArray<readonly [number, string, Mood, number]> = [
@@ -78,13 +89,13 @@ export function OfficeScene() {
     const [, text, mood] = line;
     const width = Math.ceil(text.length * 3.2) + 6;
     // El globo se abre hacia la izquierda para no quedar bajo el formulario.
-    const x = Math.max(2, speaker.x + 8 - width);
-    const y = FEET_Y - 14 - 13;
+    const x = Math.max(2, speaker.x + 14 - width);
+    const y = FEET_Y - HEIGHT - 13;
     bubble = (
       <g className="office-bubble" key={step}>
         <rect x={x} y={y} width={width} height={9} fill="#2A2238" />
         <rect x={x + 1} y={y + 1} width={width - 2} height={7} fill={BUBBLE_FILL[mood]} />
-        <rect x={speaker.x + 4} y={y + 9} width={2} height={2} fill="#2A2238" />
+        <rect x={speaker.x + 9} y={y + 9} width={2} height={2} fill="#2A2238" />
         <text
           x={x + width / 2}
           y={y + 6.2}
@@ -110,9 +121,9 @@ export function OfficeScene() {
         const mood =
           person === speaker ? line?.[2] : heated && (i === 1 || i === 2) ? 'mad' : undefined;
         return (
-          <g key={i} transform={`translate(${person.x} ${FEET_Y - 14})`}>
+          <g key={i} transform={`translate(${person.x} ${FEET_Y - HEIGHT})`}>
             <g className="office-person" data-mood={mood}>
-              {person.paths.map(([color, d], j) => (
+              {(mood === 'mad' ? person.mad : person.paths).map(([color, d], j) => (
                 <path key={j} fill={color} d={d} />
               ))}
             </g>

@@ -36,8 +36,8 @@ export function OfficeBackdrop() {
       {office.workers.map(({ x, y, front }, i) =>
         front ? (
           <g key={i} className="office-typing" style={{ animationDelay: `${-i * 0.17}s` }}>
-            <rect x={x + 14} y={y + 2} width={2} height={2} fill="#F2C9A0" />
-            <rect x={x + 20} y={y + 2} width={2} height={2} fill="#F2C9A0" />
+            <rect x={x + 14} y={y + 2} width={3} height={2} fill="#F2C9A0" />
+            <rect x={x + 21} y={y + 2} width={3} height={2} fill="#F2C9A0" />
           </g>
         ) : (
           <rect
@@ -64,12 +64,12 @@ export function OfficeBackdrop() {
           style={{ animationDelay: `${-i * 0.23}s` }}
         />
       ))}
-      <g className="office-walker" transform="translate(100 120)">
+      <g className="office-walker" transform="translate(100 123)">
         <g className="office-walker-body">
           {walker.map(([color, d], i) => (
             <path key={i} fill={color} d={d} />
           ))}
-          <rect x={6} y={6} width={4} height={3} fill="#F6F1E4" stroke={INK} strokeWidth={0.5} />
+          <rect x={11} y={14} width={5} height={4} fill="#F6F1E4" stroke={INK} strokeWidth={0.5} />
         </g>
       </g>
     </svg>
