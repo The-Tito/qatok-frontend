@@ -1001,3 +1001,190 @@
 .sync-banner[data-sync='slow'] .stripe-bar::after {
   animation: none;
 }
+
+/* Estrellas decorativas: destellan por pasos en todas las vistas. */
+@keyframes mov-sparkle {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.4;
+    transform: scale(0.55);
+  }
+}
+
+.sparkle {
+  animation: mov-sparkle 1.8s var(--mov-pasos-4) infinite;
+}
+
+.sparkle:nth-of-type(2n) {
+  animation-duration: 2.3s;
+  animation-delay: -0.8s;
+}
+
+.sparkle:nth-of-type(3n) {
+  animation-duration: 1.5s;
+  animation-delay: -1.2s;
+}
+
+/* Botón de sonido (sí/no). */
+.sound-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 12px;
+  border: var(--border) solid var(--color-ink);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+  color: var(--color-ink);
+  font-family: var(--font-silkscreen), monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.sound-toggle[aria-pressed='false'] {
+  color: var(--color-ink-muted);
+}
+
+.sound-toggle:active {
+  box-shadow: none;
+  transform: translate(3px, 3px);
+}
+
+/* Contraseña: ver u ocultar y lista de requisitos en vivo. */
+.password-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.password-toggle {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 8px;
+  min-height: 28px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-ink);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.password-toggle-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: var(--border-thin) solid var(--color-ink);
+  background: var(--color-surface);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.password-toggle[aria-pressed='true'] .password-toggle-box {
+  background: var(--color-correct-bg);
+}
+
+.password-toggle:focus-visible {
+  outline: 3px solid var(--color-ink);
+  outline-offset: 2px;
+}
+
+.password-rules {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2px 12px;
+  margin: 0;
+  padding: 6px 10px;
+  border: var(--border-thin) dashed var(--color-ink);
+  background: var(--color-fill);
+  list-style: none;
+  font-size: 12px;
+}
+
+.password-rules li {
+  display: flex;
+  gap: 6px;
+  color: var(--color-ink-muted);
+}
+
+.password-rules li > span:first-child {
+  width: 10px;
+  font-weight: 700;
+}
+
+.password-rules li[data-ok] {
+  color: var(--color-correct-fg, #2c7a3a);
+  font-weight: 600;
+}
+
+.password-rules li[data-error] {
+  grid-column: 1 / -1;
+  color: var(--color-incorrect-fg);
+}
+
+/* Cuarto de oficina detrás del personaje (simulación y jugar). */
+.scene-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+}
+
+.scene-cursor {
+  animation: mov-blink 1s var(--mov-pasos-2) infinite;
+}
+
+.scene-cloud {
+  animation: scene-cloud 14s steps(20, end) infinite;
+}
+
+/* Interlocutor: respira, parpadea cada pocos segundos. */
+.interlocutor {
+  animation: scene-breathe 1.2s var(--mov-pasos-2) infinite alternate;
+}
+
+.interlocutor-blink {
+  opacity: 0;
+  animation: scene-blink 4.3s steps(1, end) infinite;
+}
+
+@keyframes scene-breathe {
+  to {
+    transform: translateY(-3%);
+  }
+}
+
+@keyframes scene-talk {
+  to {
+    transform: translateY(-5%);
+  }
+}
+
+@keyframes scene-blink {
+  0%,
+  92%,
+  100% {
+    opacity: 0;
+  }
+
+  94% {
+    opacity: 1;
+  }
+}
+
+@keyframes scene-cloud {
+  to {
+    transform: translateX(20px);
+  }
+}

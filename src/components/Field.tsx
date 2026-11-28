@@ -10,7 +10,7 @@ interface FieldProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'id'> {
 
 /** `<label>` + control con borde 3 px y fondo relleno (01 · Field). */
 export const Field = forwardRef<HTMLInputElement, FieldProps>(function Field(
-  { label, error, hint, ...inputProps },
+  { label, error, hint, 'aria-describedby': describedBy, ...inputProps },
   ref,
 ) {
   const id = useId();
@@ -26,8 +26,10 @@ export const Field = forwardRef<HTMLInputElement, FieldProps>(function Field(
         id={id}
         className="field-input"
         aria-invalid={error ? true : undefined}
-        aria-describedby={message ? messageId : undefined}
         {...inputProps}
+        aria-describedby={
+          [message ? messageId : '', describedBy ?? ''].join(' ').trim() || undefined
+        }
       />
       {message ? (
         <p id={messageId} className="field-message" data-error={error ? '' : undefined}>

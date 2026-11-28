@@ -60,23 +60,9 @@
   text-transform: uppercase;
 }
 
-.sim-scene .pixel-icon {
-  position: absolute;
-}
-
-.sim-scene-sparkle-1 {
-  top: 90px;
-  left: 18%;
-}
-
-.sim-scene-sparkle-2 {
-  top: 80px;
-  right: 15%;
-}
-
 .sim-scene-sprite {
   position: absolute;
-  bottom: 36px;
+  bottom: 8%;
   left: calc(50% - 60px);
   width: 120px;
   height: 120px;
@@ -84,19 +70,9 @@
 }
 
 .sim-scene[data-active] .sim-scene-sprite {
-  bottom: 32px;
+  bottom: 8%;
   width: 112px;
   height: 112px;
-}
-
-.sim-scene-floor {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: 36px;
-  border-top: var(--border) solid var(--color-ink);
-  background: var(--type-base);
 }
 
 .sim-detail-info {
@@ -280,14 +256,10 @@
 
   .sim-scene-sprite,
   .sim-scene[data-active] .sim-scene-sprite {
-    bottom: 40px;
+    bottom: 8%;
     left: calc(50% - 72px);
     width: 144px;
     height: 144px;
-  }
-
-  .sim-scene-floor {
-    height: 40px;
   }
 
   .sim-detail-info {

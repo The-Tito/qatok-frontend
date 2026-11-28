@@ -4,8 +4,10 @@ import { RegisterInput } from '@qatok/shared';
 import Link from 'next/link';
 import { useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { Field } from '../../../components/Field';
+import { PasswordField } from '../../../components/PasswordField';
 import { PixelButton } from '../../../components/PixelButton';
 import { fieldErrors, isApiError, register } from '../../../lib/api';
+import { passwordMeetsRules } from '../../../lib/password';
 import { LOGIN_PATH } from '../../../lib/routes';
 import { saveSession } from '../../../lib/session';
 import { useAuthRedirect } from '../use-auth-redirect';
@@ -17,7 +19,7 @@ type FieldErrors = Partial<Record<FieldName, ReactNode>>;
 const fieldTexts: Record<FieldName, string> = {
   name: 'Escribe tu nombre (hasta 100 caracteres).',
   email: 'Escribe un correo electrónico válido.',
-  password: 'Usa al menos 8 caracteres y hasta 72 bytes.',
+  password: 'Tu contraseña aún no cumple todos los requisitos.',
 };
 
 export function RegisterForm() {
@@ -47,6 +49,10 @@ export function RegisterForm() {
       password: fields.get('password'),
     });
     setMessage(null);
+    if (input.success && !passwordMeetsRules(input.data.password)) {
+      showFieldErrors({ password: fieldTexts.password });
+      return;
+    }
     if (!input.success) {
       const found: FieldErrors = {};
       for (const issue of input.error.issues) {
@@ -108,14 +114,13 @@ export function RegisterForm() {
         error={errors.email}
         required
       />
-      <Field
+      <PasswordField
         ref={refs.password}
         label="Contraseña"
         name="password"
-        type="password"
         autoComplete="new-password"
-        hint="Mínimo 8 caracteres."
         error={errors.password}
+        checklist
         required
       />
       {message ? (
