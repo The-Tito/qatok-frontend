@@ -251,33 +251,44 @@ export function routeMap(steps: SimulationStep[]): RouteEntry[] {
   );
 }
 
-/** Pasos a los que no llega ninguna opción (salvo el primero): no se jugarán nunca. */
-export function unreachableSteps(steps: SimulationStep[]): number[] {
-  const targets = new Set(steps.flatMap((step) => step.options.map((o) => o.next_step_id)));
-  return steps
-    .map((step, index) => (index > 0 && !targets.has(step.id) ? index + 1 : null))
-    .filter((n): n is number => n !== null);
-}
-
 export { OPTION_LETTERS };
 
-/** ¿Alguna ruta vuelve a un paso ya visitado desde el paso 1? (la API lo rechaza al publicar) */
-export function hasCycle(steps: SimulationStep[]): boolean {
+function analyzeRoutes(steps: SimulationStep[]) {
   const byId = new Map(steps.map((step) => [step.id, step]));
   const visiting = new Set<string>();
   const done = new Set<string>();
-  const visit = (id: string): boolean => {
-    if (visiting.has(id)) return true;
-    if (done.has(id)) return false;
+  let cycle = false;
+  const visit = (id: string) => {
+    if (visiting.has(id)) {
+      cycle = true;
+      return;
+    }
+    if (done.has(id)) return;
     const step = byId.get(id);
-    if (!step) return false;
+    if (!step) return;
     visiting.add(id);
-    const found = step.options.some((o) => o.next_step_id !== null && visit(o.next_step_id));
+    for (const option of step.options) {
+      if (option.next_step_id !== null) visit(option.next_step_id);
+    }
     visiting.delete(id);
     done.add(id);
-    return found;
   };
-  return steps[0] ? visit(steps[0].id) : false;
+  const start = steps.find((step) => step.order === 1);
+  if (start) visit(start.id);
+  return {
+    cycle,
+    unreachable: steps.flatMap((step, index) => (done.has(step.id) ? [] : [index + 1])),
+  };
+}
+
+/** Números en el editor de los pasos a los que no se llega desde el inicio. */
+export function unreachableSteps(steps: SimulationStep[]): number[] {
+  return analyzeRoutes(steps).unreachable;
+}
+
+/** ¿Alguna ruta desde el paso 1 contiene un ciclo? */
+export function hasCycle(steps: SimulationStep[]): boolean {
+  return analyzeRoutes(steps).cycle;
 }
 
 export interface CheckItem {
@@ -290,6 +301,7 @@ export function publishChecklist(
   steps: SimulationStep[],
   { hasSkills, saved }: { hasSkills: boolean; saved: boolean },
 ): CheckItem[] {
+  const { cycle, unreachable } = analyzeRoutes(steps);
   return [
     { label: 'Tiene al menos un paso (el primero es el inicio)', ok: steps.length > 0 },
     {
@@ -302,10 +314,10 @@ export function publishChecklist(
         steps.length > 0 &&
         steps.every((step) => step.options.every((option) => option.consequences.length > 0)),
     },
-    { label: 'Ninguna ruta vuelve a un paso anterior', ok: !hasCycle(steps) },
+    { label: 'Ninguna ruta vuelve a un paso anterior', ok: !cycle },
     {
       label: 'Se llega a todos los pasos desde el inicio',
-      ok: unreachableSteps(steps).length === 0,
+      ok: unreachable.length === 0,
     },
     { label: 'Entrena al menos una habilidad', ok: hasSkills },
     { label: 'Los cambios están guardados', ok: saved },

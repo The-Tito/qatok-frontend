@@ -102,6 +102,24 @@ describe('content', () => {
 });
 
 describe('publishChecklist', () => {
+  it('marca los pasos de un ciclo desconectado del inicio como inalcanzables', () => {
+    const start = filledEmail(1);
+    const second = filledEmail(2);
+    const third = filledEmail(3);
+    const fourth = filledEmail(4);
+    start.options[0]!.next_step_id = second.id;
+    third.options[0]!.next_step_id = fourth.id;
+    fourth.options[0]!.next_step_id = third.id;
+    const steps = [start, second, third, fourth];
+
+    expect(unreachableSteps(steps)).toEqual([3, 4]);
+    expect(hasCycle(steps)).toBe(false);
+    expect(publishChecklist(steps, { hasSkills: true, saved: true })).toContainEqual({
+      label: 'Se llega a todos los pasos desde el inicio',
+      ok: false,
+    });
+  });
+
   it('marca lo que falta para publicar', () => {
     const a = filledEmail(1);
     const checks = publishChecklist([a], { hasSkills: true, saved: false });
